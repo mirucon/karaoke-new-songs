@@ -1,0 +1,170 @@
+<template lang="pug">
+  .wrapper
+    app-header
+    songs-list(:songsTable="songsTable", :datesArray="datesArray", :hasLoaded="hasLoaded", @loadMore="loadMore", @filterArray="filterArray")
+    app-footer
+</template>
+
+<script>
+  import axios from 'axios'
+  import moment from 'moment'
+  import SongsList from '~/components/SongsList.vue'
+  import AppHeader from '~/components/AppHeader.vue'
+  import AppFooter from '~/components/AppFooter.vue'
+
+  export default {
+    components: {
+      AppFooter,
+      AppHeader,
+      SongsList
+    },
+    data () {
+      return {
+        hasLoaded: false
+      }
+    },
+    asyncData () {
+      let datesArray = []
+      const numberOfWeeks = 3
+      // 日付を取得する
+      for (let i = 0; i < numberOfWeeks; i++) {
+        let date = new Date()
+        // Get next Tuesday's date
+        date.setDate(date.getDate() + (2 - date.getDay()) % 7 + 7)
+        if (new Date().getDay() > 3) {
+          date.setDate(date.getDate() + 7)
+        }
+        if (i >= 1) {
+          // Subtract "7 days" in each loop.
+          date.setDate(date.getDate() - 7 * i)
+        }
+        let y = date.getFullYear()
+        let m = date.getMonth() + 1
+        let d = date.getDate()
+        if (m < 10) {
+          m = '0' + m
+        }
+        if (d < 10) {
+          d = '0' + d
+        }
+        datesArray.push(`${y}-${m}-${d}`)
+      }
+
+      return axios.all([
+        axios.get(`https://api.karaokenewsongs.com/songs.${datesArray[0]}.json`),
+        axios.get(`https://api.karaokenewsongs.com/songs.${datesArray[1]}.json`),
+        axios.get(`https://api.karaokenewsongs.com/songs.${datesArray[2]}.json`)
+      ])
+        .then(axios.spread((res0, res1, res2) => {
+          const res = [res0.data, res1.data, res2.data]
+          let exist = [true, true, true]
+          for (let i = 0; i < numberOfWeeks; i++) {
+            if (res[i][1].length <= 1) {
+              exist[i] = false
+            }
+          }
+          return {
+            datesArray: datesArray,
+            songsTable: {
+              [datesArray[0]]: {
+                date: res[0][0],
+                cols: res[0][1],
+                isExisted: exist[0]
+              },
+              [datesArray[1]]: {
+                date: res[1][0],
+                cols: res[1][1],
+                isExisted: exist[1]
+              },
+              [datesArray[2]]: {
+                date: res[2][0],
+                cols: res[2][1],
+                isExisted: exist[2]
+              }
+            }
+          }
+        }))
+    },
+    mounted: function () {
+      this.getRelativeDates()
+    },
+    methods: {
+      getRelativeDates: function () {
+        const date = this.datesArray[1]
+        const y = new Date().getFullYear()
+        const now = moment()
+        for (let col in this.songsTable[date].cols) {
+          let dateStr = this.songsTable[date].cols[col][3]
+          dateStr = dateStr.replace('/', '-')
+          if (dateStr === '配信済' || dateStr === '配信済み') {
+            let diff = dateStr
+            this.songsTable[date].cols[col][3] = diff
+          } else {
+            let colDate = moment(`${y}-${dateStr} 23:59+0900`)
+            let diff = colDate.diff(now, 'days')
+            if (diff === 0) {
+              diff = '今日'
+            } else if (diff === 1) {
+              diff = '明日'
+            } else if (diff < 0) {
+              diff = '配信済'
+            } else {
+              diff = `${diff}日後`
+            }
+            this.songsTable[date].cols[col][3] = diff
+          }
+        }
+      },
+      loadMore: function () {
+        this.hasLoaded = false
+        for (let i = 0; i < 3; i++) {
+          let length = this.datesArray.length
+          let date = new Date(this.datesArray[length - 1])
+          date.setDate(date.getDate() - 7)
+          let y = date.getFullYear()
+          let m = date.getMonth() + 1
+          let d = date.getDate()
+          if (m < 10) {
+            m = '0' + m
+          }
+          if (d < 10) {
+            d = '0' + d
+          }
+          this.datesArray.push(`${y}-${m}-${d}`)
+
+          axios.get(`https://api.karaokenewsongs.com/songs.${this.datesArray[length]}.json`)
+            .then(res => {
+              let isExisted = Boolean
+              if (res.data[1].length <= 1) {
+                isExisted = false
+              } else {
+                isExisted = true
+              }
+              let songsTable = {
+                date: this.datesArray[length],
+                cols: res.data[1],
+                isExisted: isExisted
+              }
+              this.$set(this.songsTable, [this.datesArray[length]], songsTable)
+              this.hasLoaded = true
+              return res
+            })
+            .catch(() => {
+              const currentWeek = this.datesArray.findIndex(date => date === this.datesArray[length])
+              this.datesArray[currentWeek] = null
+              return 'notFound'
+            })
+        }
+      },
+      filterArray: function () {
+        this.datesArray = this.datesArray.filter(d => {
+          return d !== null
+        })
+      }
+    }
+  }
+</script>
+
+<style lang="stylus">
+@import '~assets/form.styl'
+</style>
