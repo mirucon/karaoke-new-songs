@@ -98,7 +98,8 @@
           dateStr = dateStr.replace('/', '-')
           if (dateStr === '配信済' || dateStr === '配信済み') {
             let diff = dateStr
-            this.songsTable[date].cols[col][3] = diff
+            dateStr = (now.month() + 1 + '-' + now.date())
+            this.songsTable[date].cols[col][3] = [diff, dateStr]
           } else {
             let colDate = moment(`${y}-${dateStr} 23:59+0900`)
             let diff = colDate.diff(now, 'days')
@@ -111,7 +112,7 @@
             } else {
               diff = `${diff}日後`
             }
-            this.songsTable[date].cols[col][3] = diff
+            this.songsTable[date].cols[col][3] = [diff, dateStr]
           }
         }
       },

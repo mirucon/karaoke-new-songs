@@ -10,14 +10,15 @@
         thead.releaseList__heading
           tr
             td
-            td(@click="sortBy = 'artist'") 歌手名
-            td(@click="sortBy = 'song'") 曲名
-            td(@click="sortBy = 'date'") 配信日
+            td.releaseList__heading__item(@click="sortBy = 'artist'" :class="{ currentSort: sortBy === 'artist' }") 歌手名
+            td.releaseList__heading__item(@click="sortBy = 'song'" :class="{ currentSort: sortBy === 'song' }") 曲名
+            td.releaseList__heading__item(@click="sortBy = 'date'" :class="{ currentSort: sortBy === 'date' }") 配信日
         tbody
             tr.releaseList__line(v-for="col in cols", :class="{ dam: col[0] === 'D', joy: col[0] === 'J', both: col[0] === 'D,J', isDAMHidden: !showDAM, isJOYHidden: !showJOY }")
               template(v-for="(item, index) in col")
                 td.releaseList__item(v-if="index === 0", :class="{ 'icon--dam': item === 'D', 'icon--joy': item === 'J', 'icon--both': item === 'D,J' }") {{ item }}
                 td.releaseList__item.artist(v-else-if="index === 1", @click="searchQuery = item") {{ item }}
+                td.releaseList__item(v-else-if="index === 3 && Array.isArray(item)") {{ item[0] }}
                 td.releaseList__item(v-else) {{ item }}
       div.wrapper--notFound(v-if="searchQuery && cols.length <= 0")
         div
@@ -178,8 +179,10 @@ export default {
     sortCols: function () {
       // Sort cols by model/song/artist/date //
       function comparatorArtist (a, b) {
-        if (a[1] < b[1]) return -1
-        if (a[1] > b[1]) return 1
+        if (a[1] < b[1]) return -2
+        if (a[1] > b[1]) return 2
+        if (a[2] < b[2]) return -1
+        if (a[2] > b[2]) return 1
         return 0
       }
       function comparatorSong (a, b) {
@@ -188,8 +191,21 @@ export default {
         return 0
       }
       function comparatorDate (a, b) {
-        if (a[3] < b[3]) return -1
-        if (a[3] > b[3]) return 1
+        if (Array.isArray(a[3])) {
+          if (a[3][1] < b[3][1]) return -3
+          if (a[3][1] > b[3][1]) return 3
+          if (a[1] < b[1]) return -2
+          if (a[1] > b[1]) return 2
+          if (a[2] < b[2]) return -1
+          if (a[2] > b[2]) return 1
+        } else {
+          if (a[3] < b[3]) return -3
+          if (a[3] > b[3]) return 3
+          if (a[1] < b[1]) return -2
+          if (a[1] > b[1]) return 2
+          if (a[2] < b[2]) return -1
+          if (a[2] > b[2]) return 1
+        }
         return 0
       }
 
@@ -271,10 +287,19 @@ export default {
 
 .releaseList__heading
   background-color #b7626160
-  & td:nth-child(2)
-    width 33%
-  & td:nth-child(n + 3)
-    white-space nowrap
+
+.releaseList__heading__item
+  transition background-color .2s
+  &:hover
+    background-color #b7626116
+  &.currentSort
+    background-color #b7626132
+
+.releaseList__heading__item:nth-child(2)
+  width 33%
+.releaseList__heading__item:nth-child(n + 4)
+  white-space nowrap
+  text-align center
 
 .releaseList__item:nth-child(1)
   padding-left .6em
@@ -284,8 +309,9 @@ export default {
   @media screen and (min-width 641px)
     font-size .94em
 
-.releaseList__item:nth-child(4), .releaseList__item:nth-child(5)
+.releaseList__item:nth-child(n + 4)
   white-space nowrap
+  text-align center
 
 .icon--dam
   color #ad2d28
