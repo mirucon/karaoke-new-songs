@@ -25,8 +25,8 @@ export default {
 
 <style scoped lang="stylus">
 .footer
-  position: relative;
-  padding 1.6em 0
+  position relative
+  padding 2.2em 10px
   background-color #11161b
   color #ffffff94
   a
@@ -45,6 +45,9 @@ export default {
   background-color: #ffffffdd
   cursor pointer
   box-shadow 0 0 1px rgba(0, 0, 0, .3)
+  &:hover
+    padding-top .5em
+    padding-bottom .7em
 
 .icon--caret.bottom
   right .16em

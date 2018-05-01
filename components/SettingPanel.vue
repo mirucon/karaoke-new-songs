@@ -126,8 +126,8 @@ $mobileMax = 1023px
     justify-content center
     position fixed
     right 0
-    bottom 7px
-    padding 4px 18px
+    bottom 40px
+    padding 6px 16px
     background-color #a24c4c
     color #fff
     transition .2s all
@@ -148,8 +148,12 @@ $mobileMax = 1023px
     &.isOpen
       background-color #a24c4c - #222
       animation .7s moveLeft forwards
+    &:not(.isOpen):hover
+      padding-right 18px
+      padding-left @padding-right
 
     @media screen and (min-width $desktopMin)
+      bottom 100px
       &:not(.isClosed)
         animation-duration .4s
       &.isOpen
