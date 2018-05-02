@@ -51,7 +51,7 @@ export default {
 
 <style lang="stylus">
 $settingWidthDesktop = 360px
-$desktopMin = 1024px
+$desktopMin = 641px
 $mobileMax = 1023px
 
 @media screen and (max-width $mobileMax)
