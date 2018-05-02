@@ -9,7 +9,7 @@
       table.releaseList
         thead.releaseList__heading
           tr
-            td
+            td.releaseList__heading__item(@click="sortBy = 'model'" :class="{ currentSort: sortBy === 'model' }")
             td.releaseList__heading__item(@click="sortBy = 'artist'" :class="{ currentSort: sortBy === 'artist' }") 歌手名
             td.releaseList__heading__item(@click="sortBy = 'song'" :class="{ currentSort: sortBy === 'song' }") 曲名
             td.releaseList__heading__item(@click="sortBy = 'date'" :class="{ currentSort: sortBy === 'date' }") 配信日
@@ -178,6 +178,15 @@ export default {
     },
     sortCols: function () {
       // Sort cols by model/song/artist/date //
+      function comparatorModel (a, b) {
+        if (a[0] < b[0]) return -2
+        if (a[0] > b[0]) return 2
+        if (a[1] < b[1]) return -2
+        if (a[1] > b[1]) return 2
+        if (a[2] < b[2]) return -1
+        if (a[2] > b[2]) return 1
+        return 0
+      }
       function comparatorArtist (a, b) {
         if (a[1] < b[1]) return -2
         if (a[1] > b[1]) return 2
@@ -209,8 +218,22 @@ export default {
         return 0
       }
 
-      if (this.sortBy === 'artist') {
-        // this.cols = this.returnCurrentData()
+      if (this.sortBy === 'model') {
+        // Replace "D,J" with "Z" so they can go at the end.
+        for (let col in this.cols) {
+          if (this.cols[col][0] === 'D,J') {
+            this.cols[col][0] = 'Z'
+          }
+        }
+        // Perform sort.
+        this.cols = this.cols.sort(comparatorModel)
+        // Change back "Z" to "D,J"
+        for (let col in this.cols) {
+          if (this.cols[col][0] === 'Z') {
+            this.cols[col][0] = 'D,J'
+          }
+        }
+      } else if (this.sortBy === 'artist') {
         this.cols = this.cols.sort(comparatorArtist)
       } else if (this.sortBy === 'song') {
         this.cols = this.cols.sort(comparatorSong)
