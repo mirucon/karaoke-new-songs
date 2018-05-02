@@ -6,11 +6,12 @@
         span.top
         span.bottom
     .searchFilter(:class="{ isToggled: showFilterWindow }")
-      .toggle--searchFilter(@click="showFilterWindow = !showFilterWindow", :class="{ isFiltered: isFiltered }") 絞り込み
+      .toggle--searchFilter(@click="click" :class="{ isFiltered: isFiltered }" ref="toggleSearchFilter") 絞り込み
       //.searchFilter__inner(v-show="showFilterWindow", :class="{ isToggled: showFilterWindow }")
-      .searchFilter__inner(:class="{ isToggled: showFilterWindow }")
-        .searchFilter__item.button--toggle(@click="filterArtist", :class="{ enabled: artistToggle }") アーティスト名
-        .searchFilter__item.button--toggle(@click="filterSong", :class="{ enabled: songToggle }") 曲名
+      transition(name="fade")
+        .searchFilter__inner(v-show="showFilterWindow" :class="{ isToggled: showFilterWindow }" :style="toggleHeight")
+          .searchFilter__item.button--toggle(@click="filterArtist", :class="{ enabled: artistToggle }") アーティスト名
+          .searchFilter__item.button--toggle(@click="filterSong", :class="{ enabled: songToggle }") 曲名
 
 </template>
 
@@ -20,11 +21,17 @@ export default {
   props: ['value'],
   data: () => ({
     showFilterWindow: '',
+    toggleHeight: {'top': '40px', 'left': '0'},
     songToggle: true,
     artistToggle: true,
     isFiltered: false
   }),
   methods: {
+    click () {
+      this.showFilterWindow = !this.showFilterWindow
+      this.calculateHeight()
+      this.checkIsFiltered()
+    },
     checkIsFiltered: function () {
       if (!this.songToggle || !this.artistToggle) {
         this.isFiltered = true
@@ -46,34 +53,36 @@ export default {
     filterArtist: function () {
       this.artistToggle = !this.artistToggle
       this.$emit('searchByArtist')
+    },
+    calculateHeight () {
+      let clientRect = this.$refs.toggleSearchFilter.getBoundingClientRect()
+      let toggleHeight = clientRect.top + clientRect.height + 5
+      let toggleLeft = clientRect.left - clientRect.width
+      this.toggleHeight['top'] = `${toggleHeight}px`
+      this.toggleHeight['left'] = `${toggleLeft}px`
     }
   },
-  watch: {
-    songToggle: function () {
-      this.checkIsFiltered()
-    },
-    artistToggle: function () {
-      this.checkIsFiltered()
-    }
+  mounted: function () {
+    this.calculateHeight()
+    window.addEventListener('resize', this.calculateHeight)
+  },
+  beforeDestroy: function () {
+    window.removeEventListener('resize', this.calculateHeight)
   }
 }
 </script>
 
 <style scoped lang="stylus">
-@keyframes right
+@keyframes fadeIn
   0%
-    width auto
-    height auto
-    // opacity 0
+    opacity 0
   100%
-    // opacity 1
-@keyframes rightOut
+    opacity 1
+@keyframes fadeOut
   0%
-    // opacity 1
+    opacity 1
   100%
-    width 0
-    height 0
-    // opacity 0
+    opacity 0
 
 .searchBox
   display flex
@@ -84,7 +93,7 @@ export default {
 
 .searchBox__label
   flex-grow 1
-  flex-basis 100%
+  //flex-basis 100%
   position relative
   margin auto
   font-size .96em
@@ -98,15 +107,7 @@ export default {
   display flex
   flex-flow row wrap
   align-items center
-  margin-top .4em
-  overflow hidden
-
-.searchFilter__inner
-  display flex
-  flex-flow row wrap
-  animation rightOut .3s forwards
-  &.isToggled
-    animation right .3s forwards
+  margin-left .2em
 
 .toggle--searchFilter
   margin-right 10px
@@ -117,19 +118,59 @@ export default {
   cursor pointer
   transition background-color .2s
   &.isFiltered
-    background-color $accent
+    background-color #8c4748
     color #fff
     &:hover
-      background-color $accent - #222
+      background-color #8c4748 - #111
+  &:hover
+    background-color #e5c8c7 - #111
+
+.searchFilter__inner
+  display flex
+  flex-flow column
+  align-items center
+  position absolute
+  bottom auto
+  width auto
+  height auto
+  padding .9em .5em
+  background-color #fff
+  box-shadow 0 0 1px rgba(0, 0, 0, .2)
+  white-space nowrap
+  letter-spacing -.1em
+  animation rightOut .3s forwards
+  &.isToggled
+    animation right .3s forwards
 
 .searchFilter__item
-  padding .4em .3em
+  display flex
+  align-items center
+  position relative
+  width 100%
+  padding .4em .6em .4em 2.2em
+  background-color transparent
+  color #222
+  &:not(:last-child)
+    margin 0 0 .3em 0
 
-@media screen and (min-width 641px)
-  .searchFilter
-    margin-top 0
-  .toggle--searchFilter
-    margin-left 10px
+  &::before
+    content ''
+    position absolute
+    left .3em
+    padding .56em
+    border 1px solid #ddd
+    transition .2s all
+    background-size 16px
+    background-position center
+  &.enabled::before
+    background-image url(../static/checkbox_white.svg)
+    background-repeat no-repeat
+    background-color #39c
+
+.fade-enter-active
+  animation fadeIn .4s
+.fade-leave-active
+  animation fadeOut .4s
 
 .icon--clear
   width 30px

@@ -20,3 +20,11 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
+
+## Bundled Resources
+
+It has bundled the following resources:
+
+### Font Awesome
+License: SIL OFL License  
+Copyright: 
