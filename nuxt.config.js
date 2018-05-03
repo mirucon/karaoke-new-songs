@@ -9,10 +9,17 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '登録したアーティストの新しい曲が配信決定時に通知を送信します !' }
+      { hid: 'description', name: 'description', content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/png', href: '/favicon-16x16.png', sizes: '16x16' },
+      { rel: 'icon', type: 'image/png', href: '/favicon-32x32.png', sizes: '32x32' },
+      { rel: 'icon', type: 'image/png', href: '/favicon-96x96.png', sizes: '96x96' },
+      { rel: 'icon', type: 'image/png', href: '/favicon-192x192.png', sizes: '192x192' },
+      { rel: 'apple-touch-icon', href: '/favicon-120x120.png', sizes: '120x120' },
+      { rel: 'apple-touch-icon', href: '/favicon-152x152.png', sizes: '152x152' },
+      { rel: 'apple-touch-icon', href: '/favicon-167x167.png', sizes: '167x167' },
+      { rel: 'apple-touch-icon', href: '/favicon-180x180.png', sizes: '180x180' }
     ]
   },
   /*
