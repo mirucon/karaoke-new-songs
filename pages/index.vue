@@ -2,6 +2,7 @@
   .wrapper
     app-header
     songs-list(:songsTable="songsTable", :datesArray="datesArray", :hasLoaded="hasLoaded", @loadMore="loadMore", @filterArray="filterArray")
+    footer-ads
     app-footer
 </template>
 
@@ -11,9 +12,11 @@
   import SongsList from '~/components/SongsList.vue'
   import AppHeader from '~/components/AppHeader.vue'
   import AppFooter from '~/components/AppFooter.vue'
+  import FooterAds from '~/components/FooterAds.vue'
 
   export default {
     components: {
+      FooterAds,
       AppFooter,
       AppHeader,
       SongsList
