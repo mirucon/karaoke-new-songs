@@ -1,8 +1,9 @@
 <template lang="pug">
-  div.FooterAds
-    adsbygoogle(
-      ad-slot="3876574254" :ad-style="style"
-    )
+  div.footerAds
+    div.container
+      adsbygoogle(
+        ad-slot="3876574254" :ad-style="style"
+      )
 </template>
 
 <script>
@@ -23,5 +24,6 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-
+.footerAds
+  margin 10px 0
 </style>

@@ -75,6 +75,7 @@ export default {
   display flex
   flex-flow row wrap
   align-items center
+  padding .7em 0
 
 .prev, .next
   flex-shrink 1

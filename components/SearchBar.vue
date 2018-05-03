@@ -89,7 +89,7 @@ export default {
   flex-flow row wrap
   align-items center
   width 94%
-  margin 1.7em auto
+  margin 1em auto 1.7em
 
 .searchBox__label
   flex-grow 1
@@ -163,7 +163,7 @@ export default {
     background-size 16px
     background-position center
   &.enabled::before
-    background-image url(../static/checkbox_white.svg)
+    background-image url(/checkbox_white.svg)
     background-repeat no-repeat
     background-color #39c
 

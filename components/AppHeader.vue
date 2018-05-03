@@ -1,7 +1,9 @@
 <template lang="pug">
   header.header
     div.container
-      h1.siteTitle <!--DAM 週間配信曲クイックビューワー-->
+      h1.siteLogo
+        img.siteLogo__img(src="/logo.svg")
+        span.siteTitle カラオケ最新曲
 
 </template>
 
@@ -12,15 +14,45 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+
+@font-face
+  font-family 'SubsettedGenJyuuGothic-Bold'
+  src url(/GenJyuuGothic.ttf) format('truetype')
+  font-weight bold
+
+@font-face
+  font-family 'SubsettedGenJyuuGothic-Bold'
+  src url(/GenJyuuGothic.woff) format('woff')
+  font-weight bold
+
+@font-face
+  font-family 'SubsettedGenJyuuGothic-Bold'
+  src url(/GenJyuuGothic.woff2) format('woff2')
+  font-weight bold
+
 .header
-  margin-bottom 2em
-  box-shadow 0 1px 0 rgba(0, 0, 0, 0)
+  padding 0 .9em .7em
+  margin-bottom 1.3em
+  box-shadow 0 1px 1px rgba(0, 0, 0, .1)
+  @media screen and (min-width 640px)
+    margin-bottom .9em
+
+.siteLogo
+  display flex
+  align-items center
+  justify-content center
+  text-align center
+
+.siteLogo__img
+  width 60px
+  @media screen and (min-width 640px)
+    width 60px
 
 .siteTitle
-  display block
-  padding .3em .5em
-  color #222
-  font-size 2em
-  font-weight 600
-  text-align center
+  position relative
+  top 6px
+  font-size .76em
+  font-family "SubsettedGenJyuuGothic-Bold", "Hiragino Maru Gothic ProN", sans-serif
+  @media screen and (min-width 640px)
+    font-size .9em
 </style>
