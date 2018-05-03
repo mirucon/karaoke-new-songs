@@ -5,7 +5,7 @@
         font-awesome-icon.icon(:icon="slidersH" size="2x")
         span.label 設定
     transition(name="fadeLeft")
-      div.settingPanel__inner(v-if="showSettingPanel" :class="{ isOpen: showSettingPanel }")
+      div.settingPanel__inner(v-show="showSettingPanel" :class="{ isOpen: showSettingPanel }")
         span.icon--clear.settingPanel__close(@click="click")
           span.top
           span.bottom
@@ -82,12 +82,16 @@ $mobileMax = 1023px
     0%
       right -100%
       left auto
+    99%
+      left auto
     100%
       right 0
       left 0
   @keyframes fadeOutLeft
     0%
       left 0
+    1%
+      left auto
     100%
       right -100%
       left auto
@@ -130,9 +134,11 @@ $mobileMax = 1023px
     padding 6px 16px
     background-color #a24c4c
     color #fff
+    opacity .68
     transition .2s all
     user-select none
     cursor pointer
+    box-shadow 0 0 1px rgba(0, 0, 0, .14)
     .icon
       transform scale(.8)
     .label
@@ -154,10 +160,6 @@ $mobileMax = 1023px
 
     @media screen and (min-width $desktopMin)
       bottom 100px
-      &:not(.isClosed)
-        animation-duration .4s
-      &.isOpen
-        animation-duration .4s
 
 .settingPanel__inner
   position fixed
@@ -170,6 +172,8 @@ $mobileMax = 1023px
   padding 1em .3em 0
   background-color #ffffffef
   text-align center
+  box-shadow 0 0 2px rgba(0, 0, 0, .14)
+  transition .7s all
 
   & > *:not(:first-child)
     padding 1.6em 0
@@ -192,9 +196,6 @@ $mobileMax = 1023px
     left auto
     height 100%
     width $settingWidthDesktop
-    &.fadeLeft-enter-active
-    &.fadeLeft-leave-active
-      animation-duration .4s
 
 .settingPanel__close
   width 50px
