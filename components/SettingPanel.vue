@@ -135,7 +135,7 @@ $mobileMax = 1023px
     background-color #a24c4c
     color #fff
     opacity .68
-    transition .2s all
+    transition .2s all, .7s opacity
     user-select none
     cursor pointer
     box-shadow 0 0 1px rgba(0, 0, 0, .14)
@@ -153,6 +153,7 @@ $mobileMax = 1023px
       background-color #a24c4c - #111
     &.isOpen
       background-color #a24c4c - #222
+      opacity 1
       animation .7s moveLeft forwards
     &:not(.isOpen):hover
       padding-right 18px

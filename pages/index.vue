@@ -101,7 +101,6 @@
             dateStr = (now.month() + 1 + '-' + now.date())
             this.songsTable[date].cols[col][3] = [diff, dateStr]
           } else {
-            console.log(moment(`${y}-${dateStr} 23:59+0900`, 'YYYY-M/D HH:mm+-HH:mm'))
             let colDate = moment(`${y}-${dateStr} 23:59+0900`, 'YYYY-M/D HH:mm+-HH:mm')
             let diff = colDate.diff(now, 'days')
             if (diff === 0) {
