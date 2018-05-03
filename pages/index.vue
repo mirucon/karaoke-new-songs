@@ -31,7 +31,7 @@
         let date = new Date()
         // Get next Tuesday's date
         date.setDate(date.getDate() + (2 - date.getDay()) % 7 + 7)
-        if (new Date().getDay() > 3) {
+        if (new Date().getDay() > 5) {
           date.setDate(date.getDate() + 7)
         }
         if (i >= 1) {
@@ -95,13 +95,14 @@
         const now = moment()
         for (let col in this.songsTable[date].cols) {
           let dateStr = this.songsTable[date].cols[col][3]
-          dateStr = dateStr.replace('/', '-')
+          // dateStr = dateStr.replace('/', '-')
           if (dateStr === '配信済' || dateStr === '配信済み') {
             let diff = dateStr
             dateStr = (now.month() + 1 + '-' + now.date())
             this.songsTable[date].cols[col][3] = [diff, dateStr]
           } else {
-            let colDate = moment(`${y}-${dateStr} 23:59+0900`)
+            console.log(moment(`${y}-${dateStr} 23:59+0900`, 'YYYY-M/D HH:mm+-HH:mm'))
+            let colDate = moment(`${y}-${dateStr} 23:59+0900`, 'YYYY-M/D HH:mm+-HH:mm')
             let diff = colDate.diff(now, 'days')
             if (diff === 0) {
               diff = '今日'
