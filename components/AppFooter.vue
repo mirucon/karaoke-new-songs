@@ -40,14 +40,14 @@ export default {
   display block
   position absolute
   top 0%
-  right 0
-  padding .3em 1.05em .5em
-  background-color: #ffffffdd
+  right calc(50% - 27px)
+  padding .2em 1.2em .4em
+  background-color #ffffffdd
   cursor pointer
   box-shadow 0 0 1px rgba(0, 0, 0, .3)
   &:hover
-    padding-top .5em
-    padding-bottom .7em
+    padding-top .37em
+    padding-bottom .65em
 
 .icon--caret.bottom
   right .16em
