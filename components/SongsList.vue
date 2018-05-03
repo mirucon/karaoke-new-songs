@@ -222,14 +222,14 @@ export default {
         // Replace "D,J" with "Z" so they can go at the end.
         for (let col in this.cols) {
           if (this.cols[col][0] === 'D,J') {
-            this.cols[col][0] = 'Z'
+            this.cols[col][0] = 'A'
           }
         }
         // Perform sort.
         this.cols = this.cols.sort(comparatorModel)
         // Change back "Z" to "D,J"
         for (let col in this.cols) {
-          if (this.cols[col][0] === 'Z') {
+          if (this.cols[col][0] === 'A') {
             this.cols[col][0] = 'D,J'
           }
         }
