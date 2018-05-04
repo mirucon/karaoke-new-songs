@@ -174,6 +174,11 @@
           return d !== null
         })
       }
+    },
+    head: {
+      meta: [
+        { property: 'og:title', content: 'カラオケ最新曲クイックビューアー' }
+      ]
     }
   }
 </script>

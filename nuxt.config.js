@@ -9,21 +9,20 @@ module.exports = {
     prefix: 'http://ogp.me/ns/website#'
   },
   head: {
-    title: 'カラオケ最新曲クイックビューワー',
+    title: 'カラオケ最新曲クイックビューアー',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !' },
       { property: 'og:description', content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !' },
-      { property: 'og:site_name', content: 'カラオケ最新曲クイックビューワー' },
+      { property: 'og:site_name', content: 'カラオケ最新曲クイックビューアー' },
       { property: 'og:type', content: 'website' },
       { property: 'og:url', content: 'https://karaokenewsongs.com/' },
-      { property: 'og:image', content: '/favicon-600x600.png' },
+      { property: 'og:image', content: 'https://karaokenewsongs.com/favicon-600x600.png' },
       { property: 'og:locale', content: 'ja' },
       { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:domain', content: 'https://karaokenewsongs.com/' },
-      { name: 'twitter:site', content: '@mirucons' },
-      { name: 'twitter:creator', content: '@mirucons' }
+      { name: 'twitter:site', content: '@mirucons' }
     ],
     link: [
       { rel: 'icon', href: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -82,7 +81,7 @@ module.exports = {
     // dev: true
   },
   manifest: {
-    name: 'カラオケ最新曲クイックビューワー',
+    name: 'カラオケ最新曲クイックビューアー',
     lang: 'ja'
   }
 }
