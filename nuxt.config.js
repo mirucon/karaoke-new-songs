@@ -18,7 +18,7 @@ module.exports = {
       { property: 'og:site_name', content: 'カラオケ最新曲クイックビューアー' },
       { property: 'og:type', content: 'website' },
       { property: 'og:url', content: 'https://karaokenewsongs.com/' },
-      { property: 'og:image', content: 'https://karaokenewsongs.com/favicon-600x600.png' },
+      { property: 'og:image', content: 'https://karaokenewsongs.com/icon.png' },
       { property: 'og:locale', content: 'ja' },
       { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:domain', content: 'https://karaokenewsongs.com/' },
@@ -78,8 +78,8 @@ module.exports = {
       test: true
     }]
   ],
-  workbox: {
-    // dev: true
+  icon: {
+    sizes: [16, 120, 144, 152, 167, 192, 384, 512]
   },
   manifest: {
     name: 'カラオケ最新曲クイックビューアー',
