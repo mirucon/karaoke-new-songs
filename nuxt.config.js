@@ -18,7 +18,7 @@ module.exports = {
       { property: 'og:site_name', content: 'カラオケ最新曲クイックビューワー' },
       { property: 'og:type', content: 'website' },
       { property: 'og:url', content: 'https://karaokenewsongs.com/' },
-      { property: 'og:image', content: '/favicon-192x192.png' },
+      { property: 'og:image', content: '/favicon-600x600.png' },
       { property: 'og:locale', content: 'ja' },
       { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:domain', content: 'https://karaokenewsongs.com/' },
