@@ -1,7 +1,7 @@
 <template lang="pug">
   div.settingPanel
     .toggle--modalSwitcher.toggle--settingPanel(@click="click" :class="{ isOpen: showSettingPanel, isClosed: !hasOpenedOnce }")
-      font-awesome-icon.icon(:icon="slidersH" size="2x" width="32" height="32")
+      img.icon(src="/sliders-h.svg" width="32" height="32")
       span.label 設定
     transition(name="fadeLeft")
       div.modalWindow.settingPanel__inner(v-show="showSettingPanel" :class="{ isOpen: showSettingPanel }")
@@ -13,13 +13,10 @@
 
 <script>
 import ModelSwitcher from '~/components/ModelSwitcher.vue'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faSlidersH from '@fortawesome/fontawesome-free-solid/faSlidersH'
 
 export default {
   name: 'setting-panel',
   components: {
-    FontAwesomeIcon,
     ModelSwitcher
   },
   props: {
@@ -30,11 +27,6 @@ export default {
     return {
       showSettingPanel: false,
       hasOpenedOnce: false
-    }
-  },
-  computed: {
-    slidersH () {
-      return faSlidersH
     }
   },
   methods: {
@@ -130,6 +122,7 @@ $mobileMax = 1023px
   box-shadow 0 0 1px rgba(0, 0, 0, .14)
   .icon
     transform scale(.8)
+    filter invert(100%)
   .label
     text-align center
     font-size .8em
