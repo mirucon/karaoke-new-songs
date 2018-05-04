@@ -128,7 +128,10 @@ export default {
     },
     currentDateChecker: function () {
       // 既に最新週まで到達、もしくは次週分がない場合: 次週ボタンの無効化 //
-      if (this.current === this.datesArray[0] || (this.current === this.datesArray[0] && !this.songsTable[this.datesArray[0]].isExisted)) {
+      if (
+        this.current === this.datesArray[0] ||
+        (this.current === this.datesArray[1] && !this.songsTable[this.datesArray[0]].isExisted)
+      ) {
         this.nextWeek.isButtonShown = false
       } else {
         this.nextWeek.isButtonShown = true
