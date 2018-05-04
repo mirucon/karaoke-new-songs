@@ -17,17 +17,17 @@ export default {
 
 @font-face
   font-family 'SubsettedGenJyuuGothic-Bold'
-  src url(/GenJyuuGothic.ttf) format('truetype')
+  src url(/fonts/GenJyuuGothic.ttf) format('truetype')
   font-weight bold
 
 @font-face
   font-family 'SubsettedGenJyuuGothic-Bold'
-  src url(/GenJyuuGothic.woff) format('woff')
+  src url(/fonts/GenJyuuGothic.woff) format('woff')
   font-weight bold
 
 @font-face
   font-family 'SubsettedGenJyuuGothic-Bold'
-  src url(/GenJyuuGothic.woff2) format('woff2')
+  src url(/fonts/GenJyuuGothic.woff2) format('woff2')
   font-weight bold
 
 .header

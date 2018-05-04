@@ -179,7 +179,7 @@ export default {
     background-size 16px
     background-position center
   &.enabled::before
-    background-image url(/checkbox_white.svg)
+    background-image url(/icon/checkbox_white.svg)
     background-repeat no-repeat
     background-color #39c
 

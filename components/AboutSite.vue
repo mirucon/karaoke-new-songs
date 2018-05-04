@@ -1,7 +1,7 @@
 <template lang="pug">
   div.aboutSite
     .toggle--modalSwitcher.toggle--aboutSite(@click="click" :class="{ isOpen: showAboutSite, isClosed: !hasOpenedOnce }")
-      img(src="/help.svg" width="32" height="32")
+      img(src="/icon/help.svg" width="32" height="32")
       span.label About
     transition(name="fadeLeft")
       div.modalWindow.aboutSite__inner(v-show="showAboutSite" :class="{ isOpen: showAboutSite }")

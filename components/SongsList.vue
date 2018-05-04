@@ -17,7 +17,7 @@
         tbody
             tr.releaseList__line(v-for="col in cols", :class="{ dam: col[0] === 'D', joy: col[0] === 'J', both: col[0] === 'D,J', isDAMHidden: !showDAM, isJOYHidden: !showJOY }")
               template(v-for="(item, index) in col")
-                td.releaseList__item(v-if="index === 0", :class="{ 'icon--dam': item === 'D', 'icon--joy': item === 'J', 'icon--both': item === 'D,J' }") {{ item }}
+                td.releaseList__item(v-if="index === 0", :class="{ 'favicon--dam': item === 'D', 'favicon--joy': item === 'J', 'favicon--both': item === 'D,J' }") {{ item }}
                 // td.releaseList__item.artist(v-else-if="index === 1", @click="searchQuery = item") {{ item }}
                 td.releaseList__item(v-else-if="index === 3 && Array.isArray(item)") {{ item[0] }}
                 td.releaseList__item(v-else) {{ item }}

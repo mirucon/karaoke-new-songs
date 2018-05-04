@@ -22,3 +22,5 @@ sw.*
 
 # Some other files
 static/slider.*
+*.afdesign
+*.afphoto

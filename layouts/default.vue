@@ -48,7 +48,7 @@ td
     padding-right calc(10px + .4em)*/
 
 
-/* CSS icon */
+/* CSS favicon */
 .icon--caret
   display inline-block
   position: relative
