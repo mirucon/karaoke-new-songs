@@ -4,6 +4,7 @@
       setting-panel(
         @toggleDAM="toggleDAM" @toggleJOY="toggleJOY" :showDAM="showDAM" :showJOY="showJOY"
       )
+      about-site
       songs-pagination(@prev="goToLastWeek", @next="goToNextWeek", @loadMore="$emit('loadMore')", :hasLoaded="hasLoaded", :nextWeek="nextWeek", :lastWeek="lastWeek", :current="current")
       search-bar(v-model="searchQuery", @clearQuery="clearQuery", @searchBySong="searchBySong", @searchByArtist="searchByArtist")
       table.releaseList
@@ -31,9 +32,11 @@ import SongsPagination from '~/components/SongsPagination.vue'
 import SearchBar from '~/components/SearchBar.vue'
 import ModelSwitcher from '~/components/ModelSwitcher.vue'
 import SettingPanel from '~/components/SettingPanel.vue'
+import AboutSite from '~/components/aboutSite.vue'
 
 export default {
   components: {
+    AboutSite,
     SettingPanel,
     ModelSwitcher,
     SearchBar,
