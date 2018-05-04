@@ -1,9 +1,9 @@
 <template lang="pug">
   header.header
     div.container
-      h1.siteLogo
+      a.siteInfo(nuxt-link to="/")
         img.siteLogo__img(src="/logo.svg")
-        span.siteTitle カラオケ最新曲
+        h1.siteTitle カラオケ最新曲
 
 </template>
 
@@ -37,7 +37,7 @@ export default {
   @media screen and (min-width 640px)
     margin-bottom .9em
 
-.siteLogo
+.siteInfo
   display flex
   align-items center
   justify-content center
@@ -51,8 +51,8 @@ export default {
 .siteTitle
   position relative
   top 6px
-  font-size .76em
+  font-size 1.5em
   font-family "SubsettedGenJyuuGothic-Bold", "Hiragino Maru Gothic ProN", sans-serif
   @media screen and (min-width 640px)
-    font-size .9em
+    font-size 1.7em
 </style>

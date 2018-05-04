@@ -61,5 +61,5 @@ export default {
     background-color #194480
 
 .settingPanel__title
-  padding .46em 0
+  padding-top .46em
 </style>

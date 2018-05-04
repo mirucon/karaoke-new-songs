@@ -11,7 +11,7 @@
 
         section.aboutSite__content.aboutThisSite
           h3 このサイトについて
-          p DAMとJOYSOUNDの最新曲を同時に表示し、検索も出来るビューアーサイトです。
+          p DAMとJOYSOUNDの最新曲を同時に表示し、検索が出来るビューアーサイトです。
           p DAM/JOYSOUNDの表示切り替え機能や、曲名/配信日ソート機能も備わっています。
           p DAM楽曲は毎週木曜日の11時、JOYSOUND楽曲はほぼ毎日0時に更新されますが、データ取得からキャッシュクリアに少し時間がかかります。<br>
           p 最新情報を見るには、更新時刻より10分ほど後にアクセスしてください。
@@ -19,10 +19,10 @@
         section.aboutSite__content.aboutTheAuthor
           h3 作者について
           a.author(href="https://twitter.com/mirucons")
-            img.authorIcon(src="https://secure.gravatar.com/avatar/38228223544cf5f1f818c93ecdd4371f" width="74" height="74")
+            img.authorIcon(src="https://secure.gravatar.com/avatar/38228223544cf5f1f818c93ecdd4371f" width="80" height="80")
             span.authorName: strong mirucon
-          p Vue.jsやWordPressを触ってる15歳のエンジニアです。
-          p 現在アルバイト/インターン先を募集しています。興味のあるWeb制作会社さんがいたら是非お声がけください。
+          p Vue.jsやWordPressを触ってる15歳のエンジニア。DAMの精密採点が趣味。最高点は91点くらい。
+          p 現在アルバイト/インターン先を募集しています。興味のあるWeb制作会社様がいたら是非お声がけください。
           p <a href="https://twitter.com/mirucons" target="blank">Twitter</a> | <a href="https://github.com/mirucon" target="blank">GitHub</a>
 </template>
 

@@ -103,6 +103,21 @@ export default {
 
 .searchBox__input
   width 100%
+  padding .7em .7em
+  border 1px #d9d9d9 solid
+  background-color #fff
+  border-radius 2px
+  font-size .9rem
+  transition .3s
+  -webkit-appearance none
+  -moz-appearance none
+  appearance none
+
+  &:hover
+    border-color #bbb
+  &:focus
+    border-color #999
+    outline 0
 
 .searchFilter
   display flex

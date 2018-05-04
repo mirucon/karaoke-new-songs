@@ -138,6 +138,20 @@ td
       background-color #fff
       color #111
 
+.button--green
+  display inline-block
+  margin-top .8em
+  padding 10px 24px
+  border 1px solid #00619F
+  border-radius 4px
+  color #00619F
+  text-decoration none
+  transition .2s
+
+  &:hover
+    color #fff
+    background-color #00619F
+
 @media print
   .next, .prev, .searchBox, .searchBox__label, .backToTop, .settingPanel, *[class^='toggle--']
     display none

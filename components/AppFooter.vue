@@ -3,7 +3,7 @@
     a(href="#", @click="scrollToTop" aria-label="Back to top").backToTop#backToTop
       span.icon--caret.bottom
     div.container
-      p.copyright DAM 週間配信曲クイックビューワー by <a href="https://www.mirucon.com/">mirucon</a>
+      p.copyright DAM 週間配信曲クイックビューアー by <a href="https://twitter.com/mirucons">mirucon</a>
 </template>
 
 <script>

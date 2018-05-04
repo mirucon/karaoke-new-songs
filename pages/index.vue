@@ -183,6 +183,5 @@
   }
 </script>
 
-<style lang="stylus">
-@import '~assets/form.styl'
+<style lang="stylus" scoped>
 </style>

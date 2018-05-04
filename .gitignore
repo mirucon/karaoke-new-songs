@@ -19,3 +19,6 @@ sw.*
 
 # System files
 *.DS_Store
+
+# Some other files
+static/slider.*

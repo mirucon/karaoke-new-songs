@@ -1,7 +1,7 @@
 <template lang="pug">
   div.settingPanel
     .toggle--modalSwitcher.toggle--settingPanel(@click="click" :class="{ isOpen: showSettingPanel, isClosed: !hasOpenedOnce }")
-      font-awesome-icon.icon(:icon="slidersH" size="2x")
+      font-awesome-icon.icon(:icon="slidersH" size="2x" width="32" height="32")
       span.label 設定
     transition(name="fadeLeft")
       div.modalWindow.settingPanel__inner(v-show="showSettingPanel" :class="{ isOpen: showSettingPanel }")

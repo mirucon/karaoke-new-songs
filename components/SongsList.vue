@@ -32,7 +32,7 @@ import SongsPagination from '~/components/SongsPagination.vue'
 import SearchBar from '~/components/SearchBar.vue'
 import ModelSwitcher from '~/components/ModelSwitcher.vue'
 import SettingPanel from '~/components/SettingPanel.vue'
-import AboutSite from '~/components/aboutSite.vue'
+import AboutSite from '~/components/AboutSite.vue'
 
 export default {
   components: {
@@ -329,18 +329,26 @@ export default {
 .releaseList__heading__item:nth-child(n + 4)
   white-space nowrap
   text-align center
+  font-size .92em
+  @media screen and (min-width 641px)
+    font-size 1em
 
 .releaseList__item:nth-child(1)
+  max-width 1em
   padding-left .6em
-  padding-right .6em
+  padding-right 0
   font-size .84em
   font-weight 600
   @media screen and (min-width 641px)
+    padding-right .6em
     font-size .94em
 
 .releaseList__item:nth-child(n + 4)
   white-space nowrap
   text-align center
+  font-size .92em
+  @media screen and (min-width 641px)
+    font-size 1em
 
 .icon--dam
   color #ad2d28
