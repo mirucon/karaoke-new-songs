@@ -22,7 +22,8 @@ module.exports = {
       { property: 'og:locale', content: 'ja' },
       { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:domain', content: 'https://karaokenewsongs.com/' },
-      { name: 'twitter:site', content: '@mirucons' }
+      { name: 'twitter:site', content: '@mirucons' },
+      { name: 'apple-mobile-web-app-title', content: 'カラオケ最新曲' }
     ],
     link: [
       { rel: 'icon', href: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },

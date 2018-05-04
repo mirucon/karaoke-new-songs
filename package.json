@@ -1,7 +1,7 @@
 {
-  "name": "karaoke-weekly-new-songs",
+  "name": "karaoke-new-songs",
   "version": "1.0.0",
-  "description": "登録したアーティストの新しい曲が配信決定時に通知を送信します !",
+  "description": "DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !",
   "author": "mirucon <i@miruc.co>",
   "private": true,
   "scripts": {

@@ -23,6 +23,20 @@
           p Vue.jsやWordPress開発をする15歳のエンジニア。DAMの精密採点が趣味。最高点は91。
           p 現在アルバイト/インターン先を募集しています。興味のあるWeb制作会社様がいたら是非お声がけください。
           p <a href="https://twitter.com/mirucons" target="blank">Twitter</a> | <a href="https://github.com/mirucon" target="blank">GitHub</a>
+
+        section.aboutSite__content.attributions
+          h3 リソース
+          p このサイトでは以下のリソースを使用しています :
+          h4 Font Awesome Icons
+          ul
+            li License: CC-BY 4.0
+            li URL: https://fontawesome.com/license
+            li Created by Fonticons, Inc.
+          h4 Gen Jyuu Gothic
+          ul
+            li License: SIL Open Font License 1.1
+            li URL: http://jikasei.me/info/license.html
+            li Created by MM.
 </template>
 
 <script>
@@ -66,4 +80,10 @@ export default {
 
 .authorName
   padding-top .3em
+
+h4
+  margin-top .8em
+  margin-bottom .3em
+ul
+  list-style none
 </style>

@@ -1,6 +1,6 @@
 # karaoke-weekly-new-songs
 
-> 登録したアーティストの新しい曲が配信決定時に通知を送信します !
+> DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !
 
 ## Build Setup
 
@@ -23,8 +23,14 @@ For detailed explanation on how things work, checkout the [Nuxt.js docs](https:/
 
 ## Bundled Resources
 
-It has bundled the following resources:
+karaoke-new-songs has bundled the following resources:
 
-### Font Awesome
-License: SIL OFL License  
-Copyright: 
+### Font Awesome Icons
+License: CC-BY 4.0
+URL: https://fontawesome.com/license
+Created by Fonticons, Inc.
+
+### Gen Jyuu Gothic
+License: SIL Open Font License 1.1
+URL: http://jikasei.me/info/license.html
+Created by MM.
