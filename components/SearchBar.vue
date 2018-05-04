@@ -56,7 +56,7 @@ export default {
     },
     calculateHeight () {
       let clientRect = this.$refs.toggleSearchFilter.getBoundingClientRect()
-      let toggleHeight = clientRect.top + clientRect.height + 5
+      let toggleHeight = clientRect.top + clientRect.height + window.pageYOffset + 5
       let toggleLeft = clientRect.left - clientRect.width
       this.toggleHeight['top'] = `${toggleHeight}px`
       this.toggleHeight['left'] = `${toggleLeft}px`
@@ -65,6 +65,7 @@ export default {
   mounted: function () {
     this.calculateHeight()
     window.addEventListener('resize', this.calculateHeight)
+    window.addEventListener('scroll', this.calculateHeight)
   },
   beforeDestroy: function () {
     window.removeEventListener('resize', this.calculateHeight)

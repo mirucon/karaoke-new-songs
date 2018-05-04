@@ -75,7 +75,11 @@ export default {
   display flex
   flex-flow row wrap
   align-items center
-  padding .7em 0
+  position sticky
+  top 0
+  z-index 99
+  background-color #ffffffdd
+  padding .3em 0
 
 .prev, .next
   flex-shrink 1
