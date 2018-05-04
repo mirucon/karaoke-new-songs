@@ -65,8 +65,8 @@ export default {
   props: ['songsTable', 'datesArray', 'hasLoaded'],
   mounted: function () {
     // デフォルト設定の `current` の値 //
-    // 日曜日以降なら今週分を取得
-    if (new Date().getDay() >= 0) {
+    // 月曜日以降なら今週分を取得
+    if (moment().utcOffset('+09:00').day() >= 1) {
       this.current = this.datesArray[1]
     } else {
       this.current = this.datesArray[2]
@@ -79,7 +79,6 @@ export default {
     setTimeout(() => {
       query = this.$route.query.s
       if (query) {
-        console.log('query = ' + query)
         this.searchQuery = query
       }
     }, 100)

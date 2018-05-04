@@ -40,7 +40,7 @@
         } else {
           date = date.add(1, 'weeks').isoWeekday(dayINeed)
         }
-        // Get one more next week if it is Thursday.
+        // Get one more next week if it is Thursday or after.
         if (moment().utcOffset('+09:00').day() > 3) {
           date = date.add(1, 'weeks').isoWeekday(dayINeed)
         }

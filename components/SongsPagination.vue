@@ -45,7 +45,6 @@ export default {
     },
     loadMore: function () {
       // Emit loadMore and limit the number of times to load only two times. //
-      console.log('loading more...')
       this.$emit('loadMore')
       this.loaded++
       if (this.loaded >= 2) {
@@ -62,7 +61,6 @@ export default {
     },
     hasLoaded: function () {
       if (this.hasLoaded === true) {
-        console.log('loaded')
         this.$emit('prev')
       }
     }
