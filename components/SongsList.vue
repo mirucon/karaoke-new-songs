@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import SongsPagination from '~/components/SongsPagination.vue'
 import SearchBar from '~/components/SearchBar.vue'
 import ModelSwitcher from '~/components/ModelSwitcher.vue'
@@ -207,8 +208,11 @@ export default {
       }
       function comparatorDate (a, b) {
         if (Array.isArray(a[3])) {
-          if (a[3][1] < b[3][1]) return -3
-          if (a[3][1] > b[3][1]) return 3
+          let aDate = moment(a[3][1], 'M/D')
+          let bDate = moment(b[3][1], 'M/D')
+
+          if (aDate < bDate) return -1
+          if (aDate > bDate) return 1
           if (a[1] < b[1]) return -2
           if (a[1] > b[1]) return 2
           if (a[2] < b[2]) return -1

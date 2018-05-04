@@ -43,6 +43,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    vendor: ['moment'],
     /*
     ** Run ESLint on save
     */
