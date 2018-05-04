@@ -31,19 +31,27 @@
       const numberOfWeeks = 3
       // 日付を取得する
       for (let i = 0; i < numberOfWeeks; i++) {
-        let date = new Date()
+        let date = moment().utcOffset('+09:00')
+        const dayINeed = 2 // for Tuesday
+
         // Get next Tuesday's date
-        date.setDate(date.getDate() + (2 - date.getDay()) % 7 + 7)
-        if (new Date().getDay() > 5) {
-          date.setDate(date.getDate() + 7)
+        if (date.isoWeekday() <= dayINeed) {
+          date = date.isoWeekday(dayINeed)
+        } else {
+          date = date.add(1, 'weeks').isoWeekday(dayINeed)
         }
+        // Get one more next week if it is Thursday.
+        if (moment().utcOffset('+09:00').day() > 3) {
+          date = date.add(1, 'weeks').isoWeekday(dayINeed)
+        }
+        // Subtract "7 days" in each loop.
         if (i >= 1) {
-          // Subtract "7 days" in each loop.
-          date.setDate(date.getDate() - 7 * i)
+          date = date.add(-i, 'weeks').isoWeekday(dayINeed)
         }
-        let y = date.getFullYear()
-        let m = date.getMonth() + 1
-        let d = date.getDate()
+
+        let y = date.year()
+        let m = date.month() + 1
+        let d = date.date()
         if (m < 10) {
           m = '0' + m
         }
@@ -94,8 +102,8 @@
     methods: {
       getRelativeDates: function () {
         const date = this.datesArray[1]
-        const y = new Date().getFullYear()
         const now = moment()
+        const y = now.year()
         for (let col in this.songsTable[date].cols) {
           let dateStr = this.songsTable[date].cols[col][3]
           // dateStr = dateStr.replace('/', '-')
@@ -123,11 +131,12 @@
         this.hasLoaded = false
         for (let i = 0; i < 3; i++) {
           let length = this.datesArray.length
-          let date = new Date(this.datesArray[length - 1])
-          date.setDate(date.getDate() - 7)
-          let y = date.getFullYear()
-          let m = date.getMonth() + 1
-          let d = date.getDate()
+          let date = moment(this.datesArray[length - 1]).utcOffset('+09:00')
+          const dayINeed = 2
+          date = date.add(-1, 'weeks').isoWeekday(dayINeed)
+          let y = date.year()
+          let m = date.month() + 1
+          let d = date.date()
           if (m < 10) {
             m = '0' + m
           }
