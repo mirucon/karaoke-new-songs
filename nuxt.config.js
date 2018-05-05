@@ -81,8 +81,7 @@ module.exports = {
       id: 'UA-56308747-9'
     }],
     ['@nuxtjs/google-adsense', {
-      id: 'ca-pub-6450842193166394',
-      test: true
+      id: 'ca-pub-6450842193166394'
     }]
   ],
   icon: {
