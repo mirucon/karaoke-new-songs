@@ -118,6 +118,7 @@ $mobileMax = 1023px
   padding 6px 12px
   color #fff
   opacity .68
+  overflow-y auto
   transition .2s all, .7s opacity
   user-select none
   cursor pointer
