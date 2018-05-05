@@ -16,38 +16,16 @@ html
   box-sizing border-box
 
 *, *:before, *:after
-  box-sizing border-box
   margin 0
   padding 0
+  box-sizing border-box
 
 .container
   max-width 800px
   margin 0 auto
 
-table
-  border-collapse collapse
-  font-size .95em
-  table-layout fixed
 
-thead
-  background-color #f6f6f6
-  color #111
-  td
-    padding .7em
-
-tr
-  padding 0 16px
-  color #333
-  border-bottom 1px solid #00000010
-  transition box-shadow .2s
-
-td
-  padding 1.3em .7em
-  overflow-wrap break-word
-  @media screen and (min-width 641px)
-    padding 1em .7em
-
-/* CSS favicon */
+/* CSS icon */
 .icon--caret
   display inline-block
   position: relative

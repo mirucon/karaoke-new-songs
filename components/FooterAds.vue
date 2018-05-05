@@ -1,9 +1,9 @@
 <template lang="pug">
   div.footerAds
     div.container
-      adsbygoogle(
+      // adsbygoogle(
         ad-slot="3876574254" :ad-style="style"
-      )
+      // )
 </template>
 
 <script>

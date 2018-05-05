@@ -7,25 +7,20 @@
       about-site
       songs-pagination(@prev="goToLastWeek", @next="goToNextWeek", @loadMore="$emit('loadMore')", :hasLoaded="hasLoaded", :nextWeek="nextWeek", :lastWeek="lastWeek", :current="current")
       search-bar(v-model="searchQuery", @clearQuery="clearQuery", @searchBySong="searchBySong", @searchByArtist="searchByArtist")
-      table.releaseList
-        colgroup
-          col
-          col
-          col
-          col
-        thead.releaseList__heading
-          tr
-            td.releaseList__heading__item(@click="sortBy = 'model'" :class="{ currentSort: sortBy === 'model' }")
-            td.releaseList__heading__item(@click="sortBy = 'artist'" :class="{ currentSort: sortBy === 'artist' }") 歌手名
-            td.releaseList__heading__item(@click="sortBy = 'song'" :class="{ currentSort: sortBy === 'song' }") 曲名
-            td.releaseList__heading__item(@click="sortBy = 'date'" :class="{ currentSort: sortBy === 'date' }") 配信日
-        tbody
-            tr.releaseList__line(v-for="col in cols", :class="{ dam: col[0] === 'D', joy: col[0] === 'J', both: col[0] === 'D,J', isDAMHidden: !showDAM, isJOYHidden: !showJOY }")
-              template(v-for="(item, index) in col")
-                td.releaseList__item(v-if="index === 0", :class="{ 'favicon--dam': item === 'D', 'favicon--joy': item === 'J', 'favicon--both': item === 'D,J' }") {{ item }}
-                // td.releaseList__item.artist(v-else-if="index === 1", @click="searchQuery = item") {{ item }}
-                td.releaseList__item(v-else-if="index === 3 && Array.isArray(item)") {{ item[0] }}
-                td.releaseList__item(v-else) {{ item }}
+      section.releaseList
+        div.releaseList__col.releaseList__heading
+          div.releaseList__heading__item.releaseList__model(@click="sortBy = 'model'" :class="{ currentSort: sortBy === 'model' }") &nbsp;
+          div.releaseList__heading__item.releaseList__artist(@click="sortBy = 'artist'" :class="{ currentSort: sortBy === 'artist' }") 歌手名
+          div.releaseList__heading__item.releaseList__song(@click="sortBy = 'song'" :class="{ currentSort: sortBy === 'song' }") 曲名
+          div.releaseList__heading__item.releaseList__date(@click="sortBy = 'date'" :class="{ currentSort: sortBy === 'date' }") 配信日
+        div.releaseList__col.releaseList__line(v-for="col in cols", :class="{ dam: col[0] === 'D', joy: col[0] === 'J', both: col[0] === 'D,J', isDAMHidden: !showDAM, isJOYHidden: !showJOY }")
+          template(v-for="(item, index) in col")
+            div.releaseList__item.releaseList__model( v-if="index === 0", :class="{ 'icon--dam': item === 'D', 'icon--joy': item === 'J', 'icon--both': item === 'D,J' }") {{ item }}
+            div.releaseList__item.releaseList__songWrapper(v-else-if="index === 1")
+              template(v-for="(nm, index) in item")
+                div(:class="{ releaseList__artist: index === 0, releaseList__song: index === 1 }") {{ nm }}
+            div.releaseList__item.releaseList__date(  v-else-if="index === 2 && Array.isArray(item)") {{ item[0] }}
+            div.releaseList__item.releaseList__date(  v-else-if="index === 2") {{ item }}
       div.wrapper--notFound(v-if="searchQuery && cols.length <= 0")
         div
           p 検索結果が見つかりませんでした。
@@ -157,7 +152,15 @@ export default {
     },
     returnCurrentData: function () {
       // 現在位置から当てはまる曲リストを返す //
-      return this.songsTable[this.current].cols
+      let cols = this.songsTable[this.current].cols
+      for (let col in cols) {
+        if (cols[col].length === 3) {
+          break
+        }
+        let wrappedNm = [cols[col][1], cols[col][2]]
+        cols[col] = [cols[col][0], wrappedNm, cols[col][3]]
+      }
+      return cols
     },
     getSearchResults: function () {
       // 検索結果 //
@@ -305,7 +308,10 @@ export default {
 
 .releaseList
   width 100%
+  color #333
 .releaseList__line
+  border-bottom 1px solid #00000010
+  transition .2s all
   &.dam
     background-color rgba($accent, .03)
     @media screen and (min-width 641px)
@@ -332,28 +338,83 @@ export default {
     @media screen and (min-width 641px)
       background-color rgba(#1e343b, .092)
   &:hover
-    box-shadow 0 2px 1px #00000018
+    box-shadow 0 1px 0 #00000010
   &.notFound
     &:hover
       box-shadow 0 1px 0 #00000010
 
+.releaseList__col
+  display flex
+  flex-flow row wrap
+  align-items center
 
-colgroup
-  col:first-child
-    width 1em
-  col:nth-child(2)
-    width 35%
-  col:nth-child(3)
-    width auto
-  col:last-child
-    width 20%
-    @media screen and (max-width 640px) and (min-width 440px)
-      width 12%
-    @media screen and (min-width 641px)
-      width 10%
+.releaseList__heading__item
+  padding .8em .7em
+  @media screen and (min-width 641px)
+    padding .7em .7em
+  &.releaseList__model
+    align-self stretch
+  &.releaseList__artist
+  &.releaseList__song
+    flex 1
+
+.releaseList__item
+  padding 1.4em .7em
+  @media screen and (min-width 641px)
+    padding 1.14em .7em
 
 .releaseList__heading
   background-color #b7626160
+
+.releaseList__songWrapper
+  flex 1
+  display flex
+  flex-flow column wrap
+  border-right .01em solid #ddd
+  @media screen and (min-width 641px)
+    flex-flow row wrap
+    align-items center
+    padding 0
+
+  .releaseList__artist
+    margin-bottom .29em
+    padding-left .04em
+    color #666
+    font-size .86em
+    @media screen and (min-width 641px)
+      margin-bottom 0
+      padding 1.14em .7em
+      color currentColor
+      font-size 1em
+
+  .releaseList__song
+    flex 1
+    @media screen and (min-width 641px)
+      padding 1.14em .7em
+
+.releaseList__song
+  flex 1
+.releaseList__artist
+  @media screen and (min-width 641px)
+    width 250px
+
+.releaseList__model
+  width 1.5em
+  padding-left .6em
+  padding-right .1em
+  font-size .84em
+  font-weight 600
+  word-break break-word
+  @media screen and (min-width 641px)
+    padding-right .6em
+    font-size .94em
+
+.releaseList__date
+  text-align center
+  font-size .92em
+  flex-shrink 1
+  @media screen and (min-width 641px)
+    font-size 1em
 
 .releaseList__heading__item
   transition background-color .2s
@@ -362,36 +423,10 @@ colgroup
   &.currentSort
     background-color #b7626132
 
-.releaseList__heading__item:nth-child(2)
-  width 34%
-.releaseList__heading__item:nth-child(n + 4)
-  text-align center
-  font-size .92em
-  @media screen and (min-width 641px)
-    font-size 1em
-
-.releaseList__item:nth-child(1)
-  width 1em
-  padding-left .6em
-  padding-right 0
-  font-size .84em
-  font-weight 600
-  @media screen and (min-width 641px)
-    padding-right .6em
-    font-size .94em
-
-.releaseList__item:nth-child(n + 4)
-  text-align center
-  font-size .92em
-  @media screen and (min-width 641px)
-    font-size 1em
-
 .icon--dam
   color #ad2d28
 .icon--joy
   color #194480
-.artist
-  cursor pointer
 
 .wrapper--notFound
   padding .8em .7em
