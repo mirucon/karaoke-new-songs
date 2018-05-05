@@ -78,6 +78,8 @@ export default {
   z-index 99
   background-color #ffffffdd
   padding .3em 0
+  @media only screen and (max-width 640px and orientation landscape)
+    position relative
 
 .prev, .next
   flex-shrink 1

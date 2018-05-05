@@ -8,6 +8,11 @@
       songs-pagination(@prev="goToLastWeek", @next="goToNextWeek", @loadMore="$emit('loadMore')", :hasLoaded="hasLoaded", :nextWeek="nextWeek", :lastWeek="lastWeek", :current="current")
       search-bar(v-model="searchQuery", @clearQuery="clearQuery", @searchBySong="searchBySong", @searchByArtist="searchByArtist")
       table.releaseList
+        colgroup
+          col
+          col
+          col
+          col
         thead.releaseList__heading
           tr
             td.releaseList__heading__item(@click="sortBy = 'model'" :class="{ currentSort: sortBy === 'model' }")
@@ -228,7 +233,7 @@ export default {
       }
 
       if (this.sortBy === 'model') {
-        // Replace "D,J" with "Z" so they can go at the end.
+        // Replace "D,J" with "Z" so they can go at the top of list.
         for (let col in this.cols) {
           if (this.cols[col][0] === 'D,J') {
             this.cols[col][0] = 'A'
@@ -302,20 +307,50 @@ export default {
   width 100%
 .releaseList__line
   &.dam
-    background-color rgba($accent, .06)
+    background-color rgba($accent, .03)
+    @media screen and (min-width 641px)
+      background-color rgba($accent, .046)
+    &:nth-child(even)
+      background-color rgba($accent, .044)
+      @media screen and (min-width 641px)
+        background-color rgba($accent, .064)
     &.isDAMHidden
       display none
   &.joy
-    background-color rgba(#1000ff, .066)
+    background-color rgba(#1000ff, .024)
+    @media screen and (min-width 641px)
+      background-color rgba(#1000ff, .056)
+    &:nth-child(even)
+      background-color rgba(#1000ff, .03)
+      @media screen and (min-width 641px)
+        background-color rgba(#1000ff, .059)
     &.isJOYHidden
       display none
+
   &.both
-    background-color rgba(#1e343b, .092)
+    background-color rgba(#1e343b, .062)
+    @media screen and (min-width 641px)
+      background-color rgba(#1e343b, .092)
   &:hover
     box-shadow 0 2px 1px #00000018
   &.notFound
     &:hover
       box-shadow 0 1px 0 #00000010
+
+
+colgroup
+  col:first-child
+    width 1em
+  col:nth-child(2)
+    width 35%
+  col:nth-child(3)
+    width auto
+  col:last-child
+    width 20%
+    @media screen and (max-width 640px) and (min-width 440px)
+      width 12%
+    @media screen and (min-width 641px)
+      width 10%
 
 .releaseList__heading
   background-color #b7626160
@@ -328,16 +363,15 @@ export default {
     background-color #b7626132
 
 .releaseList__heading__item:nth-child(2)
-  width 33%
+  width 34%
 .releaseList__heading__item:nth-child(n + 4)
-  white-space nowrap
   text-align center
   font-size .92em
   @media screen and (min-width 641px)
     font-size 1em
 
 .releaseList__item:nth-child(1)
-  max-width 1em
+  width 1em
   padding-left .6em
   padding-right 0
   font-size .84em
@@ -347,7 +381,6 @@ export default {
     font-size .94em
 
 .releaseList__item:nth-child(n + 4)
-  white-space nowrap
   text-align center
   font-size .92em
   @media screen and (min-width 641px)

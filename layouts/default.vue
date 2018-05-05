@@ -26,13 +26,14 @@ html
 
 table
   border-collapse collapse
-  font-size .97em
-  word-break break-all
-  word-wrap break-all
+  font-size .95em
+  table-layout fixed
 
 thead
   background-color #f6f6f6
   color #111
+  td
+    padding .7em
 
 tr
   padding 0 16px
@@ -41,12 +42,10 @@ tr
   transition box-shadow .2s
 
 td
-  padding .8em .7em
-  /*&:first-of-type
-    padding-left calc(10px + .4em)
-  &:last-of-type
-    padding-right calc(10px + .4em)*/
-
+  padding 1.3em .7em
+  overflow-wrap break-word
+  @media screen and (min-width 641px)
+    padding 1em .7em
 
 /* CSS favicon */
 .icon--caret

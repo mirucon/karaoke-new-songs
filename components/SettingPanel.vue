@@ -161,7 +161,7 @@ $mobileMax = 1023px
   z-index 100
   width 100vw
   height 120vh
-  padding 1em .3em 0
+  padding 1em .3em 22vh .3em
   background-color #ffffffef
   text-align center
   overflow-y auto
@@ -191,6 +191,7 @@ $mobileMax = 1023px
     left auto
     height 100%
     width $settingWidthDesktop
+    padding-bottom 1em
 
 .modalWindow__close
   width 50px
