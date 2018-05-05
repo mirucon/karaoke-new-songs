@@ -105,12 +105,18 @@
         const now = moment()
         const y = now.year()
         for (let col in this.songsTable[date].cols) {
-          let dateStr = this.songsTable[date].cols[col][3]
+          let dateIndex
+          if (this.songsTable[date].cols[col].length === 3) {
+            dateIndex = 2
+          } else {
+            dateIndex = 3
+          }
+          let dateStr = this.songsTable[date].cols[col][dateIndex]
           // dateStr = dateStr.replace('/', '-')
           if (dateStr === '配信済' || dateStr === '配信済み') {
             let diff = dateStr
             dateStr = (now.month() + 1 + '-' + now.date())
-            this.songsTable[date].cols[col][3] = [diff, dateStr]
+            this.songsTable[date].cols[col][dateIndex] = [diff, dateStr]
           } else {
             let colDate = moment(`${y}-${dateStr} 23:59+0900`, 'YYYY-M/D HH:mm+-HH:mm')
             let diff = colDate.diff(now, 'days')
@@ -123,7 +129,7 @@
             } else {
               diff = `${diff}日後`
             }
-            this.songsTable[date].cols[col][3] = [diff, dateStr]
+            this.songsTable[date].cols[col][dateIndex] = [diff, dateStr]
           }
         }
       },

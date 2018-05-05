@@ -158,11 +158,10 @@ export default {
       // 現在位置から当てはまる曲リストを返す //
       let cols = this.songsTable[this.current].cols
       for (let col in cols) {
-        if (cols[col].length === 3) {
-          break
+        if (cols[col].length !== 3) {
+          let wrappedNm = [cols[col][1], cols[col][2]]
+          cols[col] = [cols[col][0], wrappedNm, cols[col][3]]
         }
-        let wrappedNm = [cols[col][1], cols[col][2]]
-        cols[col] = [cols[col][0], wrappedNm, cols[col][3]]
       }
       return cols
     },
