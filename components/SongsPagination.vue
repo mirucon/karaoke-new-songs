@@ -32,8 +32,26 @@ export default {
     currentDateFormatter: function () {
       // 実表示用の日付フォーマットに変換 //
       let current = this.current
-      current = current.replace(/-/g, '/')
-      this.formattedCurrent = current
+      let date = new Date(current)
+      date.setDate(date.getDate() - 1)
+      let mStart = date.getMonth() + 1
+      let dStart = date.getDate()
+      if (mStart < 10) {
+        mStart = '0' + mStart
+      }
+      if (dStart < 10) {
+        dStart = '0' + dStart
+      }
+      date.setDate(date.getDate() + 6)
+      let mEnd = date.getMonth() + 1
+      let dEnd = date.getDate()
+      if (mEnd < 10) {
+        mEnd = '0' + mEnd
+      }
+      if (dEnd < 10) {
+        dEnd = '0' + dEnd
+      }
+      this.formattedCurrent = mStart + '/' + dStart + ' ~ ' + mEnd + '/' + dEnd
     },
     prev: function () {
       // if it can load more then load more. Otherwise move to the previous week. //
