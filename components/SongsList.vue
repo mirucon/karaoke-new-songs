@@ -199,42 +199,41 @@ export default {
       function comparatorModel (a, b) {
         if (a[0] < b[0]) return -2
         if (a[0] > b[0]) return 2
-        if (a[1] < b[1]) return -2
-        if (a[1] > b[1]) return 2
-        if (a[2] < b[2]) return -1
-        if (a[2] > b[2]) return 1
+        if (a[1][0] < b[1][0]) return -2
+        if (a[1][0] > b[1][0]) return 2
+        if (a[1][1] < b[1][1]) return -1
+        if (a[1][1] > b[1][1]) return 1
         return 0
       }
       function comparatorArtist (a, b) {
-        if (a[1] < b[1]) return -2
-        if (a[1] > b[1]) return 2
-        if (a[2] < b[2]) return -1
-        if (a[2] > b[2]) return 1
+        if (a[1][0] < b[1][0]) return -2
+        if (a[1][0] > b[1][0]) return 2
+        if (a[1][1] < b[1][1]) return -1
+        if (a[1][1] > b[1][1]) return 1
         return 0
       }
       function comparatorSong (a, b) {
-        if (a[2] < b[2]) return -1
-        if (a[2] > b[2]) return 1
+        if (a[1][1] < b[1][1]) return -1
+        if (a[1][1] > b[1][1]) return 1
         return 0
       }
       function comparatorDate (a, b) {
-        if (Array.isArray(a[3])) {
-          let aDate = moment(a[3][1], 'M/D')
-          let bDate = moment(b[3][1], 'M/D')
-
+        if (Array.isArray(a[2])) {
+          let aDate = moment(a[2][1], 'M/D')
+          let bDate = moment(b[2][1], 'M/D')
           if (aDate < bDate) return -1
           if (aDate > bDate) return 1
-          if (a[1] < b[1]) return -2
-          if (a[1] > b[1]) return 2
-          if (a[2] < b[2]) return -1
-          if (a[2] > b[2]) return 1
+          if (a[1][0] < b[1][0]) return -2
+          if (a[1][0] > b[1][0]) return 2
+          if (a[1][1] < b[1][1]) return -1
+          if (a[1][1] > b[1][1]) return 1
         } else {
-          if (a[3] < b[3]) return -3
-          if (a[3] > b[3]) return 3
-          if (a[1] < b[1]) return -2
-          if (a[1] > b[1]) return 2
-          if (a[2] < b[2]) return -1
-          if (a[2] > b[2]) return 1
+          if (a[2] < b[2]) return -3
+          if (a[2] > b[2]) return 3
+          if (a[1][0] < b[1][0]) return -2
+          if (a[1][0] > b[1][0]) return 2
+          if (a[1][1] < b[1][1]) return -1
+          if (a[1][1] > b[1][1]) return 1
         }
         return 0
       }
@@ -403,6 +402,7 @@ export default {
     flex-flow row wrap
     align-items center
     padding 0
+    border-left 0
 
   *[class*="releaseList__"]
     display flex
