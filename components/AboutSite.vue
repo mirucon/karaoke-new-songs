@@ -1,7 +1,7 @@
 <template lang="pug">
   div.aboutSite
     .toggle--modalSwitcher.toggle--aboutSite(@click="click" :class="{ isOpen: showAboutSite, isClosed: !hasOpenedOnce }")
-      img(:src="help" width="32" height="32")
+      img(:src="help" width="32" height="32" alt="about")
       span.label About
     transition(name="fadeLeft")
       div.modalWindow.aboutSite__inner(v-show="showAboutSite" :class="{ isOpen: showAboutSite }")
@@ -18,7 +18,7 @@
         section.aboutSite__content.aboutTheAuthor
           h3 作者について
           a.author(href="https://twitter.com/mirucons")
-            img.authorIcon(src="https://secure.gravatar.com/avatar/38228223544cf5f1f818c93ecdd4371f" width="80" height="80")
+            img.authorIcon(src="https://secure.gravatar.com/avatar/38228223544cf5f1f818c93ecdd4371f" width="80" height="80" alt="mirucon")
             span.authorName: strong mirucon
           p Vue.jsやWordPress開発をする15歳のエンジニア。DAMの精密採点が趣味。最高点は91。
           p 現在アルバイト/インターン先を募集しています。興味のあるWeb制作会社様がいたら是非お声がけください。

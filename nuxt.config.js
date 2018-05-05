@@ -13,6 +13,7 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'robots', content: 'index, follow' },
       { hid: 'description', name: 'description', content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !' },
       { name: 'apple-mobile-web-app-title', content: 'カラオケ最新曲' },
       { property: 'og:description', content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !' },

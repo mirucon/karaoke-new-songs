@@ -2,7 +2,7 @@
   header.header
     div.container
       a.siteInfo(nuxt-link to="/")
-        img.siteLogo__img(:src="logo")
+        img.siteLogo__img(:src="logo" alt="カラオケ最新曲")
         h1.siteTitle カラオケ最新曲
 
 </template>
