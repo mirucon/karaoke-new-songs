@@ -118,7 +118,6 @@ $mobileMax = 1023px
   padding 6px 12px
   color #fff
   opacity .68
-  overflow-y auto
   transition .2s all, .7s opacity
   user-select none
   cursor pointer
@@ -165,6 +164,7 @@ $mobileMax = 1023px
   padding 1em .3em 0
   background-color #ffffffef
   text-align center
+  overflow-y auto
   box-shadow 0 0 2px rgba(0, 0, 0, .14)
   transition .7s all
 
