@@ -2,14 +2,19 @@
   header.header
     div.container
       a.siteInfo(nuxt-link to="/")
-        img.siteLogo__img(src="/logo.svg")
+        img.siteLogo__img(:src="logo")
         h1.siteTitle カラオケ最新曲
 
 </template>
 
 <script>
+import logoImg from '~/assets/logo.svg'
+
 export default {
-  name: 'app-header'
+  name: 'app-header',
+  data: () => ({
+    logo: logoImg
+  })
 }
 </script>
 
@@ -17,17 +22,17 @@ export default {
 
 @font-face
   font-family 'SubsettedGenJyuuGothic-Bold'
-  src url(/fonts/GenJyuuGothic.ttf) format('truetype')
+  src url('~/assets/fonts/GenJyuuGothic.ttf') format('truetype')
   font-weight bold
 
 @font-face
   font-family 'SubsettedGenJyuuGothic-Bold'
-  src url(/fonts/GenJyuuGothic.woff) format('woff')
+  src url('~/assets/fonts/GenJyuuGothic.woff') format('woff')
   font-weight bold
 
 @font-face
   font-family 'SubsettedGenJyuuGothic-Bold'
-  src url(/fonts/GenJyuuGothic.woff2) format('woff2')
+  src url('~/assets/fonts/GenJyuuGothic.woff2') format('woff2')
   font-weight bold
 
 .header

@@ -1,7 +1,7 @@
 <template lang="pug">
   div.settingPanel
     .toggle--modalSwitcher.toggle--settingPanel(@click="click" :class="{ isOpen: showSettingPanel, isClosed: !hasOpenedOnce }")
-      img.icon(src="/icon/sliders-h.svg" width="32" height="32")
+      img.icon(:src="sliderH" width="32" height="32")
       span.label 設定
     transition(name="fadeLeft")
       div.modalWindow.settingPanel__inner(v-show="showSettingPanel" :class="{ isOpen: showSettingPanel }")
@@ -13,6 +13,7 @@
 
 <script>
 import ModelSwitcher from '~/components/ModelSwitcher.vue'
+import sliderHIcon from '~/assets/icon/sliders-h.svg'
 
 export default {
   name: 'setting-panel',
@@ -26,7 +27,8 @@ export default {
   data () {
     return {
       showSettingPanel: false,
-      hasOpenedOnce: false
+      hasOpenedOnce: false,
+      sliderH: sliderHIcon
     }
   },
   methods: {

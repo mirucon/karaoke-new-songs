@@ -21,6 +21,6 @@ sw.*
 *.DS_Store
 
 # Some other files
-static/slider.*
+assets/slider.*
 *.afdesign
 *.afphoto

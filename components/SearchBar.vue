@@ -7,7 +7,6 @@
         span.bottom
     .searchFilter(:class="{ isToggled: showFilterWindow }")
       .toggle--searchFilter(@click="click" :class="{ isFiltered: isFiltered }" ref="toggleSearchFilter") 絞り込み
-      //.searchFilter__inner(v-show="showFilterWindow", :class="{ isToggled: showFilterWindow }")
       transition(name="fade")
         .searchFilter__inner(v-show="showFilterWindow" :class="{ isToggled: showFilterWindow }" :style="toggleHeight")
           .searchFilter__item.button--toggle(@click="filterArtist", :class="{ enabled: artistToggle }") アーティスト名
@@ -179,7 +178,7 @@ export default {
     background-size 16px
     background-position center
   &.enabled::before
-    background-image url(/icon/checkbox_white.svg)
+    background-image url('~/assets/icon/checkbox_white.svg')
     background-repeat no-repeat
     background-color #39c
 

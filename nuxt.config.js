@@ -14,6 +14,7 @@ module.exports = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !' },
+      { name: 'apple-mobile-web-app-title', content: 'カラオケ最新曲' },
       { property: 'og:description', content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !' },
       { property: 'og:site_name', content: 'カラオケ最新曲クイックビューアー' },
       { property: 'og:type', content: 'website' },
@@ -22,8 +23,7 @@ module.exports = {
       { property: 'og:locale', content: 'ja' },
       { name: 'twitter:card', content: 'summary' },
       { name: 'twitter:domain', content: 'https://karaokenewsongs.com/' },
-      { name: 'twitter:site', content: '@mirucons' },
-      { name: 'apple-mobile-web-app-title', content: 'カラオケ最新曲' }
+      { name: 'twitter:site', content: '@mirucons' }
     ],
     link: [
       { rel: 'icon', href: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -50,13 +50,18 @@ module.exports = {
     */
     extend (config, { isDev, isClient }) {
       // find the stylus loader
-      const stylus = config.module.rules[0].options.loaders.stylus.find(e => e.loader == 'stylus-loader')
+      const stylus = config.module.rules[0].options.loaders.stylus.find(e => e.loader === 'stylus-loader')
       // extend default options
       Object.assign(stylus.options, {
         import: [
           // require my own configs and variables and mixins and ..
           path.resolve(__dirname, 'assets/_variables.styl')
         ]
+      })
+      const vueLoader = config.module.rules.find((loader) => loader.loader === 'vue-loader')
+      Object.assign(vueLoader.options.transformToRequire, {
+        object: 'src',
+        embed: 'src'
       })
 
       if (isDev && isClient) {
