@@ -175,15 +175,16 @@ export default {
           return Object.keys(col).some(key => {
             // Do not include D or J & 配信日 in search results.
             if (parseInt(key) > 1 || parseInt(key) === 0) return
-            console.log(col[key])
             // If artist is unchecked
             if (!this.filterArtist && parseInt(key) === 1) {
-              console.log(col[key][1])
-              return String(col[key][0]).toLowerCase().indexOf(searchQuery) > -1
+              return String(col[key][1]).toLowerCase().indexOf(searchQuery) > -1
             }
             // If song is unchecked
             if (!this.filterSong && parseInt(key) === 1) {
-              return String(col[key][1]).toLowerCase().indexOf(searchQuery) > -1
+              return String(col[key][0]).toLowerCase().indexOf(searchQuery) > -1
+            }
+            if (parseInt(key) === 1 && !this.filterSong && !this.filterArtist) {
+              return
             }
             return String(col[key]).toLowerCase().indexOf(searchQuery) > -1
           })
