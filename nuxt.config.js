@@ -89,6 +89,7 @@ module.exports = {
   },
   manifest: {
     name: 'カラオケ最新曲クイックビューアー',
+    short_name: 'カラオケ最新曲',
     lang: 'ja'
   }
 }
