@@ -6,8 +6,9 @@
 
 <style lang="stylus">
 html
-  font-family "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
+  font-family -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif
   font-size 16px
+  line-height 1.6
   word-spacing 1px
   -ms-text-size-adjust 100%
   -webkit-text-size-adjust 100%
