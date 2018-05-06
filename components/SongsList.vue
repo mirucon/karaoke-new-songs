@@ -70,11 +70,12 @@ export default {
   mounted: function () {
     // デフォルト設定の `current` の値 //
     // 月曜日以降なら今週分を取得
-    if (moment().utcOffset('+09:00').day() >= 1) {
-      this.current = this.datesArray[1]
-    } else {
-      this.current = this.datesArray[2]
-    }
+    // if (moment().utcOffset('+09:00').day() >= 1) {
+    //   this.current = this.datesArray[0]
+    // } else {
+    //   this.current = this.datesArray[1]
+    // }
+    this.current = this.datesArray[1]
     setTimeout(() => {
       this.currentDateChecker()
     }, 400)

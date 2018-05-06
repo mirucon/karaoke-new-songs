@@ -35,11 +35,8 @@
         const dayINeed = 2 // for Tuesday
 
         // Get next Tuesday's date
-        if (date.isoWeekday() <= dayINeed) {
-          date = date.isoWeekday(dayINeed)
-        } else {
-          date = date.add(1, 'weeks').isoWeekday(dayINeed)
-        }
+        date = date.add(1, 'weeks').isoWeekday(dayINeed)
+
         // Get one more next week if it is Thursday or after.
         if (moment().utcOffset('+09:00').day() > 3) {
           date = date.add(1, 'weeks').isoWeekday(dayINeed)
@@ -49,15 +46,9 @@
           date = date.add(-i, 'weeks').isoWeekday(dayINeed)
         }
 
-        let y = date.year()
-        let m = date.month() + 1
-        let d = date.date()
-        if (m < 10) {
-          m = '0' + m
-        }
-        if (d < 10) {
-          d = '0' + d
-        }
+        let y = date.format('YYYY')
+        let m = date.format('MM')
+        let d = date.format('DD')
         datesArray.push(`${y}-${m}-${d}`)
       }
 
