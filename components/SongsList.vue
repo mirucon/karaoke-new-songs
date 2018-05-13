@@ -47,7 +47,8 @@ export default {
     SearchBar,
     SongsPagination
   },
-  data () {
+  props: ['songsTable', 'datesArray', 'hasLoaded'],
+  data() {
     return {
       lastWeek: {
         isButtonShown: true
@@ -66,8 +67,23 @@ export default {
       thead: ['', '歌手名', '曲名', '配信日']
     }
   },
-  props: ['songsTable', 'datesArray', 'hasLoaded'],
-  mounted: function () {
+  watch: {
+    searchQuery: function() {
+      this.getSearchResults()
+    },
+    songsTable: function() {
+      this.currentDateChecker()
+    },
+    current: function() {
+      this.cols = this.returnCurrentData()
+      this.currentDateChecker()
+      this.sortCols()
+    },
+    sortBy: function() {
+      this.sortCols()
+    }
+  },
+  mounted: function() {
     // デフォルト設定の `current` の値 //
     // 月曜日以降なら今週分を取得
     // if (moment().utcOffset('+09:00').day() >= 1) {
@@ -89,7 +105,7 @@ export default {
     }, 100)
   },
   methods: {
-    goToLastWeek: function () {
+    goToLastWeek: function() {
       //  前週分へ移動  //
       if (!this.lastWeek.isButtonShown) return
       let index = this.datesArray.indexOf(this.current)
@@ -115,7 +131,7 @@ export default {
         this.lastWeek.isButtonShown = false
       }
     },
-    goToNextWeek: function () {
+    goToNextWeek: function() {
       //  次週分へ移動  //
       if (!this.nextWeek.isButtonShown) return
       this.$emit('filterArray')
@@ -134,11 +150,12 @@ export default {
       this.current = this.datesArray[index]
       this.clearQuery()
     },
-    currentDateChecker: function () {
+    currentDateChecker: function() {
       // 既に最新週まで到達、もしくは次週分がない場合: 次週ボタンの無効化 //
       if (
         this.current === this.datesArray[0] ||
-        (this.current === this.datesArray[1] && !this.songsTable[this.datesArray[0]].isExisted)
+        (this.current === this.datesArray[1] &&
+          !this.songsTable[this.datesArray[0]].isExisted)
       ) {
         this.nextWeek.isButtonShown = false
       } else {
@@ -148,14 +165,15 @@ export default {
       if (
         this.current === this.datesArray[this.datesArray.length - 1] ||
         (this.current === this.datesArray[this.datesArray.length - 1] &&
-          !this.songsTable[this.datesArray[this.datesArray.length - 1]].isExisted)
+          !this.songsTable[this.datesArray[this.datesArray.length - 1]]
+            .isExisted)
       ) {
         this.lastWeek.isButtonShown = false
       } else {
         this.lastWeek.isButtonShown = true
       }
     },
-    returnCurrentData: function () {
+    returnCurrentData: function() {
       // 現在位置から当てはまる曲リストを返す //
       let cols = this.songsTable[this.current].cols
       for (let col in cols) {
@@ -166,28 +184,43 @@ export default {
       }
       return cols
     },
-    getSearchResults: function () {
+    getSearchResults: function() {
       // 検索結果 //
       let cols = this.returnCurrentData()
       let searchQuery = this.searchQuery.toLowerCase().trim()
       if (searchQuery) {
-        this.$router.push({path: this.$route.path, query: {s: this.searchQuery}})
+        this.$router.push({
+          path: this.$route.path,
+          query: { s: this.searchQuery }
+        })
         cols = cols.filter(col => {
           return Object.keys(col).some(key => {
             // Do not include D or J & 配信日 in search results.
             if (parseInt(key) > 1 || parseInt(key) === 0) return
             // If artist is unchecked
             if (!this.filterArtist && parseInt(key) === 1) {
-              return String(col[key][1]).toLowerCase().indexOf(searchQuery) > -1
+              return (
+                String(col[key][1])
+                  .toLowerCase()
+                  .indexOf(searchQuery) > -1
+              )
             }
             // If song is unchecked
             if (!this.filterSong && parseInt(key) === 1) {
-              return String(col[key][0]).toLowerCase().indexOf(searchQuery) > -1
+              return (
+                String(col[key][0])
+                  .toLowerCase()
+                  .indexOf(searchQuery) > -1
+              )
             }
             if (parseInt(key) === 1 && !this.filterSong && !this.filterArtist) {
               return
             }
-            return String(col[key]).toLowerCase().indexOf(searchQuery) > -1
+            return (
+              String(col[key])
+                .toLowerCase()
+                .indexOf(searchQuery) > -1
+            )
           })
         })
         this.cols = cols
@@ -197,14 +230,14 @@ export default {
         this.clearQuery()
       }
     },
-    clearQuery: function () {
+    clearQuery: function() {
       // SearchQuery をクリア //
-      this.$router.replace({query: ''})
+      this.$router.replace({ query: '' })
       this.searchQuery = ''
     },
-    sortCols: function () {
+    sortCols: function() {
       // Sort cols by model/song/artist/date //
-      function comparatorModel (a, b) {
+      function comparatorModel(a, b) {
         if (a[0] < b[0]) return -2
         if (a[0] > b[0]) return 2
         if (a[1][0] < b[1][0]) return -2
@@ -213,19 +246,19 @@ export default {
         if (a[1][1] > b[1][1]) return 1
         return 0
       }
-      function comparatorArtist (a, b) {
+      function comparatorArtist(a, b) {
         if (a[1][0] < b[1][0]) return -2
         if (a[1][0] > b[1][0]) return 2
         if (a[1][1] < b[1][1]) return -1
         if (a[1][1] > b[1][1]) return 1
         return 0
       }
-      function comparatorSong (a, b) {
+      function comparatorSong(a, b) {
         if (a[1][1] < b[1][1]) return -1
         if (a[1][1] > b[1][1]) return 1
         return 0
       }
-      function comparatorDate (a, b) {
+      function comparatorDate(a, b) {
         if (Array.isArray(a[2])) {
           let aDate = moment(a[2][1], 'M/D')
           let bDate = moment(b[2][1], 'M/D')
@@ -269,41 +302,25 @@ export default {
         this.cols = this.cols.sort(comparatorDate)
       }
     },
-    searchBySong: function () {
+    searchBySong: function() {
       this.filterSong = !this.filterSong
       this.getSearchResults()
     },
-    searchByArtist: function () {
+    searchByArtist: function() {
       this.filterArtist = !this.filterArtist
       this.getSearchResults()
     },
-    toggleDAM: function () {
+    toggleDAM: function() {
       this.showDAM = !this.showDAM
       if (!this.showJOY && !this.showDAM) {
         this.showJOY = true
       }
     },
-    toggleJOY: function () {
+    toggleJOY: function() {
       this.showJOY = !this.showJOY
       if (!this.showJOY && !this.showDAM) {
         this.showDAM = true
       }
-    }
-  },
-  watch: {
-    searchQuery: function () {
-      this.getSearchResults()
-    },
-    songsTable: function () {
-      this.currentDateChecker()
-    },
-    current: function () {
-      this.cols = this.returnCurrentData()
-      this.currentDateChecker()
-      this.sortCols()
-    },
-    sortBy: function () {
-      this.sortCols()
     }
   }
 }

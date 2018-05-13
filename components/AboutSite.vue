@@ -43,14 +43,14 @@
 import helpIcon from '~/assets/icon/help.svg'
 
 export default {
-  name: 'about-site',
+  name: 'AboutSite',
   data: () => ({
     showAboutSite: false,
     hasOpenedOnce: false,
     help: helpIcon
   }),
   methods: {
-    click: function () {
+    click: function() {
       this.showAboutSite = !this.showAboutSite
       if (!this.hasOpenedOnce) {
         this.hasOpenedOnce = true

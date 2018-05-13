@@ -16,23 +16,21 @@ import ModelSwitcher from '~/components/ModelSwitcher.vue'
 import sliderHIcon from '~/assets/icon/sliders-h.svg'
 
 export default {
-  name: 'setting-panel',
+  name: 'SettingPanel',
   components: {
     ModelSwitcher
   },
   props: {
-    showDAM: Boolean,
-    showJOY: Boolean
+    showDAM: true,
+    showJOY: true
   },
-  data () {
-    return {
-      showSettingPanel: false,
-      hasOpenedOnce: false,
-      sliderH: sliderHIcon
-    }
-  },
+  data: () => ({
+    showSettingPanel: false,
+    hasOpenedOnce: false,
+    sliderH: sliderHIcon
+  }),
   methods: {
-    click: function () {
+    click: function() {
       this.showSettingPanel = !this.showSettingPanel
       if (!this.hasOpenedOnce) {
         this.hasOpenedOnce = true

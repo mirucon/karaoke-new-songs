@@ -11,7 +11,7 @@
 import logoImg from '~/assets/logo.svg'
 
 export default {
-  name: 'app-header',
+  name: 'AppHeader',
   data: () => ({
     logo: logoImg
   })

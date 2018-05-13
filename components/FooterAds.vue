@@ -10,7 +10,7 @@
 import AdsByGoogle from '@nuxtjs/google-adsense'
 
 export default {
-  name: 'footer-ads',
+  name: 'FooterAds',
   components: {
     AdsByGoogle
   },

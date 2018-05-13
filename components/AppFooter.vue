@@ -8,15 +8,15 @@
 
 <script>
 export default {
-  name: 'app-footer',
+  name: 'AppFooter',
   methods: {
-    scrollToTop: function () {
+    scrollToTop: function() {
       const SmoothScroll = require('smooth-scroll')
       SmoothScroll('a[href="#"]', {
         speed: 300
       })
       setTimeout(() => {
-        this.$router.replace({hash: ''})
+        this.$router.replace({ hash: '' })
       }, 100)
     }
   }

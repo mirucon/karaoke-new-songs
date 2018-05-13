@@ -14,9 +14,16 @@ module.exports = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'robots', content: 'index, follow' },
-      { hid: 'description', name: 'description', content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !'
+      },
       { name: 'apple-mobile-web-app-title', content: 'カラオケ最新曲' },
-      { property: 'og:description', content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !' },
+      {
+        property: 'og:description',
+        content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !'
+      },
       { property: 'og:site_name', content: 'カラオケ最新曲クイックビューアー' },
       { property: 'og:type', content: 'website' },
       { property: 'og:url', content: 'https://karaokenewsongs.com/' },
@@ -27,14 +34,50 @@ module.exports = {
       { name: 'twitter:site', content: '@mirucons' }
     ],
     link: [
-      { rel: 'icon', href: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { rel: 'icon', href: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { rel: 'icon', href: '/favicon/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
-      { rel: 'icon', href: '/favicon/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
-      { rel: 'apple-touch-favicon', href: '/favicon/favicon-120x120.png', sizes: '120x120' },
-      { rel: 'apple-touch-favicon', href: '/favicon/favicon-152x152.png', sizes: '152x152' },
-      { rel: 'apple-touch-favicon', href: '/favicon/favicon-167x167.png', sizes: '167x167' },
-      { rel: 'apple-touch-favicon', href: '/favicon/favicon-180x180.png', sizes: '180x180' }
+      {
+        rel: 'icon',
+        href: '/favicon/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png'
+      },
+      {
+        rel: 'icon',
+        href: '/favicon/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png'
+      },
+      {
+        rel: 'icon',
+        href: '/favicon/favicon-96x96.png',
+        sizes: '96x96',
+        type: 'image/png'
+      },
+      {
+        rel: 'icon',
+        href: '/favicon/favicon-192x192.png',
+        sizes: '192x192',
+        type: 'image/png'
+      },
+      {
+        rel: 'apple-touch-favicon',
+        href: '/favicon/favicon-120x120.png',
+        sizes: '120x120'
+      },
+      {
+        rel: 'apple-touch-favicon',
+        href: '/favicon/favicon-152x152.png',
+        sizes: '152x152'
+      },
+      {
+        rel: 'apple-touch-favicon',
+        href: '/favicon/favicon-167x167.png',
+        sizes: '167x167'
+      },
+      {
+        rel: 'apple-touch-favicon',
+        href: '/favicon/favicon-180x180.png',
+        sizes: '180x180'
+      }
     ]
   },
   /*
@@ -49,9 +92,11 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    extend (config, { isDev, isClient }) {
+    extend(config, { isDev, isClient }) {
       // find the stylus loader
-      const stylus = config.module.rules[0].options.loaders.stylus.find(e => e.loader === 'stylus-loader')
+      const stylus = config.module.rules[0].options.loaders.stylus.find(
+        e => e.loader === 'stylus-loader'
+      )
       // extend default options
       Object.assign(stylus.options, {
         import: [
@@ -59,7 +104,9 @@ module.exports = {
           path.resolve(__dirname, 'assets/_variables.styl')
         ]
       })
-      const vueLoader = config.module.rules.find((loader) => loader.loader === 'vue-loader')
+      const vueLoader = config.module.rules.find(
+        loader => loader.loader === 'vue-loader'
+      )
       Object.assign(vueLoader.options.transformToRequire, {
         object: 'src',
         embed: 'src'
@@ -77,12 +124,18 @@ module.exports = {
   },
   modules: [
     '@nuxtjs/pwa',
-    ['@nuxtjs/google-analytics', {
-      id: 'UA-56308747-9'
-    }],
-    ['@nuxtjs/google-adsense', {
-      id: 'ca-pub-6450842193166394'
-    }]
+    [
+      '@nuxtjs/google-analytics',
+      {
+        id: 'UA-56308747-9'
+      }
+    ],
+    [
+      '@nuxtjs/google-adsense',
+      {
+        id: 'ca-pub-6450842193166394'
+      }
+    ]
   ],
   icon: {
     sizes: [16, 120, 144, 152, 167, 192, 384, 512]

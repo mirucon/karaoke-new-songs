@@ -10,18 +10,27 @@
 
 <script>
 export default {
-  name: 'model-switcher',
-  data () {
-    return {
-      statusMsg: ''
+  name: 'ModelSwitcher',
+  props: {
+    showDAM: true,
+    showJOY: true
+  },
+  data: () => ({
+    statusMsg: ''
+  }),
+  watch: {
+    showDAM: function() {
+      this.updateStatusMsg()
+    },
+    showJOY: function() {
+      this.updateStatusMsg()
     }
   },
-  props: {
-    showDAM: Boolean,
-    showJOY: Boolean
+  mounted: function() {
+    this.updateStatusMsg()
   },
   methods: {
-    updateStatusMsg: function () {
+    updateStatusMsg: function() {
       if (this.showDAM && this.showJOY) {
         this.statusMsg = 'DAM, JOYSOUND を同時表示中です。'
       } else if (!this.showJOY) {
@@ -29,17 +38,6 @@ export default {
       } else if (!this.showDAM) {
         this.statusMsg = 'JOYSOUND のみ表示中です。'
       }
-    }
-  },
-  mounted: function () {
-    this.updateStatusMsg()
-  },
-  watch: {
-    showDAM: function () {
-      this.updateStatusMsg()
-    },
-    showJOY: function () {
-      this.updateStatusMsg()
     }
   }
 }
