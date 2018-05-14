@@ -25,7 +25,6 @@ html
   max-width 800px
   margin 0 auto
 
-
 /* CSS icon */
 .icon--caret
   display inline-block
@@ -82,7 +81,6 @@ html
   &:hover
     .top, .bottom
       background-color: #000;
-
 
 /* Button style */
 .hidden

@@ -21,7 +21,7 @@ export default {
       isButtonShown: Boolean
     }
   },
-  data() {
+  data () {
     return {
       canLoadMore: true,
       loaded: 0,
@@ -29,20 +29,20 @@ export default {
     }
   },
   watch: {
-    current: function() {
+    current: function () {
       this.currentDateFormatter()
     },
-    hasLoaded: function() {
+    hasLoaded: function () {
       if (this.hasLoaded === true) {
         this.$emit('prev')
       }
     }
   },
-  mounted: function() {
+  mounted: function () {
     this.currentDateFormatter()
   },
   methods: {
-    currentDateFormatter: function() {
+    currentDateFormatter: function () {
       // 実表示用の日付フォーマットに変換 //
       let current = this.current
       let date = new Date(current)
@@ -66,7 +66,7 @@ export default {
       }
       this.formattedCurrent = mStart + '/' + dStart + ' ~ ' + mEnd + '/' + dEnd
     },
-    prev: function() {
+    prev: function () {
       // if it can load more then load more. Otherwise move to the previous week. //
       if (this.canLoadMore) {
         this.loadMore()
@@ -74,7 +74,7 @@ export default {
         this.$emit('prev')
       }
     },
-    loadMore: function() {
+    loadMore: function () {
       // Emit loadMore and limit the number of times to load only two times. //
       this.$emit('loadMore')
       this.loaded++

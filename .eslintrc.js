@@ -1,6 +1,10 @@
 module.exports = {
   root: true,
-  parser: 'vue-eslint-parser',
+  parserOptions: {
+    parser: "babel-eslint",
+    ecmaVersion: 2017,
+    sourceType: "module"
+  },
   globals: {
     '$nuxt': true
   },
@@ -12,7 +16,8 @@ module.exports = {
     "eslint:recommended",
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     "plugin:vue/recommended",
-    "plugin:prettier/recommended"
+    // "plugin:prettier/recommended",
+    "standard",
   ],
   // required to lint *.vue files
   plugins: [
@@ -21,10 +26,12 @@ module.exports = {
   // add your custom rules here
   rules: {
     'semi': [2, 'never'],
+    "space-before-function-paren": ["error", "always"],
     'no-console': 'warn',
     'no-unused-vars': 'warn',
     'vue/max-attributes-per-line': 'off',
-    'prettier/prettier': ['error', { 'singleQuote': true, 'semi': false }]
+    'vue/require-default-prop': 'warn',
+    'vue/require-prop-types': 'warn'
   },
   globals: {}
 }

@@ -48,7 +48,7 @@ export default {
     SongsPagination
   },
   props: ['songsTable', 'datesArray', 'hasLoaded'],
-  data() {
+  data () {
     return {
       lastWeek: {
         isButtonShown: true
@@ -68,22 +68,22 @@ export default {
     }
   },
   watch: {
-    searchQuery: function() {
+    searchQuery: function () {
       this.getSearchResults()
     },
-    songsTable: function() {
+    songsTable: function () {
       this.currentDateChecker()
     },
-    current: function() {
+    current: function () {
       this.cols = this.returnCurrentData()
       this.currentDateChecker()
       this.sortCols()
     },
-    sortBy: function() {
+    sortBy: function () {
       this.sortCols()
     }
   },
-  mounted: function() {
+  mounted: function () {
     // デフォルト設定の `current` の値 //
     // 月曜日以降なら今週分を取得
     // if (moment().utcOffset('+09:00').day() >= 1) {
@@ -105,7 +105,7 @@ export default {
     }, 100)
   },
   methods: {
-    goToLastWeek: function() {
+    goToLastWeek: function () {
       //  前週分へ移動  //
       if (!this.lastWeek.isButtonShown) return
       let index = this.datesArray.indexOf(this.current)
@@ -131,7 +131,7 @@ export default {
         this.lastWeek.isButtonShown = false
       }
     },
-    goToNextWeek: function() {
+    goToNextWeek: function () {
       //  次週分へ移動  //
       if (!this.nextWeek.isButtonShown) return
       this.$emit('filterArray')
@@ -150,7 +150,7 @@ export default {
       this.current = this.datesArray[index]
       this.clearQuery()
     },
-    currentDateChecker: function() {
+    currentDateChecker: function () {
       // 既に最新週まで到達、もしくは次週分がない場合: 次週ボタンの無効化 //
       if (
         this.current === this.datesArray[0] ||
@@ -173,7 +173,7 @@ export default {
         this.lastWeek.isButtonShown = true
       }
     },
-    returnCurrentData: function() {
+    returnCurrentData: function () {
       // 現在位置から当てはまる曲リストを返す //
       let cols = this.songsTable[this.current].cols
       for (let col in cols) {
@@ -184,7 +184,7 @@ export default {
       }
       return cols
     },
-    getSearchResults: function() {
+    getSearchResults: function () {
       // 検索結果 //
       let cols = this.returnCurrentData()
       let searchQuery = this.searchQuery.toLowerCase().trim()
@@ -230,14 +230,14 @@ export default {
         this.clearQuery()
       }
     },
-    clearQuery: function() {
+    clearQuery: function () {
       // SearchQuery をクリア //
       this.$router.replace({ query: '' })
       this.searchQuery = ''
     },
-    sortCols: function() {
+    sortCols: function () {
       // Sort cols by model/song/artist/date //
-      function comparatorModel(a, b) {
+      function comparatorModel (a, b) {
         if (a[0] < b[0]) return -2
         if (a[0] > b[0]) return 2
         if (a[1][0] < b[1][0]) return -2
@@ -246,19 +246,19 @@ export default {
         if (a[1][1] > b[1][1]) return 1
         return 0
       }
-      function comparatorArtist(a, b) {
+      function comparatorArtist (a, b) {
         if (a[1][0] < b[1][0]) return -2
         if (a[1][0] > b[1][0]) return 2
         if (a[1][1] < b[1][1]) return -1
         if (a[1][1] > b[1][1]) return 1
         return 0
       }
-      function comparatorSong(a, b) {
+      function comparatorSong (a, b) {
         if (a[1][1] < b[1][1]) return -1
         if (a[1][1] > b[1][1]) return 1
         return 0
       }
-      function comparatorDate(a, b) {
+      function comparatorDate (a, b) {
         if (Array.isArray(a[2])) {
           let aDate = moment(a[2][1], 'M/D')
           let bDate = moment(b[2][1], 'M/D')
@@ -302,21 +302,21 @@ export default {
         this.cols = this.cols.sort(comparatorDate)
       }
     },
-    searchBySong: function() {
+    searchBySong: function () {
       this.filterSong = !this.filterSong
       this.getSearchResults()
     },
-    searchByArtist: function() {
+    searchByArtist: function () {
       this.filterArtist = !this.filterArtist
       this.getSearchResults()
     },
-    toggleDAM: function() {
+    toggleDAM: function () {
       this.showDAM = !this.showDAM
       if (!this.showJOY && !this.showDAM) {
         this.showJOY = true
       }
     },
-    toggleJOY: function() {
+    toggleJOY: function () {
       this.showJOY = !this.showJOY
       if (!this.showJOY && !this.showDAM) {
         this.showDAM = true

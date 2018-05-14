@@ -30,7 +30,7 @@ export default {
     sliderH: sliderHIcon
   }),
   methods: {
-    click: function() {
+    click: function () {
       this.showSettingPanel = !this.showSettingPanel
       if (!this.hasOpenedOnce) {
         this.hasOpenedOnce = true

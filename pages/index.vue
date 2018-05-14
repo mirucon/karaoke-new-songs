@@ -21,12 +21,12 @@ export default {
     AppHeader,
     SongsList
   },
-  data() {
+  data () {
     return {
       hasLoaded: false
     }
   },
-  asyncData() {
+  asyncData () {
     let datesArray = []
     const numberOfWeeks = 3
     // 日付を取得する
@@ -49,11 +49,8 @@ export default {
       if (i >= 1) {
         date = date.add(-i, 'weeks').isoWeekday(dayINeed)
       }
-
-      let y = date.format('YYYY')
-      let m = date.format('MM')
-      let d = date.format('DD')
-      datesArray.push(`${y}-${m}-${d}`)
+      const DateToAdd = date.format('YYYY-MM-DD')
+      datesArray.push(DateToAdd)
     }
 
     return axios
@@ -98,11 +95,11 @@ export default {
         })
       )
   },
-  mounted: function() {
+  mounted: function () {
     this.getRelativeDates()
   },
   methods: {
-    getRelativeDates: function() {
+    getRelativeDates: function () {
       const date = this.datesArray[1]
       const now = moment()
       const y = now.year()
@@ -138,7 +135,7 @@ export default {
         }
       }
     },
-    loadMore: function() {
+    loadMore: function () {
       this.hasLoaded = false
       for (let i = 0; i < 3; i++) {
         let length = this.datesArray.length
@@ -187,7 +184,7 @@ export default {
           })
       }
     },
-    filterArray: function() {
+    filterArray: function () {
       this.datesArray = this.datesArray.filter(d => {
         return d !== null
       })

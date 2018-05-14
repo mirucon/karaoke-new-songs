@@ -92,7 +92,7 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    extend(config, { isDev, isClient }) {
+    extend (config, { isDev, isClient }) {
       // find the stylus loader
       const stylus = config.module.rules[0].options.loaders.stylus.find(
         e => e.loader === 'stylus-loader'

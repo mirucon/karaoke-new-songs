@@ -19,18 +19,18 @@ export default {
     statusMsg: ''
   }),
   watch: {
-    showDAM: function() {
+    showDAM: function () {
       this.updateStatusMsg()
     },
-    showJOY: function() {
+    showJOY: function () {
       this.updateStatusMsg()
     }
   },
-  mounted: function() {
+  mounted: function () {
     this.updateStatusMsg()
   },
   methods: {
-    updateStatusMsg: function() {
+    updateStatusMsg: function () {
       if (this.showDAM && this.showJOY) {
         this.statusMsg = 'DAM, JOYSOUND を同時表示中です。'
       } else if (!this.showJOY) {

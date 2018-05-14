@@ -50,7 +50,7 @@ export default {
     help: helpIcon
   }),
   methods: {
-    click: function() {
+    click: function () {
       this.showAboutSite = !this.showAboutSite
       if (!this.hasOpenedOnce) {
         this.hasOpenedOnce = true
