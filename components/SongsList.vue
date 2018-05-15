@@ -236,7 +236,12 @@ export default {
       this.searchQuery = ''
     },
     sortCols: function () {
-      // Sort cols by model/song/artist/date //
+      /**
+       * Custom sort by model
+       * @param {array} a - An element to sort
+       * @param {array} b - An element to sort
+       * @returns {number} - The number for sorting
+       */
       function comparatorModel (a, b) {
         if (a[0] < b[0]) return -2
         if (a[0] > b[0]) return 2
@@ -246,6 +251,12 @@ export default {
         if (a[1][1] > b[1][1]) return 1
         return 0
       }
+      /**
+       * Custom sort by artist
+       * @param {array} a - An element to sort
+       * @param {array} b - An element to sort
+       * @returns {number} - The number for sorting
+       */
       function comparatorArtist (a, b) {
         if (a[1][0] < b[1][0]) return -2
         if (a[1][0] > b[1][0]) return 2
@@ -253,11 +264,23 @@ export default {
         if (a[1][1] > b[1][1]) return 1
         return 0
       }
+      /**
+       * Custom sort by song
+       * @param {array} a - An element to sort
+       * @param {array} b - An element to sort
+       * @returns {number} - The number for sorting
+       */
       function comparatorSong (a, b) {
         if (a[1][1] < b[1][1]) return -1
         if (a[1][1] > b[1][1]) return 1
         return 0
       }
+      /**
+       * Custom sort by date
+       * @param {array} a - An element to sort
+       * @param {array} b - An element to sort
+       * @returns {number} - The number for sorting
+       */
       function comparatorDate (a, b) {
         if (Array.isArray(a[2])) {
           let aDate = moment(a[2][1], 'M/D')
