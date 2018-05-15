@@ -123,16 +123,15 @@ module.exports = {
     }
   },
   modules: [
+    '~/modules/typescript.js',
     '@nuxtjs/pwa',
+    // [
+    // '@nuxtjs/google-analytics', {
+    // id: 'UA-56308747-9'
+    // }
+    // ],
     [
-      '@nuxtjs/google-analytics',
-      {
-        id: 'UA-56308747-9'
-      }
-    ],
-    [
-      '@nuxtjs/google-adsense',
-      {
+      '@nuxtjs/google-adsense', {
         id: 'ca-pub-6450842193166394'
       }
     ]

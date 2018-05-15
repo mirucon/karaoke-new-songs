@@ -14,10 +14,9 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
+    'typescript',
     "plugin:vue/recommended",
-    // "plugin:prettier/recommended",
-    "standard",
+    "standard"
   ],
   // required to lint *.vue files
   plugins: [
