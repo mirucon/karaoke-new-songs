@@ -17,12 +17,12 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !'
+        content: 'DAM と JOYSOUND の最新配信曲を同時表示 + 横断検索出来る、高機能なカラオケ最新曲ビューアーアプリです。'
       },
       { name: 'apple-mobile-web-app-title', content: 'カラオケ最新曲' },
       {
         property: 'og:description',
-        content: 'DAMとJOYSOUNDの最新配信曲を同時表示 + 横断検索 !'
+        content: 'DAM と JOYSOUND の最新配信曲を同時表示 + 横断検索出来る、高機能なカラオケ最新曲ビューアーアプリです。'
       },
       { property: 'og:site_name', content: 'カラオケ最新曲クイックビューアー' },
       { property: 'og:type', content: 'website' },

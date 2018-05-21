@@ -3,7 +3,7 @@
     a(href="#", @click="scrollToTop" aria-label="Back to top").backToTop#backToTop
       span.icon--caret.bottom
     div.container
-      p.copyright DAM 週間配信曲クイックビューアー by <a href="https://twitter.com/mirucons">mirucon</a>
+      p.copyright カラオケ配信曲クイックビューアー by <a href="https://twitter.com/mirucons">mirucon</a>
 </template>
 
 <script>
@@ -25,7 +25,10 @@ export default {
 
 <style scoped lang="stylus">
 .footer
-  position relative
+  position absolute
+  right 0
+  bottom 0
+  left 0
   padding 2.2em 10px
   background-color #11161b
   color #ffffff94

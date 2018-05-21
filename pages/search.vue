@@ -1,14 +1,23 @@
 <template lang="pug">
   div.wrapper
-    p Welcome to search screen
+    global-search
+    global-search-results
+    app-footer
 </template>
 
 <script lang="ts">
 import axios from 'axios'
 import moment from 'moment'
-import { mapState } from 'vuex'
+import GlobalSearch from '~/components/GlobalSearch.vue'
+import GlobalSearchResults from '~/components/GlobalSearchResults.vue'
+import AppFooter from '~/components/AppFooter.vue'
 
 export default {
+  components: {
+    AppFooter,
+    GlobalSearchResults,
+    GlobalSearch
+  },
   async fetch ({ store }) {
     const numberOfWeeks: number = 7
     for (let i = 0; i < numberOfWeeks; i++) {
@@ -16,9 +25,8 @@ export default {
       const tues = 2 // for Tuesday
 
       // Get next Tuesday's date
-      date = date.add(2, 'weeks').isoWeekday(tues)
-
-      // Get one more next week if it is Thursday or after.
+      date = date.add(1, 'weeks').isoWeekday(tues)
+      // Get one more next week if it is Thursday or later.
       if (moment().utcOffset('+09:00').day() > 3) {
         date = date.add(1, 'weeks').isoWeekday(tues)
       }
@@ -26,13 +34,11 @@ export default {
       if (i >= 1) {
         date = date.add(-i, 'weeks').isoWeekday(tues)
       }
-      const DateToAdd = date.format('YYYY-MM-DD')
-
-      store.commit('setDatesArray', DateToAdd)
+      store.commit('setDatesArray', date.format('YYYY-MM-DD'))
 
       let urls: Array<any> = []
       for (let date in store.state.datesArray) {
-        urls.push(axios.get(`https://api.karaokenewsongs.com/songs.${store.state.datesArray[date]}.json`))
+        urls.push(axios.get(`http://localhost:8000/songs.${store.state.datesArray[date]}.json`))
       }
       await Promise.all(urls)
         .then(res => {
@@ -49,10 +55,9 @@ export default {
         })
     }
   },
-  computed: mapState([
-    'datesArray',
-    'songsTable'
-  ])
+  head: {
+    title: '検索画面 - カラオケ最新曲クイックビューアー'
+  }
 }
 </script>
 
