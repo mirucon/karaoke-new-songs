@@ -38,8 +38,13 @@ export default {
       date = date.add(1, 'weeks').isoWeekday(dayINeed)
 
       // Get one more next week if it is Thursday or after.
+<<<<<<< HEAD
       if (moment().utcOffset('+09:00').day() > 3) {
         date = date.add(2, 'weeks').isoWeekday(dayINeed)
+=======
+      if (moment().utcOffset('+09:00').isoWeekday() > 3) {
+        date = date.add(1, 'weeks').isoWeekday(dayINeed)
+>>>>>>> refs/remotes/origin/master
       }
       // Subtract "7 days" in each loop.
       if (i >= 1) {
