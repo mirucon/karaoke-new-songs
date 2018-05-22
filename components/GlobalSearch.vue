@@ -3,11 +3,11 @@
   div.wrapper--globalSearch
     div#modal__top.modal__top
       div.globalSearch__content
-        input#globalSearch__form.globalSearch__form(type="text" placeholder="検索" v-model="searchQuery" @keyup.enter="openModal")
+        input#globalSearch__form.globalSearch__form(type="text" placeholder="検索" v-model="searchQuery" @keyup.enter="openModal" autocomplete="off")
       div.modal__backgroundTop
     div#modal__bottom.modal__bottom
-      div#modal__bottomLeft.modal__backgroundBottomLeft
-      div#modal__bottomRight.modal__backgroundBottomRight
+      div#modal__baseTop.modal__backgroundBaseTop
+      div#modal__baseBottom.modal__backgroundBaseBottom
 </template>
 
 <script lang="ts">
@@ -37,7 +37,7 @@ export default {
     },
     hitEnter: function () {
       console.log('HIT ENTER: ' + this.hitEnter)
-      // Animation to open the modal //
+      // Animation move the search form to top //
       const modalTop = document.getElementById('modal__top')
       requestAnimationFrame(() => {
         TweenMax.to(modalTop, 0.4, {
@@ -48,16 +48,19 @@ export default {
     isFirstSearchDone: function () {
       console.log('IS FIRST SEARCH DONE: ' + this.isFirstSearchDone)
       if (this.isFirstSearchDone) {
-        const modalBottomLeft = document.getElementById('modal__bottomLeft')
-        const modalBottomRight = document.getElementById('modal__bottomRight')
+        // Animation to open the modal //
+        const modalTop = document.getElementById('modal__baseTop')
+        const modalBottom = document.getElementById('modal__baseBottom')
         requestAnimationFrame(() => {
-          TweenMax.to(modalBottomLeft, 0.6, {
-            left: '-50%',
-            delay: 0.4
+          TweenMax.to(modalBottom, 0.6, {
+            delay: 0.4,
+            left: '-100%',
+            right: 'auto'
           })
-          TweenMax.to(modalBottomRight, 0.6, {
-            right: '-50%',
-            delay: 0.4
+          TweenMax.to(modalTop, 0.6, {
+            delay: 0.8,
+            right: '-100%',
+            left: 'auto'
           })
         })
       }
@@ -166,8 +169,8 @@ export default {
   left 0
 
 .modal__backgroundTop
-.modal__backgroundBottomRight
-.modal__backgroundBottomLeft
+.modal__backgroundBaseTop
+.modal__backgroundBaseBottom
   position absolute
   height 100%
   z-index 1
@@ -178,13 +181,16 @@ export default {
   top 0
   right 0
   left 0
-.modal__backgroundBottomRight
-.modal__backgroundBottomLeft
-  width 50%
-  bottom 0
-.modal__backgroundBottomRight
+
+.modal__backgroundBaseTop
+.modal__backgroundBaseBottom
+  width 100%
+  height 50%
   right 0
-.modal__backgroundBottomLeft
   left 0
+.modal__backgroundBaseTop
+  bottom 0
+.modal__backgroundBaseBottom
+  top 0
 
 </style>

@@ -8,7 +8,7 @@
 html
   position relative
   min-height 100vh
-  padding-bottom 150px
+  padding-bottom 135px
   font-family -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif
   font-size 16px
   line-height 1.6

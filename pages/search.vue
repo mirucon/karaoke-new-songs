@@ -2,6 +2,7 @@
   div.wrapper
     global-search
     global-search-results
+    loading-animation
     app-footer
 </template>
 
@@ -11,9 +12,11 @@ import moment from 'moment'
 import GlobalSearch from '~/components/GlobalSearch.vue'
 import GlobalSearchResults from '~/components/GlobalSearchResults.vue'
 import AppFooter from '~/components/AppFooter.vue'
+import LoadingAnimation from '~/components/LoadingAnimation.vue'
 
 export default {
   components: {
+    LoadingAnimation,
     AppFooter,
     GlobalSearchResults,
     GlobalSearch
