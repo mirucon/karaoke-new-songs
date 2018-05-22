@@ -41,7 +41,7 @@ export default {
 
       let urls: Array<any> = []
       for (let date in store.state.datesArray) {
-        urls.push(axios.get(`http://localhost:8000/songs.${store.state.datesArray[date]}.json`))
+        urls.push(axios.get(`https://api.karaokenewsongs.com/songs.${store.state.datesArray[date]}.json`))
       }
       await Promise.all(urls)
         .then(res => {
