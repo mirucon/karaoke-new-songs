@@ -36,22 +36,24 @@ export const actions = {
         res = []
         break
       }
-      let sanitizedQuery = query.toLowerCase().trim()
-      const table: Array<any> = songsTable[datesArray[date]]
-      await table.filter(col => {
-        Object.keys(col).some(key => {
-          if (parseInt(key) > 1 || parseInt(key) === 0) return false
-          if (parseInt(key) === 1) {
-            for (let i: number = 0; i < 2; i++) {
-              // return col[key][i].toLowerCase().indexOf(query) > -1
-              if(col[key][i].toLowerCase().indexOf(sanitizedQuery) > -1) {
-                // console.log(col[key], ': ', i)
-                res.push(col)
+      if (songsTable[datesArray[date]] === []) {
+        let sanitizedQuery = query.toLowerCase().trim()
+        const table: Array<any> = songsTable[datesArray[date]]
+        await table.filter(col => {
+          Object.keys(col).some(key => {
+            if (parseInt(key) > 1 || parseInt(key) === 0) return false
+            if (parseInt(key) === 1) {
+              for (let i: number = 0; i < 2; i++) {
+                // return col[key][i].toLowerCase().indexOf(query) > -1
+                if(col[key][i].toLowerCase().indexOf(sanitizedQuery) > -1) {
+                  // console.log(col[key], ': ', i)
+                  res.push(col)
+                }
               }
             }
-          }
+          })
         })
-      })
+      }
     }
     console.log('SEARCH DONE')
     commit('setSearchResults', res)
