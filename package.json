@@ -41,7 +41,7 @@
     "prettier": "^1.12.1",
     "prettier-eslint": "^8.8.1",
     "pug": "^2.0.3",
-    "pug-loader": "^2.4.0",
+    "pug-plain-loader": "^1.0.0",
     "smooth-scroll": "^12.1.5",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",

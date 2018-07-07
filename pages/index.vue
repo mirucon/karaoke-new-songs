@@ -7,7 +7,6 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios'
 import { mapState } from 'vuex'
 import moment from 'moment'
 import SongsList from '~/components/SongsList.vue'
@@ -48,9 +47,6 @@ export default {
       store.commit('setDatesArray', date.format('YYYY-MM-DD'))
     })
     await store.dispatch('getSongsTable', store.state.datesArray)
-  },
-  mounted: function() {
-    // this.getRelativeDates()
   },
   head: {
     meta: [

@@ -8,7 +8,7 @@
       songs-pagination
       search-bar(v-model="searchQuery", @clearQuery="clearQuery", @searchBySong="searchBySong", @searchByArtist="searchByArtist")
       section.releaseList
-        div.releaseList__col.releaseList__heading
+        div.releaseList__col.releaseList__heading#releaseList__heading
           div.releaseList__heading__item.releaseList__model(@click="sortBy = 'model'" :class="{ currentSort: sortBy === 'model' }") &nbsp;
           div.releaseList__heading__item.releaseList__artist(@click="sortBy = 'artist'" :class="{ currentSort: sortBy === 'artist' }") 歌手名
           div.releaseList__heading__item.releaseList__song(@click="sortBy = 'song'" :class="{ currentSort: sortBy === 'song' }") 曲名
@@ -31,7 +31,7 @@
           button.button--green(type="button", @click="searchQuery = ''") 戻る
 </template>
 
-<script>
+<script lang="ts">
 import { mapState } from 'vuex'
 import moment from 'moment'
 import SongsPagination from '~/components/SongsPagination.vue'
@@ -76,6 +76,8 @@ export default {
     current: function() {
       this.cols = this.returnCurrentData()
       this.sortCols()
+      this.scrollToTop()
+      this.clearQuery()
     },
     sortBy: function() {
       this.sortCols()
@@ -97,6 +99,16 @@ export default {
     }, 100)
   },
   methods: {
+    scrollToTop: function() {
+      const el: HTMLElement = document.getElementById('releaseList__heading')
+      if (el && el.getBoundingClientRect().top < window.pageYOffset) {
+        // @ts-ignore
+        const SmoothScroll = require('smooth-scroll')
+        const scroll = new SmoothScroll()
+        const options = { speed: 300, ease: 'easeOutCubic' }
+        scroll.animateScroll(el, null, options)
+      }
+    },
     returnCurrentData: function() {
       // 現在位置から当てはまる曲リストを返す //
       let cols = this.songsTable[this.current].cols
