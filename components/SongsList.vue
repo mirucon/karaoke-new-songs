@@ -5,7 +5,7 @@
         @toggleDAM="toggleDAM" @toggleJOY="toggleJOY" :showDAM="showDAM" :showJOY="showJOY"
       )
       about-site
-      songs-pagination(@prev="goToLastWeek", @next="goToNextWeek", @loadMore="$emit('loadMore')", :hasLoaded="hasLoaded", :nextWeek="nextWeek", :lastWeek="lastWeek", :current="current")
+      songs-pagination
       search-bar(v-model="searchQuery", @clearQuery="clearQuery", @searchBySong="searchBySong", @searchByArtist="searchByArtist")
       section.releaseList
         div.releaseList__col.releaseList__heading
@@ -48,11 +48,6 @@ export default {
     SearchBar,
     SongsPagination
   },
-  props: [
-    // 'songsTable',
-    // 'datesArray',
-    'hasLoaded'
-  ],
   data() {
     return {
       lastWeek: {
@@ -61,7 +56,6 @@ export default {
       nextWeek: {
         isButtonShown: true
       },
-      current: '',
       searchQuery: '',
       filterSong: true,
       filterArtist: true,
@@ -73,30 +67,26 @@ export default {
     }
   },
   computed: {
-    ...mapState(['datesArray', 'songsTable'])
+    ...mapState(['datesArray', 'songsTable', 'current'])
   },
   watch: {
     searchQuery: function() {
       this.getSearchResults()
     },
-    songsTable: function() {
-      this.currentDateChecker()
-    },
     current: function() {
       this.cols = this.returnCurrentData()
-      this.currentDateChecker()
       this.sortCols()
     },
     sortBy: function() {
       this.sortCols()
+    },
+    cols: function() {
+      this.getRelativeDates()
     }
   },
   mounted: function() {
     // デフォルト設定の `current` の値 //
-    this.current = this.datesArray[1]
-    setTimeout(() => {
-      this.currentDateChecker()
-    }, 400)
+    this.$store.commit('setCurrent', this.datesArray[1])
     // if URL query is included in the first load. //
     let query = ''
     setTimeout(() => {
@@ -107,74 +97,6 @@ export default {
     }, 100)
   },
   methods: {
-    goToLastWeek: function() {
-      //  前週分へ移動  //
-      if (!this.lastWeek.isButtonShown) return
-      let index = this.datesArray.indexOf(this.current)
-      index += 1
-      this.$emit('filterArray')
-
-      while (true) {
-        if (index === Object.keys(this.songsTable).length) {
-          this.lastWeek.isButtonShown = false
-          return
-        } else if (!this.songsTable[this.datesArray[index]].isExisted) {
-          index -= 1
-        } else {
-          break
-        }
-      }
-      this.current = this.datesArray[index]
-      this.clearQuery()
-
-      // Check for the previous week and disable the button if it reaches to the end.
-      index = this.datesArray.indexOf(this.current) + 1
-      if (index === Object.keys(this.songsTable).length) {
-        this.lastWeek.isButtonShown = false
-      }
-    },
-    goToNextWeek: function() {
-      //  次週分へ移動  //
-      if (!this.nextWeek.isButtonShown) return
-      this.$emit('filterArray')
-      let index = this.datesArray.indexOf(this.current)
-      index -= 1
-      while (true) {
-        if (index === -1) {
-          this.nextWeek.isButtonShown = false
-          return
-        } else if (!this.songsTable[this.datesArray[index]].isExisted) {
-          index -= 1
-        } else {
-          break
-        }
-      }
-      this.current = this.datesArray[index]
-      this.clearQuery()
-    },
-    currentDateChecker: function() {
-      // 既に最新週まで到達、もしくは次週分がない場合: 次週ボタンの無効化 //
-      if (
-        this.current === this.datesArray[0] ||
-        (this.current === this.datesArray[1] &&
-          !this.songsTable[this.datesArray[0]].isExisted)
-      ) {
-        this.nextWeek.isButtonShown = false
-      } else {
-        this.nextWeek.isButtonShown = true
-      }
-      // 既に最前週まで到達、もしくは前週分がない場合: 前週ボタンの無効化 //
-      if (
-        this.current === this.datesArray[this.datesArray.length - 1] ||
-        (this.current === this.datesArray[this.datesArray.length - 1] &&
-          !this.songsTable[this.datesArray[this.datesArray.length - 1]]
-            .isExisted)
-      ) {
-        this.lastWeek.isButtonShown = false
-      } else {
-        this.lastWeek.isButtonShown = true
-      }
-    },
     returnCurrentData: function() {
       // 現在位置から当てはまる曲リストを返す //
       let cols = this.songsTable[this.current].cols
@@ -185,6 +107,50 @@ export default {
         }
       }
       return cols
+    },
+    getRelativeDates: function() {
+      const now = moment()
+      moment.locale('ja-JP')
+      const y = now.year()
+      for (let col of this.cols.keys()) {
+        let dateIndex
+        if (this.cols[col].length === 3) {
+          dateIndex = 2
+        } else {
+          dateIndex = 3
+        }
+        let dateCol = this.cols[col][dateIndex]
+        if (typeof dateCol === 'object') {
+          return
+        } else if (dateCol === '配信済' || dateCol === '配信済み') {
+          let diff = dateCol
+          dateCol = now.month() + 1 + '-' + now.date()
+          this.cols[col][dateIndex] = [diff, dateCol]
+        } else {
+          let colDate
+          if (dateCol.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
+            colDate = moment(`${dateCol} 23:59+0900`, 'YYYY/M/D HH:mm+-HH:mm')
+          } else {
+            colDate = moment(
+              `${y}-${dateCol} 23:59+0900`,
+              'YYYY-M/D HH:mm+-HH:mm'
+            )
+          }
+          let diff = colDate.diff(now, 'days')
+          if (diff === 0) {
+            diff = '今日'
+          } else if (diff === 1) {
+            diff = '明日'
+          } else if (diff < 0) {
+            diff = '配信済'
+          } else if (diff > 7) {
+            diff = `${colDate.format('M/D')}(${colDate.format('ddd')})`
+          } else {
+            diff = `${diff}日後(${colDate.format('ddd')})`
+          }
+          this.cols[col][dateIndex] = [diff, dateCol]
+        }
+      }
     },
     getSearchResults: function() {
       // 検索結果 //
@@ -255,23 +221,11 @@ export default {
         if (a[1][1] > b[1][1]) return 1
         return 0
       }
-      /**
-       * Custom sort by song
-       * @param {array} a - An element to sort
-       * @param {array} b - An element to sort
-       * @returns {number} - The number for sorting
-       */
       function comparatorSong(a, b) {
         if (a[1][1] < b[1][1]) return -1
         if (a[1][1] > b[1][1]) return 1
         return 0
       }
-      /**
-       * Custom sort by date
-       * @param {array} a - An element to sort
-       * @param {array} b - An element to sort
-       * @returns {number} - The number for sorting
-       */
       function comparatorDate(a, b) {
         if (Array.isArray(a[2])) {
           let aDate = moment(a[2][1], 'M/D')
