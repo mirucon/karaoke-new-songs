@@ -27,43 +27,43 @@ export default {
     artistToggle: true,
     isFiltered: false
   }),
-  mounted: function () {
+  mounted: function() {
     this.calculateHeight()
     window.addEventListener('resize', this.calculateHeight)
     window.addEventListener('scroll', this.calculateHeight)
   },
-  beforeDestroy: function () {
+  beforeDestroy: function() {
     window.removeEventListener('resize', this.calculateHeight)
   },
   methods: {
-    click () {
+    click() {
       this.showFilterWindow = !this.showFilterWindow
       this.calculateHeight()
       this.checkIsFiltered()
     },
-    checkIsFiltered: function () {
+    checkIsFiltered: function() {
       if (!this.songToggle || !this.artistToggle) {
         this.isFiltered = true
       } else {
         this.isFiltered = false
       }
     },
-    updateValue: function (value) {
+    updateValue: function(value) {
       let formattedValue = value.trim()
       if (formattedValue !== value) {
         this.$refs.input.value = formattedValue
       }
       this.$emit('input', value)
     },
-    filterSong: function () {
+    filterSong: function() {
       this.songToggle = !this.songToggle
       this.$emit('searchBySong')
     },
-    filterArtist: function () {
+    filterArtist: function() {
       this.artistToggle = !this.artistToggle
       this.$emit('searchByArtist')
     },
-    calculateHeight () {
+    calculateHeight() {
       let clientRect = this.$refs.toggleSearchFilter.getBoundingClientRect()
       let toggleHeight =
         clientRect.top + clientRect.height + window.pageYOffset + 5

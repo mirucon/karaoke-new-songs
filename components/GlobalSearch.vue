@@ -31,11 +31,11 @@ export default {
     'searchResults'
   ]),
   watch: {
-    searchQuery: function () {
+    searchQuery: function() {
       this.queryValidator()
       this.checkForSuspendedTime()
     },
-    hitEnter: function () {
+    hitEnter: function() {
       console.log('HIT ENTER: ' + this.hitEnter)
       // Animation move the search form to top //
       const modalTop = document.getElementById('modal__top')
@@ -45,7 +45,7 @@ export default {
         })
       })
     },
-    isFirstSearchDone: function () {
+    isFirstSearchDone: function() {
       console.log('IS FIRST SEARCH DONE: ' + this.isFirstSearchDone)
       if (this.isFirstSearchDone) {
         // Animation to open the modal //
@@ -66,18 +66,13 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     document.getElementById('globalSearch__form').focus()
   },
   methods: {
-    ...mapMutations([
-      'setModalState',
-      'setProcessing'
-    ]),
-    ...mapActions([
-      'searchSongsTable'
-    ]),
-    queryValidator () {
+    ...mapMutations(['setModalState', 'setProcessing']),
+    ...mapActions(['searchSongsTable']),
+    queryValidator() {
       // Validator for query; it needs to have at least one character. //
       let searchQuery = this.searchQuery.toLowerCase().trim()
       if (searchQuery) {
@@ -86,23 +81,22 @@ export default {
         this.queryValidation = false
       }
     },
-    async openModal () {
+    async openModal() {
       // Open modal and show the search result if the validation passes. //
       this.setProcessing(true)
       if (this.queryValidation) {
         this.hitEnter = await true
-        await this.searchSongsTable(this.searchQuery)
-          .then(() => {
-            this.setModalState(true)
-            this.setProcessing(false)
-            this.isFirstSearchDone = true
-          })
+        await this.searchSongsTable(this.searchQuery).then(() => {
+          this.setModalState(true)
+          this.setProcessing(false)
+          this.isFirstSearchDone = true
+        })
       } else {
         this.setProcessing(false)
         this.searchSongsTable('')
       }
     },
-    async checkForSuspendedTime () {
+    async checkForSuspendedTime() {
       // Check for how long does it take to type one character, and do search when it took more than 1500 ms. //
       if (!this.beforeDate) {
         this.beforeDate = moment()

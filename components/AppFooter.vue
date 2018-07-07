@@ -10,7 +10,7 @@
 export default {
   name: 'AppFooter',
   methods: {
-    scrollToTop: function () {
+    scrollToTop: function() {
       const SmoothScroll = require('smooth-scroll')
       SmoothScroll('a[href="#"]', {
         speed: 300

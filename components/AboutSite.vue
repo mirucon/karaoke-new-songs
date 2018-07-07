@@ -21,7 +21,6 @@
             img.authorIcon(src="https://secure.gravatar.com/avatar/38228223544cf5f1f818c93ecdd4371f" width="80" height="80" alt="mirucon")
             span.authorName: strong mirucon
           p Vue.jsやWordPress開発をする15歳のフリーランスエンジニア。DAMの精密採点が趣味。
-          p 現在 Web サイト製作依頼受付中です。お気軽にお問い合わせください。
           p <a href="https://twitter.com/mirucons" target="blank">Twitter</a> | <a href="https://github.com/mirucon" target="blank">GitHub</a>
 
         section.aboutSite__content.attributions
@@ -36,7 +35,7 @@
           ul
             li License: SIL Open Font License 1.1
             li URL: http://jikasei.me/info/license.html
-            li Created by MM.
+            li Created by MM
 </template>
 
 <script>
@@ -50,7 +49,7 @@ export default {
     help: helpIcon
   }),
   methods: {
-    click: function () {
+    click: function() {
       this.showAboutSite = !this.showAboutSite
       if (!this.hasOpenedOnce) {
         this.hasOpenedOnce = true

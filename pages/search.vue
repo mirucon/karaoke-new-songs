@@ -21,16 +21,20 @@ export default {
     GlobalSearchResults,
     GlobalSearch
   },
-  async fetch ({ store }) {
+  async fetch({ store }) {
     const numberOfWeeks: number = 7
-    for (let i = 0; i < numberOfWeeks; i++) {
+    ;[...Array(numberOfWeeks)].map(async (_, i) => {
       let date = moment().utcOffset('+09:00')
       const tues = 2 // for Tuesday
 
       // Get next Tuesday's date
       date = date.add(1, 'weeks').isoWeekday(tues)
       // Get one more next week if it is Thursday or later.
-      if (moment().utcOffset('+09:00').day() > 3) {
+      if (
+        moment()
+          .utcOffset('+09:00')
+          .day() > 3
+      ) {
         date = date.add(1, 'weeks').isoWeekday(tues)
       }
       // Subtract "7 days" in each loop.
@@ -38,25 +42,8 @@ export default {
         date = date.add(-i, 'weeks').isoWeekday(tues)
       }
       store.commit('setDatesArray', date.format('YYYY-MM-DD'))
-
-      let urls: Array<any> = []
-      for (let date in store.state.datesArray) {
-        urls.push(axios.get(`https://api.karaokenewsongs.com/songs.${store.state.datesArray[date]}.json`))
-      }
-      await Promise.all(urls)
-        .then(res => {
-          const len: number = res.length
-          for (let i = 0; i < len; i++) {
-            const songsData: Array<any> = res[i]['data'][1]
-            if (songsData.length > 1) {
-              store.commit('setSongsTable', {
-                date: res[i]['data'][0],
-                table: songsData
-              })
-            }
-          }
-        })
-    }
+    })
+    await store.dispatch('getSongsTable', store.state.datesArray)
   },
   head: {
     title: '検索画面 - カラオケ最新曲クイックビューアー'

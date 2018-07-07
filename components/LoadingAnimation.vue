@@ -22,37 +22,45 @@ export default {
     isWindowShown: true,
     startedTime: ''
   }),
-  computed: mapState([
-    'processing'
-  ]),
+  computed: mapState(['processing']),
   watch: {
-    processing () {
+    processing() {
       console.log('PROCESSING STATUS HAS BEEN SET TO: ' + this.processing)
     }
   },
-  mounted () {
+  mounted() {
     const bar: HTMLElement = document.getElementById('bar')
     const tl: any = new TimelineMax({ repeat: -1 })
-    tl.fromTo(bar, 1, {
-      left: '0',
-      bottom: '0',
-      width: '0',
-      height: '0'
-    }, {
-      left: 'auto',
-      bottom: 'auto',
-      width: '120px',
-      height: '120px'
-    })
-    tl.fromTo(bar, 0.2, {
-      width: '120px',
-      height: '120px',
-      opacity: 1
-    }, {
-      width: '140px',
-      height: '140px',
-      opacity: 0
-    })
+    tl.fromTo(
+      bar,
+      1,
+      {
+        left: '0',
+        bottom: '0',
+        width: '0',
+        height: '0'
+      },
+      {
+        left: 'auto',
+        bottom: 'auto',
+        width: '120px',
+        height: '120px'
+      }
+    )
+    tl.fromTo(
+      bar,
+      0.2,
+      {
+        width: '120px',
+        height: '120px',
+        opacity: 1
+      },
+      {
+        width: '140px',
+        height: '140px',
+        opacity: 0
+      }
+    )
   }
 }
 </script>

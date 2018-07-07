@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import moment from 'moment'
 import SongsPagination from '~/components/SongsPagination.vue'
 import SearchBar from '~/components/SearchBar.vue'
@@ -47,8 +48,12 @@ export default {
     SearchBar,
     SongsPagination
   },
-  props: ['songsTable', 'datesArray', 'hasLoaded'],
-  data () {
+  props: [
+    // 'songsTable',
+    // 'datesArray',
+    'hasLoaded'
+  ],
+  data() {
     return {
       lastWeek: {
         isButtonShown: true
@@ -67,30 +72,27 @@ export default {
       thead: ['', '歌手名', '曲名', '配信日']
     }
   },
+  computed: {
+    ...mapState(['datesArray', 'songsTable'])
+  },
   watch: {
-    searchQuery: function () {
+    searchQuery: function() {
       this.getSearchResults()
     },
-    songsTable: function () {
+    songsTable: function() {
       this.currentDateChecker()
     },
-    current: function () {
+    current: function() {
       this.cols = this.returnCurrentData()
       this.currentDateChecker()
       this.sortCols()
     },
-    sortBy: function () {
+    sortBy: function() {
       this.sortCols()
     }
   },
-  mounted: function () {
+  mounted: function() {
     // デフォルト設定の `current` の値 //
-    // 月曜日以降なら今週分を取得
-    // if (moment().utcOffset('+09:00').day() >= 1) {
-    //   this.current = this.datesArray[0]
-    // } else {
-    //   this.current = this.datesArray[1]
-    // }
     this.current = this.datesArray[1]
     setTimeout(() => {
       this.currentDateChecker()
@@ -105,7 +107,7 @@ export default {
     }, 100)
   },
   methods: {
-    goToLastWeek: function () {
+    goToLastWeek: function() {
       //  前週分へ移動  //
       if (!this.lastWeek.isButtonShown) return
       let index = this.datesArray.indexOf(this.current)
@@ -131,7 +133,7 @@ export default {
         this.lastWeek.isButtonShown = false
       }
     },
-    goToNextWeek: function () {
+    goToNextWeek: function() {
       //  次週分へ移動  //
       if (!this.nextWeek.isButtonShown) return
       this.$emit('filterArray')
@@ -150,7 +152,7 @@ export default {
       this.current = this.datesArray[index]
       this.clearQuery()
     },
-    currentDateChecker: function () {
+    currentDateChecker: function() {
       // 既に最新週まで到達、もしくは次週分がない場合: 次週ボタンの無効化 //
       if (
         this.current === this.datesArray[0] ||
@@ -173,10 +175,10 @@ export default {
         this.lastWeek.isButtonShown = true
       }
     },
-    returnCurrentData: function () {
+    returnCurrentData: function() {
       // 現在位置から当てはまる曲リストを返す //
       let cols = this.songsTable[this.current].cols
-      for (let col in cols) {
+      for (let col of cols.keys()) {
         if (cols[col].length !== 3) {
           let wrappedNm = [cols[col][1], cols[col][2]]
           cols[col] = [cols[col][0], wrappedNm, cols[col][3]]
@@ -184,7 +186,7 @@ export default {
       }
       return cols
     },
-    getSearchResults: function () {
+    getSearchResults: function() {
       // 検索結果 //
       let cols = this.returnCurrentData()
       let searchQuery = this.searchQuery.toLowerCase().trim()
@@ -230,19 +232,14 @@ export default {
         this.clearQuery()
       }
     },
-    clearQuery: function () {
+    clearQuery: function() {
       // SearchQuery をクリア //
       this.$router.replace({ query: '' })
       this.searchQuery = ''
     },
-    sortCols: function () {
-      /**
-       * Custom sort by model
-       * @param {array} a - An element to sort
-       * @param {array} b - An element to sort
-       * @returns {number} - The number for sorting
-       */
-      function comparatorModel (a, b) {
+    sortCols: function() {
+      /* Custom sort by model/artist/song/date */
+      function comparatorModel(a, b) {
         if (a[0] < b[0]) return -2
         if (a[0] > b[0]) return 2
         if (a[1][0] < b[1][0]) return -2
@@ -251,13 +248,7 @@ export default {
         if (a[1][1] > b[1][1]) return 1
         return 0
       }
-      /**
-       * Custom sort by artist
-       * @param {array} a - An element to sort
-       * @param {array} b - An element to sort
-       * @returns {number} - The number for sorting
-       */
-      function comparatorArtist (a, b) {
+      function comparatorArtist(a, b) {
         if (a[1][0] < b[1][0]) return -2
         if (a[1][0] > b[1][0]) return 2
         if (a[1][1] < b[1][1]) return -1
@@ -270,7 +261,7 @@ export default {
        * @param {array} b - An element to sort
        * @returns {number} - The number for sorting
        */
-      function comparatorSong (a, b) {
+      function comparatorSong(a, b) {
         if (a[1][1] < b[1][1]) return -1
         if (a[1][1] > b[1][1]) return 1
         return 0
@@ -281,7 +272,7 @@ export default {
        * @param {array} b - An element to sort
        * @returns {number} - The number for sorting
        */
-      function comparatorDate (a, b) {
+      function comparatorDate(a, b) {
         if (Array.isArray(a[2])) {
           let aDate = moment(a[2][1], 'M/D')
           let bDate = moment(b[2][1], 'M/D')
@@ -325,21 +316,21 @@ export default {
         this.cols = this.cols.sort(comparatorDate)
       }
     },
-    searchBySong: function () {
+    searchBySong: function() {
       this.filterSong = !this.filterSong
       this.getSearchResults()
     },
-    searchByArtist: function () {
+    searchByArtist: function() {
       this.filterArtist = !this.filterArtist
       this.getSearchResults()
     },
-    toggleDAM: function () {
+    toggleDAM: function() {
       this.showDAM = !this.showDAM
       if (!this.showJOY && !this.showDAM) {
         this.showJOY = true
       }
     },
-    toggleJOY: function () {
+    toggleJOY: function() {
       this.showJOY = !this.showJOY
       if (!this.showJOY && !this.showDAM) {
         this.showDAM = true

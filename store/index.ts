@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 
+import axios from 'axios'
+
 export const state = () => ({
   songsTable: <object>{},
   datesArray: <Array<string>>[],
@@ -9,27 +11,50 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setSongsTable (state, payload) {
-    state.songsTable[payload.date] = payload.table
+  setSongsTable(state, payload) {
+    state.songsTable[payload.date] = {
+      date: payload.date,
+      cols: payload.cols,
+      isExisted: payload.isExisted
+    }
   },
-  setDatesArray (state, date: string) {
+  setDatesArray(state, date: string) {
     state.datesArray.push(date)
   },
-  setModalState (state, bool) {
+  setModalState(state, bool) {
     state.isModalOpen = bool
   },
-  setSearchResults (state, result: Array<string>) {
+  setSearchResults(state, result: Array<string>) {
     state.searchResults = result
   },
-  setProcessing (state, bool: boolean) {
+  setProcessing(state, bool: boolean) {
     state.processing = bool
   }
 }
 
+export const strict: boolean = false
+
 export const actions = {
-  async searchSongsTable ({ commit, state }, query: string) {
+  async getSongsTable({ commit, state }, dates: Array<string>) {
+    let urls: Array<any> = []
+    for (const date of dates) {
+      urls.push(
+        await axios.get(`https://api.karaokenewsongs.com/songs.${date}.json`)
+      )
+    }
+    const resAll: any = await Promise.all(urls)
+    for (const res of resAll) {
+      const songsData: Array<any> = res.data[1]
+      commit('setSongsTable', {
+        date: res.data[0],
+        cols: songsData,
+        isExisted: !!songsData.length
+      })
+    }
+  },
+  async searchSongsTable({ commit, state }, query: string) {
     const songsTable: Object = state.songsTable
-    const datesArray: Array<string>= state.datesArray
+    const datesArray: Array<string> = state.datesArray
     let res: Array<any> = []
     for (let date in datesArray) {
       if (query === '') {
@@ -45,7 +70,7 @@ export const actions = {
             if (parseInt(key) === 1) {
               for (let i: number = 0; i < 2; i++) {
                 // return col[key][i].toLowerCase().indexOf(query) > -1
-                if(col[key][i].toLowerCase().indexOf(sanitizedQuery) > -1) {
+                if (col[key][i].toLowerCase().indexOf(sanitizedQuery) > -1) {
                   // console.log(col[key], ': ', i)
                   res.push(col)
                 }
@@ -59,4 +84,3 @@ export const actions = {
     commit('setSearchResults', res)
   }
 }
-
