@@ -1,6 +1,6 @@
 <template lang="pug">
   nav.pagination
-    div.prev(@click="prev", :class="{isHidden: !lastWeek.isButtonShown}")
+    div.prev(@click="goToPrevWeek", :class="{isHidden: !lastWeek.isButtonShown}")
       i.icon.icon--caret.left
       | 前週
     div.current {{ current | formatCurrentDate }} 配信
@@ -56,7 +56,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['current', 'songsTable', 'datesArray'])
+    ...mapState(['current', 'songsTable', 'datesArray', 'meta'])
   },
   watch: {
     current: function() {
@@ -72,70 +72,38 @@ export default {
     }, 400)
   },
   methods: {
-    goToPrevWeek: function() {
+    async goToPrevWeek() {
       //  前週分へ移動  //
       if (!this.lastWeek.isButtonShown) return
-      let index = this.datesArray.indexOf(this.current)
-      index += 1
-      this.$store.commit('filterDatesArray')
-
-      while (true) {
-        if (index === Object.keys(this.songsTable).length) {
-          this.lastWeek.isButtonShown = false
-          return
-        } else if (!this.songsTable[this.datesArray[index]].isExisted) {
-          index += 1
-        } else {
-          break
-        }
-      }
-      this.$store.commit('setCurrent', this.datesArray[index])
-
-      // Check for the previous week and disable the button if it reaches to the end.
-      index = this.datesArray.indexOf(this.current) + 1
-      if (index === Object.keys(this.songsTable).length) {
-        this.lastWeek.isButtonShown = false
-      }
-    },
-    goToNextWeek: function() {
-      //  次週分へ移動  //
-      if (!this.nextWeek.isButtonShown) return
-      this.$store.commit('filterDatesArray')
-      let index = this.datesArray.indexOf(this.current)
-      index -= 1
-      while (true) {
-        if (index === -1) {
-          this.nextWeek.isButtonShown = false
-          return
-        } else if (!this.songsTable[this.datesArray[index]].isExisted) {
-          index -= 1
-        } else {
-          break
-        }
-      }
-      this.$store.commit('setCurrent', this.datesArray[index])
-    },
-    currentDateChecker: function() {
-      // 既に最新週まで到達、もしくは次週分がない場合: 次週ボタンの無効化 //
-      if (
-        this.current === this.datesArray[0] ||
-        (this.current === this.datesArray[1] &&
-          !this.songsTable[this.datesArray[0]].isExisted)
-      ) {
-        this.nextWeek.isButtonShown = false
-      } else {
-        this.nextWeek.isButtonShown = true
-      }
-      // 既に最前週まで到達、もしくは前週分がない場合: 前週ボタンの無効化 //
-      if (
-        this.current === this.datesArray[this.datesArray.length - 1] ||
-        (this.current === this.datesArray[this.datesArray.length - 1] &&
-          !this.songsTable[this.datesArray[this.datesArray.length - 1]]
-            .isExisted)
-      ) {
+      if (this.meta.oldest === this.current) {
         this.lastWeek.isButtonShown = false
       } else {
         this.lastWeek.isButtonShown = true
+        this.$store.commit('setCurrent', this.meta.prev)
+        await this.$store.dispatch('getSingleSongsTable', this.meta.prev)
+      }
+    },
+    async goToNextWeek() {
+      //  次週分へ移動  //
+      if (this.meta.latest === this.current) {
+        this.nextWeek.isButtonShown = false
+      } else {
+        this.nextWeek.isButtonShown = true
+        this.$store.commit('setCurrent', this.meta.next)
+        await this.$store.dispatch('getSingleSongsTable', this.meta.next)
+      }
+    },
+    currentDateChecker: function() {
+      if (this.meta.oldest === this.current) {
+        this.lastWeek.isButtonShown = false
+      } else {
+        this.lastWeek.isButtonShown = true
+      }
+
+      if (this.meta.latest === this.current) {
+        this.nextWeek.isButtonShown = false
+      } else {
+        this.nextWeek.isButtonShown = true
       }
     },
     prev: function() {

@@ -3,10 +3,28 @@
 import axios from 'axios'
 import moment from 'moment'
 
+
+interface metaPayload {
+  oldest: string,
+  latest: string,
+  next: string,
+  prev: string,
+  current?: string
+}
+
+interface songsTablePayload {
+  date: string,
+  cols: Array<string>,
+  isExisted: boolean
+}
+
+export const strict: boolean = false
+
 export const state = () => ({
   songsTable: <object>{},
   datesArray: <Array<string>>[],
   current: <string>'',
+  meta: <object>{},
   isLoading: <boolean>false,
   searchResults: <Array<string>>[],
   isModalOpen: <boolean>false,
@@ -14,7 +32,8 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setSongsTable(state, payload) {
+
+  setSongsTable(state, payload: songsTablePayload) {
     state.songsTable[payload.date] = {
       date: payload.date,
       cols: payload.cols,
@@ -36,6 +55,13 @@ export const mutations = {
   setCurrent(state, date: string) {
     state.current = date
   },
+  setMeta(state, payload: metaPayload) {
+    state.meta.oldest = payload.oldest
+    state.meta.latest = payload.latest
+    state.meta.next = payload.next
+    state.meta.prev = payload.prev
+    state.meta.current = payload.current
+  },
   setIsLoading(state, bool: boolean) {
     state.isLoading = bool
   },
@@ -46,28 +72,54 @@ export const mutations = {
   }
 }
 
-export const strict: boolean = false
-
 export const actions = {
+
+  async getSingleSongsTable({ commit, state }, date: string) {
+    commit('setIsLoading', true)
+    const res = await axios.get(`https://apiv2.karaokenewsongs.com/weekly/${date}`)
+    const songsData: Array<any> = res.data.songs
+    await commit('setSongsTable', {
+      date: res.data.date,
+      cols: songsData,
+      isExisted: !!songsData.length
+    })
+    await commit('setMeta', {
+      oldest: res.data.oldest,
+      latest: res.data.latest,
+      next: res.data.next,
+      prev: res.data.prev,
+      current: res.data.date
+    })
+    commit('setIsLoading', false)
+  },
+
   async getSongsTable({ commit, state }, dates: Array<string>) {
     commit('setIsLoading', true)
     let urls: Array<any> = []
     for (const date of dates) {
       urls.push(
-        await axios.get(`https://api.karaokenewsongs.com/songs.${date}.json`)
+        await axios.get(`https://apiv2.karaokenewsongs.com/weekly/${date}`)
       )
     }
     const resAll: any = await Promise.all(urls)
     for (const res of resAll) {
-      const songsData: Array<any> = res.data[1]
+      const songsData: Array<any> = res.data.songs
       await commit('setSongsTable', {
-        date: res.data[0],
+        date: res.data.date,
         cols: songsData,
         isExisted: !!songsData.length
+      })
+      await commit('setMeta', {
+        oldest: res.data.oldest,
+        latest: res.data.latest,
+        next: res.data.next,
+        prev: res.data.prev,
+        current: res.data.date
       })
     }
     commit('setIsLoading', false)
   },
+
   async loadMore({ commit, state, dispatch }) {
     commit('setIsLoading', true)
     const LoadingDates = []
@@ -91,6 +143,7 @@ export const actions = {
 
      dispatch('getSongsTable', LoadingDates)
   },
+
   async searchSongsTable({ commit, state }, query: string) {
     const songsTable: Object = state.songsTable
     const datesArray: Array<string> = state.datesArray

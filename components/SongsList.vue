@@ -23,8 +23,7 @@
                 div(
                   :class="{ releaseList__artist: index === 0, releaseList__song: index === 1 }"
                 ): span(:class="{ releaseList__artist__inner: index === 0, releaseList__song__inner: index === 1 }") {{ nm }}
-            div.releaseList__item.releaseList__date(v-else-if="index === 2 && Array.isArray(item)") {{ item[0] }}
-            div.releaseList__item.releaseList__date(v-else-if="index === 2") {{ item }}
+            div.releaseList__item.releaseList__date(v-else-if="index === 2") {{ item[1] }}
       div.wrapper--notFound(v-if="searchQuery && cols.length <= 0")
         div
           p 検索結果が見つかりませんでした。
@@ -67,28 +66,28 @@ export default {
     }
   },
   computed: {
-    ...mapState(['datesArray', 'songsTable', 'current'])
+    ...mapState(['datesArray', 'songsTable', 'current', 'isLoading', 'meta'])
   },
   watch: {
     searchQuery: function() {
       this.getSearchResults()
     },
-    current: function() {
-      this.cols = this.returnCurrentData()
-      this.sortCols()
-      this.scrollToTop()
-      this.clearQuery()
+    current: function() {},
+    isLoading() {
+      if (!this.isLoading) {
+        this.cols = this.returnCurrentData()
+        this.sortCols()
+        this.scrollToTop()
+        this.clearQuery()
+      }
     },
     sortBy: function() {
       this.sortCols()
-    },
-    cols: function() {
-      this.getRelativeDates()
     }
   },
   mounted: function() {
     // デフォルト設定の `current` の値 //
-    this.$store.commit('setCurrent', this.datesArray[1])
+    this.$store.commit('setCurrent', this.meta.current)
     // if URL query is included in the first load. //
     let query = ''
     setTimeout(() => {
@@ -97,6 +96,10 @@ export default {
         this.searchQuery = query
       }
     }, 100)
+    this.cols = this.returnCurrentData()
+    this.sortCols()
+    this.scrollToTop()
+    this.clearQuery()
   },
   methods: {
     scrollToTop: function() {
@@ -111,58 +114,7 @@ export default {
     },
     returnCurrentData: function() {
       // 現在位置から当てはまる曲リストを返す //
-      let cols = this.songsTable[this.current].cols
-      for (let col of cols.keys()) {
-        if (cols[col].length !== 3) {
-          let wrappedNm = [cols[col][1], cols[col][2]]
-          cols[col] = [cols[col][0], wrappedNm, cols[col][3]]
-        }
-      }
-      return cols
-    },
-    getRelativeDates: function() {
-      const now = moment()
-      moment.locale('ja-JP')
-      const y = now.year()
-      for (let col of this.cols.keys()) {
-        let dateIndex
-        if (this.cols[col].length === 3) {
-          dateIndex = 2
-        } else {
-          dateIndex = 3
-        }
-        let dateCol = this.cols[col][dateIndex]
-        if (typeof dateCol === 'object') {
-          return
-        } else if (dateCol === '配信済' || dateCol === '配信済み') {
-          let diff = dateCol
-          dateCol = now.month() + 1 + '-' + now.date()
-          this.cols[col][dateIndex] = [diff, dateCol]
-        } else {
-          let colDate
-          if (dateCol.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
-            colDate = moment(`${dateCol} 23:59+0900`, 'YYYY/M/D HH:mm+-HH:mm')
-          } else {
-            colDate = moment(
-              `${y}-${dateCol} 23:59+0900`,
-              'YYYY-M/D HH:mm+-HH:mm'
-            )
-          }
-          let diff = colDate.diff(now, 'days')
-          if (diff === 0) {
-            diff = '今日'
-          } else if (diff === 1) {
-            diff = '明日'
-          } else if (diff < 0) {
-            diff = '配信済'
-          } else if (diff > 7) {
-            diff = `${colDate.format('M/D')}(${colDate.format('ddd')})`
-          } else {
-            diff = `${diff}日後(${colDate.format('ddd')})`
-          }
-          this.cols[col][dateIndex] = [diff, dateCol]
-        }
-      }
+      return this.songsTable[this.current].cols
     },
     getSearchResults: function() {
       // 検索結果 //
