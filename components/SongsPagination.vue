@@ -18,6 +18,7 @@
 
 <script lang="ts">
 import { mapState } from 'vuex'
+import moment from 'moment'
 
 export default {
   name: 'SongsPagination',
@@ -27,26 +28,10 @@ export default {
       if (value === '') {
         return ''
       }
-      let date = new Date(value)
-      date.setDate(date.getDate() - 1)
-      let mStart: any = date.getMonth() + 1
-      let dStart: any = date.getDate()
-      if (mStart < 10) {
-        mStart = '0' + mStart
-      }
-      if (dStart < 10) {
-        dStart = '0' + dStart
-      }
-      date.setDate(date.getDate() + 6)
-      let mEnd: any = date.getMonth() + 1
-      let dEnd: any = date.getDate()
-      if (mEnd < 10) {
-        mEnd = '0' + mEnd
-      }
-      if (dEnd < 10) {
-        dEnd = '0' + dEnd
-      }
-      return mStart + '/' + dStart + ' ~ ' + mEnd + '/' + dEnd
+      let date: moment.Moment = moment(value)
+      const startDate: string = date.add(-1, 'd').format('M/D')
+      const endDate: string = date.add(6, 'd').format('M/D')
+      return `${startDate} ~ ${endDate}`
     }
   },
   data() {
@@ -114,6 +99,7 @@ export default {
 <style scoped lang="stylus">
 @import "~assets/_variables.styl"
 $loaderWidth = 30px
+$loaderWidthMobile = 21px
 
 .pagination
   display flex
@@ -177,6 +163,9 @@ $loaderWidth = 30px
   width "calc(100% - %s * 2)" % $loaderWidth
   margin auto
 
+  @media screen and (max-width 640px)
+    width "calc(100% - %s * 2)" % $loaderWidth
+
 // When it reaches to the end
 .prev.isHidden, .next.isHidden
   background-color: #aaa
@@ -205,6 +194,10 @@ $loaderWidth = 30px
     left 3px
   &.right
     right 3px
+
+  @media screen and (max-width 640px)
+    width $loaderWidthMobile
+    height $loaderWidthMobile
 
 .isHidden > .loader
   visibility hidden
