@@ -1,11 +1,19 @@
 <template lang="pug">
   nav.pagination
-    div.prev(@click="goToPrevWeek", :class="{isHidden: !lastWeek.isButtonShown}")
-      i.icon.icon--caret.left
+    div.prev(@click="goToPrevWeek" :class="{isHidden: !prevWeek.isButtonShown}")
+      span.icon.icon--caret.left
       | 前週
+
+    div.prevIsLoading(:class="{isHidden: !prevWeek.isLoading}")
+      span.loader.left
+
     div.current {{ current | formatCurrentDate }} 配信
-    div.next(@click="goToNextWeek", :class="{isHidden: !nextWeek.isButtonShown}") 次週
-      i.icon.icon--caret.right
+
+    div.nextIsLoading(:class="{isHidden: !nextWeek.isLoading}")
+      span.loader.right
+
+    div.next(@click="goToNextWeek" :class="{isHidden: !nextWeek.isButtonShown}") 次週
+      span.icon.icon--caret.right
 </template>
 
 <script lang="ts">
@@ -43,20 +51,18 @@ export default {
   },
   data() {
     return {
-      canLoadMore: true,
-      loaded: 0,
-      isLoaded: false,
-      formattedCurrent: '',
-      lastWeek: {
-        isButtonShown: true
+      prevWeek: {
+        isButtonShown: true,
+        isLoading: false
       },
       nextWeek: {
-        isButtonShown: true
+        isButtonShown: true,
+        isLoading: false
       }
     }
   },
   computed: {
-    ...mapState(['current', 'songsTable', 'datesArray', 'meta'])
+    ...mapState(['current', 'meta'])
   },
   watch: {
     current: function() {
@@ -74,13 +80,15 @@ export default {
   methods: {
     async goToPrevWeek() {
       //  前週分へ移動  //
-      if (!this.lastWeek.isButtonShown) return
+      if (!this.prevWeek.isButtonShown) return
       if (this.meta.oldest === this.current) {
-        this.lastWeek.isButtonShown = false
+        this.prevWeek.isButtonShown = false
       } else {
-        this.lastWeek.isButtonShown = true
-        this.$store.commit('setCurrent', this.meta.prev)
+        this.prevWeek.isButtonShown = true
+        this.prevWeek.isLoading = true
+        await this.$store.commit('setCurrent', this.meta.prev)
         await this.$store.dispatch('getSingleSongsTable', this.meta.prev)
+        this.prevWeek.isLoading = false
       }
     },
     async goToNextWeek() {
@@ -89,46 +97,24 @@ export default {
         this.nextWeek.isButtonShown = false
       } else {
         this.nextWeek.isButtonShown = true
-        this.$store.commit('setCurrent', this.meta.next)
+        this.nextWeek.isLoading = true
+        await this.$store.commit('setCurrent', this.meta.next)
         await this.$store.dispatch('getSingleSongsTable', this.meta.next)
+        this.nextWeek.isLoading = false
       }
     },
-    currentDateChecker: function() {
-      if (this.meta.oldest === this.current) {
-        this.lastWeek.isButtonShown = false
-      } else {
-        this.lastWeek.isButtonShown = true
-      }
-
-      if (this.meta.latest === this.current) {
-        this.nextWeek.isButtonShown = false
-      } else {
-        this.nextWeek.isButtonShown = true
-      }
-    },
-    prev: function() {
-      // if it can load more then load more. Otherwise move to the previous week. //
-      if (this.canLoadMore) {
-        this.loadMore()
-      } else {
-        this.goToPrevWeek()
-      }
-    },
-    loadMore: async function() {
-      this.isLoaded = true
-      await this.$store.dispatch('loadMore')
-      this.goToPrevWeek()
-      this.isLoaded = false
-      this.loaded++
-      if (this.loaded >= 2) {
-        this.canLoadMore = false
-      }
+    currentDateChecker() {
+      this.prevWeek.isButtonShown = this.meta.oldest !== this.current
+      this.nextWeek.isButtonShown = this.meta.latest !== this.current
     }
   }
 }
 </script>
 
 <style scoped lang="stylus">
+@import "~assets/_variables.styl"
+$loaderWidth = 30px
+
 .pagination
   display flex
   flex-flow row wrap
@@ -187,6 +173,10 @@ export default {
   transform scale(.9)
   margin-right .7em
 
+.current
+  width "calc(100% - %s * 2)" % $loaderWidth
+  margin auto
+
 // When it reaches to the end
 .prev.isHidden, .next.isHidden
   background-color: #aaa
@@ -199,4 +189,29 @@ export default {
     background-color: #aaa
     .icon--caret.left, .icon--caret.right
       transform scale(.9)
+
+.loader
+  flex-basis 30px
+  display inline-block
+  position relative
+  bottom -3px
+  border 2px solid #f3f3f3
+  border-top 2px solid $accent
+  border-radius 50%
+  width $loaderWidth
+  height $loaderWidth
+  animation spin 2s linear infinite
+  &.left
+    left 3px
+  &.right
+    right 3px
+
+.isHidden > .loader
+  visibility hidden
+
+@keyframes spin
+  0%
+    transform rotate(0deg)
+  100%
+    transform rotate(360deg)
 </style>

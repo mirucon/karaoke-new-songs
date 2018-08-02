@@ -13,7 +13,11 @@
           div.releaseList__heading__item.releaseList__artist(@click="sortBy = 'artist'" :class="{ currentSort: sortBy === 'artist' }") 歌手名
           div.releaseList__heading__item.releaseList__song(@click="sortBy = 'song'" :class="{ currentSort: sortBy === 'song' }") 曲名
           div.releaseList__heading__item.releaseList__date(@click="sortBy = 'date'" :class="{ currentSort: sortBy === 'date' }") 配信日
-        div.releaseList__col.releaseList__line(v-for="col in cols", :class="{ dam: col[0] === 'D', joy: col[0] === 'J', both: col[0] === 'D,J', isDAMHidden: !showDAM, isJOYHidden: !showJOY }")
+
+        div.releaseList__col.releaseList__line(
+          v-for="col in cols", :class="{ dam: col[0] === 'D', joy: col[0] === 'J', both: col[0] === 'D,J', isDAMHidden: !showDAM, isJOYHidden: !showJOY }"
+        )
+
           template(v-for="(item, index) in col")
             div.releaseList__item.releaseList__model(
               v-if="index === 0", :class="{ 'icon--dam': item === 'D', 'icon--joy': item === 'J', 'icon--both': item === 'D,J' }"
@@ -49,7 +53,7 @@ export default {
   },
   data() {
     return {
-      lastWeek: {
+      prevWeek: {
         isButtonShown: true
       },
       nextWeek: {
