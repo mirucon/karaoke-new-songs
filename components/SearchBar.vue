@@ -41,25 +41,25 @@ export default {
       this.calculateHeight()
       this.checkIsFiltered()
     },
-    checkIsFiltered: function() {
+    checkIsFiltered() {
       if (!this.songToggle || !this.artistToggle) {
         this.isFiltered = true
       } else {
         this.isFiltered = false
       }
     },
-    updateValue: function(value) {
+    updateValue(value) {
       let formattedValue = value.trim()
       if (formattedValue !== value) {
         this.$refs.input.value = formattedValue
       }
       this.$emit('input', value)
     },
-    filterSong: function() {
+    filterSong() {
       this.songToggle = !this.songToggle
       this.$emit('searchBySong')
     },
-    filterArtist: function() {
+    filterArtist() {
       this.artistToggle = !this.artistToggle
       this.$emit('searchByArtist')
     },

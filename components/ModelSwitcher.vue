@@ -23,7 +23,7 @@ export default {
     this.updateStatusMsg()
   },
   methods: {
-    updateStatusMsg: function() {
+    updateStatusMsg() {
       if (this.settings.showDAM && this.settings.showJOY) {
         this.statusMsg = 'DAM, JOYSOUND を同時表示中です。'
       } else if (!this.settings.showJOY) {

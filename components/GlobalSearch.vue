@@ -24,18 +24,15 @@ export default {
     hitEnter: false,
     isFirstSearchDone: false
   }),
-  computed: mapState([
-    'datesArray',
-    'songsTable',
-    'isModalOpen',
-    'searchResults'
-  ]),
+  computed: {
+    ...mapState(['datesArray', 'songsTable', 'isModalOpen', 'searchResults'])
+  },
   watch: {
-    searchQuery: function() {
+    searchQuery() {
       this.queryValidator()
       this.checkForSuspendedTime()
     },
-    hitEnter: function() {
+    hitEnter() {
       console.log('HIT ENTER: ' + this.hitEnter)
       // Animation move the search form to top //
       const modalTop = document.getElementById('modal__top')
@@ -45,7 +42,7 @@ export default {
         })
       })
     },
-    isFirstSearchDone: function() {
+    isFirstSearchDone() {
       console.log('IS FIRST SEARCH DONE: ' + this.isFirstSearchDone)
       if (this.isFirstSearchDone) {
         // Animation to open the modal //

@@ -38,11 +38,6 @@ export default {
     ...mapState({
       cols: 'searchResults'
     })
-  },
-  mounted() {
-    // const modalTopHeight: number = document.getElementById('modal__top').offsetHeight
-    // const wrapperGsr: HTMLElement = document.getElementById('wrapper--globalSearchResults')
-    // wrapperGsr.style.top = `${modalTopHeight}px`
   }
 }
 </script>

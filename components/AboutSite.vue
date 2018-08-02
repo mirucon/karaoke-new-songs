@@ -49,7 +49,7 @@ export default {
     help: helpIcon
   }),
   methods: {
-    click: function() {
+    click() {
       this.showAboutSite = !this.showAboutSite
       if (!this.hasOpenedOnce) {
         this.hasOpenedOnce = true

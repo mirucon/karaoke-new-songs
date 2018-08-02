@@ -41,6 +41,40 @@ import ModelSwitcher from '~/components/ModelSwitcher.vue'
 import SettingPanel from '~/components/SettingPanel.vue'
 import AboutSite from '~/components/AboutSite.vue'
 
+/* Custom sort by model/artist/song/date */
+const comparatorModel = (a, b) => {
+  if (a[0] < b[0]) return -2
+  if (a[0] > b[0]) return 2
+  if (a[1][0] < b[1][0]) return -2
+  if (a[1][0] > b[1][0]) return 2
+  if (a[1][1] < b[1][1]) return -1
+  if (a[1][1] > b[1][1]) return 1
+  return 0
+}
+const comparatorArtist = (a, b) => {
+  if (a[1][0] < b[1][0]) return -2
+  if (a[1][0] > b[1][0]) return 2
+  if (a[1][1] < b[1][1]) return -1
+  if (a[1][1] > b[1][1]) return 1
+  return 0
+}
+const comparatorSong = (a, b) => {
+  if (a[1][1] < b[1][1]) return -1
+  if (a[1][1] > b[1][1]) return 1
+  return 0
+}
+const comparatorDate = (a, b) => {
+  let aDate = moment(a[2][0], 'YYYY/M/D')
+  let bDate = moment(b[2][0], 'YYYY/M/D')
+  if (aDate < bDate) return -1
+  if (aDate > bDate) return 1
+  if (a[1][0] < b[1][0]) return -1
+  if (a[1][0] > b[1][0]) return 1
+  if (a[1][1] < b[1][1]) return -1
+  if (a[1][1] > b[1][1]) return 1
+  return 0
+}
+
 export default {
   components: {
     AboutSite,
@@ -49,22 +83,20 @@ export default {
     SearchBar,
     SongsPagination
   },
-  data() {
-    return {
-      prevWeek: {
-        isButtonShown: true
-      },
-      nextWeek: {
-        isButtonShown: true
-      },
-      searchQuery: '',
-      filterSong: true,
-      filterArtist: true,
-      sortBy: 'artist',
-      cols: [],
-      thead: ['', '歌手名', '曲名', '配信日']
-    }
-  },
+  data: () => ({
+    prevWeek: {
+      isButtonShown: true
+    },
+    nextWeek: {
+      isButtonShown: true
+    },
+    searchQuery: '',
+    filterSong: true,
+    filterArtist: true,
+    sortBy: 'artist',
+    cols: [],
+    thead: ['', '歌手名', '曲名', '配信日']
+  }),
   computed: {
     ...mapState([
       'datesArray',
@@ -76,10 +108,10 @@ export default {
     ])
   },
   watch: {
-    searchQuery: function() {
+    searchQuery() {
       this.getSearchResults()
     },
-    current: function() {},
+    current() {},
     isLoading() {
       if (!this.isLoading) {
         this.cols = this.returnCurrentData()
@@ -88,11 +120,11 @@ export default {
         this.clearQuery()
       }
     },
-    sortBy: function() {
+    sortBy() {
       this.sortCols()
     }
   },
-  mounted: function() {
+  mounted() {
     // デフォルト設定の `current` の値 //
     this.$store.commit('setCurrent', this.meta.current)
     // if URL query is included in the first load. //
@@ -109,7 +141,7 @@ export default {
     this.clearQuery()
   },
   methods: {
-    scrollToTop: function() {
+    scrollToTop() {
       const el: HTMLElement = document.getElementById('releaseList__heading')
       if (el && el.getBoundingClientRect().top < window.pageYOffset) {
         // @ts-ignore
@@ -119,11 +151,11 @@ export default {
         scroll.animateScroll(el, null, options)
       }
     },
-    returnCurrentData: function() {
+    returnCurrentData() {
       // 現在位置から当てはまる曲リストを返す //
       return this.songsTable[this.current].cols
     },
-    getSearchResults: function() {
+    getSearchResults() {
       // 検索結果 //
       let cols = this.returnCurrentData()
       let searchQuery = this.searchQuery.toLowerCase().trim()
@@ -169,55 +201,12 @@ export default {
         this.clearQuery()
       }
     },
-    clearQuery: function() {
+    clearQuery() {
       // SearchQuery をクリア //
       this.$router.replace({ query: '' })
       this.searchQuery = ''
     },
-    sortCols: function() {
-      /* Custom sort by model/artist/song/date */
-      function comparatorModel(a, b) {
-        if (a[0] < b[0]) return -2
-        if (a[0] > b[0]) return 2
-        if (a[1][0] < b[1][0]) return -2
-        if (a[1][0] > b[1][0]) return 2
-        if (a[1][1] < b[1][1]) return -1
-        if (a[1][1] > b[1][1]) return 1
-        return 0
-      }
-      function comparatorArtist(a, b) {
-        if (a[1][0] < b[1][0]) return -2
-        if (a[1][0] > b[1][0]) return 2
-        if (a[1][1] < b[1][1]) return -1
-        if (a[1][1] > b[1][1]) return 1
-        return 0
-      }
-      function comparatorSong(a, b) {
-        if (a[1][1] < b[1][1]) return -1
-        if (a[1][1] > b[1][1]) return 1
-        return 0
-      }
-      function comparatorDate(a, b) {
-        if (Array.isArray(a[2])) {
-          let aDate = moment(a[2][1], 'M/D')
-          let bDate = moment(b[2][1], 'M/D')
-          if (aDate < bDate) return -1
-          if (aDate > bDate) return 1
-          if (a[1][0] < b[1][0]) return -2
-          if (a[1][0] > b[1][0]) return 2
-          if (a[1][1] < b[1][1]) return -1
-          if (a[1][1] > b[1][1]) return 1
-        } else {
-          if (a[2] < b[2]) return -3
-          if (a[2] > b[2]) return 3
-          if (a[1][0] < b[1][0]) return -2
-          if (a[1][0] > b[1][0]) return 2
-          if (a[1][1] < b[1][1]) return -1
-          if (a[1][1] > b[1][1]) return 1
-        }
-        return 0
-      }
-
+    sortCols() {
       if (this.sortBy === 'model') {
         // Replace "D,J" with "Z" so they can go at the top of list.
         for (let col in this.cols) {
@@ -241,11 +230,11 @@ export default {
         this.cols = this.cols.sort(comparatorDate)
       }
     },
-    searchBySong: function() {
+    searchBySong() {
       this.filterSong = !this.filterSong
       this.getSearchResults()
     },
-    searchByArtist: function() {
+    searchByArtist() {
       this.filterArtist = !this.filterArtist
       this.getSearchResults()
     }
