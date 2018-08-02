@@ -7,7 +7,6 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios'
 import moment from 'moment'
 import GlobalSearch from '~/components/GlobalSearch.vue'
 import GlobalSearchResults from '~/components/GlobalSearchResults.vue'

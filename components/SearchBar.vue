@@ -18,7 +18,7 @@
 export default {
   name: 'SearchBar',
   props: {
-    value: String
+    value: ''
   },
   data: () => ({
     showFilterWindow: '',

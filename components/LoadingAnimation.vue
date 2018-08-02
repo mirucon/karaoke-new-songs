@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts">
-import moment from 'moment'
 import { mapState } from 'vuex'
 import { TimelineMax } from 'gsap'
 

@@ -17,12 +17,14 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: 'DAM と JOYSOUND の最新配信曲を同時表示 + 横断検索出来る、高機能なカラオケ最新曲ビューアーアプリです。'
+        content:
+          'DAM と JOYSOUND の最新配信曲を同時表示 + 横断検索出来る、高機能なカラオケ最新曲ビューアーアプリです。'
       },
       { name: 'apple-mobile-web-app-title', content: 'カラオケ最新曲' },
       {
         property: 'og:description',
-        content: 'DAM と JOYSOUND の最新配信曲を同時表示 + 横断検索出来る、高機能なカラオケ最新曲ビューアーアプリです。'
+        content:
+          'DAM と JOYSOUND の最新配信曲を同時表示 + 横断検索出来る、高機能なカラオケ最新曲ビューアーアプリです。'
       },
       { property: 'og:site_name', content: 'カラオケ最新曲クイックビューアー' },
       { property: 'og:type', content: 'website' },
@@ -92,7 +94,7 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    extend (config, { isDev, isClient }) {
+    extend(config, { isDev, isClient }) {
       // find the stylus loader
       const stylus = config.module.rules[0].options.loaders.stylus.find(
         e => e.loader === 'stylus-loader'
@@ -126,12 +128,14 @@ module.exports = {
     '~/modules/typescript.js',
     '@nuxtjs/pwa',
     [
-      '@nuxtjs/google-analytics', {
+      '@nuxtjs/google-analytics',
+      {
         id: 'UA-56308747-9'
       }
     ],
     [
-      '@nuxtjs/google-adsense', {
+      '@nuxtjs/google-adsense',
+      {
         id: 'ca-pub-6450842193166394'
       }
     ]
