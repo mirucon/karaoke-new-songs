@@ -2,42 +2,57 @@
   div.modelSwitcher
     h3.settingPanel__title.modelSwitcher__title 表示機種選択
     .modelSwitcher__inner
-      .modelSwitcher__item.button--toggle.rounded.dam(@click="$emit('toggleDAM')" :class="{ enabled: showDAM }") DAM
-      .modelSwitcher__item.button--toggle.rounded.joy(@click="$emit('toggleJOY')" :class="{ enabled: showJOY }") JOYSOUND
+      .modelSwitcher__item.button--toggle.rounded.dam(@click="toggleDAM" :class="{ enabled: settings.showDAM }") DAM
+      .modelSwitcher__item.button--toggle.rounded.joy(@click="toggleJOY" :class="{ enabled: settings.showJOY }") JOYSOUND
     p.statusMessage {{ statusMsg }}
 
 </template>
 
-<script>
+<script lang="ts">
+import { mapState } from 'vuex'
+
 export default {
   name: 'ModelSwitcher',
-  props: {
-    showDAM: true,
-    showJOY: true
-  },
   data: () => ({
     statusMsg: ''
   }),
-  watch: {
-    showDAM: function() {
-      this.updateStatusMsg()
-    },
-    showJOY: function() {
-      this.updateStatusMsg()
-    }
+  computed: {
+    ...mapState(['settings'])
   },
   mounted: function() {
     this.updateStatusMsg()
   },
   methods: {
     updateStatusMsg: function() {
-      if (this.showDAM && this.showJOY) {
+      if (this.settings.showDAM && this.settings.showJOY) {
         this.statusMsg = 'DAM, JOYSOUND を同時表示中です。'
-      } else if (!this.showJOY) {
+      } else if (!this.settings.showJOY) {
         this.statusMsg = 'DAM のみ表示中です。'
-      } else if (!this.showDAM) {
+      } else if (!this.settings.showDAM) {
         this.statusMsg = 'JOYSOUND のみ表示中です。'
       }
+    },
+    toggleDAM() {
+      this.$store.commit('setSettings', {
+        showDAM: !this.settings.showDAM
+      })
+      if (!this.settings.showDAM && !this.settings.showJOY) {
+        this.$store.commit('setSettings', {
+          showJOY: true
+        })
+      }
+      this.updateStatusMsg()
+    },
+    toggleJOY() {
+      this.$store.commit('setSettings', {
+        showJOY: !this.settings.showJOY
+      })
+      if (!this.settings.showDAM && !this.settings.showJOY) {
+        this.$store.commit('setSettings', {
+          showDAM: true
+        })
+      }
+      this.updateStatusMsg()
     }
   }
 }

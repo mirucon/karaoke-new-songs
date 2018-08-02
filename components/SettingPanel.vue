@@ -8,7 +8,7 @@
         span.icon--clear.modalWindow__close.settingPanel__close(@click="click")
           span.top
           span.bottom
-        model-switcher(@toggleDAM="$emit('toggleDAM')" @toggleJOY="$emit('toggleJOY')" :showDAM="showDAM" :showJOY="showJOY")
+        model-switcher
 </template>
 
 <script>
@@ -20,17 +20,13 @@ export default {
   components: {
     ModelSwitcher
   },
-  props: {
-    showDAM: true,
-    showJOY: true
-  },
   data: () => ({
     showSettingPanel: false,
     hasOpenedOnce: false,
     sliderH: sliderHIcon
   }),
   methods: {
-    click: function() {
+    click() {
       this.showSettingPanel = !this.showSettingPanel
       if (!this.hasOpenedOnce) {
         this.hasOpenedOnce = true

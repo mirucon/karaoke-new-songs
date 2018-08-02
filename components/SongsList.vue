@@ -1,9 +1,7 @@
 <template lang="pug">
   main.main
     div.container.songsList
-      setting-panel(
-        @toggleDAM="toggleDAM" @toggleJOY="toggleJOY" :showDAM="showDAM" :showJOY="showJOY"
-      )
+      setting-panel
       about-site
       songs-pagination
       search-bar(v-model="searchQuery", @clearQuery="clearQuery", @searchBySong="searchBySong", @searchByArtist="searchByArtist")
@@ -15,7 +13,7 @@
           div.releaseList__heading__item.releaseList__date(@click="sortBy = 'date'" :class="{ currentSort: sortBy === 'date' }") 配信日
 
         div.releaseList__col.releaseList__line(
-          v-for="col in cols", :class="{ dam: col[0] === 'D', joy: col[0] === 'J', both: col[0] === 'D,J', isDAMHidden: !showDAM, isJOYHidden: !showJOY }"
+          v-for="col in cols", :class="{ dam: col[0] === 'D', joy: col[0] === 'J', both: col[0] === 'D,J', isDAMHidden: !settings.showDAM, isJOYHidden: !settings.showJOY }"
         )
 
           template(v-for="(item, index) in col")
@@ -62,15 +60,20 @@ export default {
       searchQuery: '',
       filterSong: true,
       filterArtist: true,
-      showDAM: true,
-      showJOY: true,
       sortBy: 'artist',
       cols: [],
       thead: ['', '歌手名', '曲名', '配信日']
     }
   },
   computed: {
-    ...mapState(['datesArray', 'songsTable', 'current', 'isLoading', 'meta'])
+    ...mapState([
+      'datesArray',
+      'songsTable',
+      'current',
+      'isLoading',
+      'meta',
+      'settings'
+    ])
   },
   watch: {
     searchQuery: function() {
@@ -245,18 +248,6 @@ export default {
     searchByArtist: function() {
       this.filterArtist = !this.filterArtist
       this.getSearchResults()
-    },
-    toggleDAM: function() {
-      this.showDAM = !this.showDAM
-      if (!this.showJOY && !this.showDAM) {
-        this.showJOY = true
-      }
-    },
-    toggleJOY: function() {
-      this.showJOY = !this.showJOY
-      if (!this.showJOY && !this.showDAM) {
-        this.showDAM = true
-      }
     }
   }
 }
