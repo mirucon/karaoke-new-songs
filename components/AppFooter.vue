@@ -11,6 +11,8 @@ export default {
   name: 'AppFooter',
   methods: {
     scrollToTop() {
+      // @ts-ignore
+      // eslint-disable-next-line
       const SmoothScroll = require('smooth-scroll')
       SmoothScroll('a[href="#"]', {
         speed: 300

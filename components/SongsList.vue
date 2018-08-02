@@ -135,6 +135,7 @@ export default {
       const el: HTMLElement = document.getElementById('releaseList__heading')
       if (el && el.getBoundingClientRect().top < window.pageYOffset) {
         // @ts-ignore
+        // eslint-disable-next-line
         const SmoothScroll = require('smooth-scroll')
         const scroll = new SmoothScroll()
         const options = { speed: 300, ease: 'easeOutCubic' }

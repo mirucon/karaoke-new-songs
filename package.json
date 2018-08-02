@@ -18,20 +18,20 @@
     "@nuxtjs/google-analytics": "^2.0.2",
     "@nuxtjs/pwa": "^2.0.8",
     "axios": "^0.18.0",
-    "gsap": "^1.20.4",
+    "gsap": "^2.0.1",
     "moment": "^2.22.0",
-    "nuxt": "^1.4.0"
+    "nuxt": "^1.4.2"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
-    "eslint": "^4.19.1",
+    "eslint": "^5.2.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-config-typescript": "^1.0.2",
     "eslint-loader": "^2.0.0",
     "eslint-plugin-html": "^4.0.2",
     "eslint-plugin-import": "^2.10.0",
-    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
@@ -42,13 +42,13 @@
     "prettier-eslint": "^8.8.1",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
-    "smooth-scroll": "^12.1.5",
+    "smooth-scroll": "^14.2.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "ts-loader": "^3.5.0",
-    "typescript": "^2.8.3",
-    "typescript-eslint-parser": "^15.0.0",
-    "vue-eslint-parser": "^2.0.3"
+    "typescript": "^3.0.1",
+    "typescript-eslint-parser": "^17.0.1",
+    "vue-eslint-parser": "^3.2.2"
   },
   "prettier": {
     "semi": false,
