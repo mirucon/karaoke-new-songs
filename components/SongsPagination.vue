@@ -7,7 +7,7 @@
     div.prevIsLoading(:class="{isHidden: !prevWeek.isLoading}")
       span.loader.left
 
-    div.current {{ current | formatCurrentDate }} 配信
+    div.current {{ meta.current | formatCurrentDate }} 配信
 
     div.nextIsLoading(:class="{isHidden: !nextWeek.isLoading}")
       span.loader.right
@@ -47,13 +47,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(['current', 'meta'])
+    ...mapState(['meta'])
   },
   watch: {
-    current: function() {
-      this.currentDateChecker()
+    meta: {
+      current() {
+        this.currentDateChecker()
+      }
     },
-    songsTable: function() {
+    songsTable() {
       this.currentDateChecker()
     }
   },
@@ -66,31 +68,31 @@ export default {
     async goToPrevWeek() {
       //  前週分へ移動  //
       if (!this.prevWeek.isButtonShown) return
-      if (this.meta.oldest === this.current) {
+      if (this.meta.oldest === this.meta.current) {
         this.prevWeek.isButtonShown = false
       } else {
         this.prevWeek.isButtonShown = true
         this.prevWeek.isLoading = true
-        await this.$store.commit('setCurrent', this.meta.prev)
         await this.$store.dispatch('getSingleSongsTable', this.meta.prev)
+        this.currentDateChecker()
         this.prevWeek.isLoading = false
       }
     },
     async goToNextWeek() {
       //  次週分へ移動  //
-      if (this.meta.latest === this.current) {
+      if (this.meta.latest === this.meta.current) {
         this.nextWeek.isButtonShown = false
       } else {
         this.nextWeek.isButtonShown = true
         this.nextWeek.isLoading = true
-        await this.$store.commit('setCurrent', this.meta.next)
         await this.$store.dispatch('getSingleSongsTable', this.meta.next)
+        this.currentDateChecker()
         this.nextWeek.isLoading = false
       }
     },
     currentDateChecker() {
-      this.prevWeek.isButtonShown = this.meta.oldest !== this.current
-      this.nextWeek.isButtonShown = this.meta.latest !== this.current
+      this.prevWeek.isButtonShown = this.meta.oldest !== this.meta.current
+      this.nextWeek.isButtonShown = this.meta.latest !== this.meta.current
     }
   }
 }

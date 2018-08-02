@@ -98,20 +98,12 @@ export default {
     thead: ['', '歌手名', '曲名', '配信日']
   }),
   computed: {
-    ...mapState([
-      'datesArray',
-      'songsTable',
-      'current',
-      'isLoading',
-      'meta',
-      'settings'
-    ])
+    ...mapState(['datesArray', 'songsTable', 'isLoading', 'meta', 'settings'])
   },
   watch: {
     searchQuery() {
       this.getSearchResults()
     },
-    current() {},
     isLoading() {
       if (!this.isLoading) {
         this.cols = this.returnCurrentData()
@@ -125,8 +117,6 @@ export default {
     }
   },
   mounted() {
-    // デフォルト設定の `current` の値 //
-    this.$store.commit('setCurrent', this.meta.current)
     // if URL query is included in the first load. //
     let query = ''
     setTimeout(() => {
@@ -153,7 +143,7 @@ export default {
     },
     returnCurrentData() {
       // 現在位置から当てはまる曲リストを返す //
-      return this.songsTable[this.current].cols
+      return this.songsTable[this.meta.current].cols
     },
     getSearchResults() {
       // 検索結果 //

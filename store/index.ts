@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import axios, { AxiosResponse } from "axios";
-import moment from 'moment'
+import axios, { AxiosResponse } from "axios"
 
 interface songsTablePayload {
   date: string,
@@ -17,7 +16,7 @@ interface metaPayload {
   current: string
 }
 
-interface settinngsObject {
+interface settingsObject {
   showDAM?: boolean,
   showJOY?: boolean
 }
@@ -28,9 +27,8 @@ export const state = () => ({
   songsTable: <object>{},
   datesArray: <Array<string>>[],
   isLoading: <boolean>false,
-  current: <string>'',
   meta: <object>{},
-  settings: <settinngsObject>{
+  settings: <settingsObject>{
     showDAM: true,
     showJOY: true
   },
@@ -63,9 +61,6 @@ export const mutations = {
   setIsLoading(state, bool: boolean) {
     state.isLoading = bool
   },
-  setCurrent(state, date: string) {
-    state.current = date
-  },
   setMeta(state, payload: metaPayload) {
     state.meta.oldest = payload.oldest
     state.meta.latest = payload.latest
@@ -73,7 +68,7 @@ export const mutations = {
     state.meta.prev = payload.prev
     state.meta.current = payload.current
   },
-  setSettings(state, payload: settinngsObject) {
+  setSettings(state, payload: settingsObject) {
     if ('showDAM' in payload) {
       state.settings.showDAM = !!payload.showDAM
     } else if ('showJOY' in payload) {
