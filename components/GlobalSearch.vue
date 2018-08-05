@@ -65,10 +65,16 @@ export default {
   },
   mounted() {
     document.getElementById('globalSearch__form').focus()
+    console.log(this.$store.state.search.searchResults)
   },
   methods: {
-    ...mapMutations(['setModalState', 'setProcessing']),
-    ...mapActions(['searchSongsTable']),
+    ...mapMutations({
+      setModalState: 'search/setModalState',
+      setProcessing: 'search/setProcessing'
+    }),
+    ...mapActions({
+      searchSongsTable: 'search/searchSongsTable'
+    }),
     queryValidator() {
       // Validator for query; it needs to have at least one character. //
       let searchQuery = this.searchQuery.toLowerCase().trim()

@@ -13,6 +13,20 @@ import GlobalSearchResults from '~/components/GlobalSearchResults.vue'
 import AppFooter from '~/components/AppFooter.vue'
 import LoadingAnimation from '~/components/LoadingAnimation.vue'
 
+// import Vue from 'vue'
+// import Vuex from 'vuex'
+// import * as search from '~/store/search'
+//
+// Vue.use(Vuex)
+//
+// const createState = () => {
+//   return new Vuex.Store({
+//     modules: {
+//       search
+//     }
+//   })
+// }
+
 export default {
   components: {
     LoadingAnimation,
@@ -40,9 +54,9 @@ export default {
       if (i >= 1) {
         date = date.add(-i, 'weeks').isoWeekday(tues)
       }
-      store.commit('setDatesArray', date.format('YYYY-MM-DD'))
+      store.commit('search/setDatesArray', date.format('YYYY-MM-DD'))
     })
-    await store.dispatch('getSongsTable', store.state.datesArray)
+    await store.dispatch('search/getSongsTable', store.state.search.datesArray)
   },
   head: {
     title: '検索画面 - カラオケ最新曲クイックビューアー'

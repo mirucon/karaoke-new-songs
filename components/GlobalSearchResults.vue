@@ -7,7 +7,7 @@
           div.releaseList__heading__item.releaseList__artist(@click="sortBy = 'artist'" :class="{ currentSort: sortBy === 'artist' }") 歌手名
           div.releaseList__heading__item.releaseList__song(@click="sortBy = 'song'" :class="{ currentSort: sortBy === 'song' }") 曲名
           div.releaseList__heading__item.releaseList__date(@click="sortBy = 'date'" :class="{ currentSort: sortBy === 'date' }") 配信日
-        div.releaseList__col.releaseList__line(v-for="col in cols", :class="{ dam: col[0] === 'D', joy: col[0] === 'J', both: col[0] === 'D,J', isDAMHidden: !showDAM, isJOYHidden: !showJOY }")
+        div.releaseList__col.releaseList__line(v-for="col in $store.state.search.searchResults", :class="{ dam: col[0] === 'D', joy: col[0] === 'J', both: col[0] === 'D,J', isDAMHidden: !showDAM, isJOYHidden: !showJOY }")
           template(v-for="(item, index) in col")
             div.releaseList__item.releaseList__model(
             v-if="index === 0", :class="{ 'icon--dam': item === 'D', 'icon--joy': item === 'J', 'icon--both': item === 'D,J' }"
@@ -19,26 +19,19 @@
                 ): span(:class="{ releaseList__artist__inner: index === 0, releaseList__song__inner: index === 1 }") {{ nm }}
             div.releaseList__item.releaseList__date(v-else-if="index === 2 && Array.isArray(item)") {{ item[0] }}
             div.releaseList__item.releaseList__date(v-else-if="index === 2") {{ item }}
-      div.wrapper--notFound(v-if="cols.length <= 0")
+      div.wrapper--notFound(v-if="$store.state.search.searchResults.length < 1")
         div
           p 検索結果が見つかりませんでした。
 </template>
 
 <script lang="ts">
-import { mapState } from 'vuex'
-
 export default {
   name: 'GlobalSearchResults',
   data: () => ({
     sortBy: 'artist',
     showDAM: true,
     showJOY: true
-  }),
-  computed: {
-    ...mapState({
-      cols: 'searchResults'
-    })
-  }
+  })
 }
 </script>
 
