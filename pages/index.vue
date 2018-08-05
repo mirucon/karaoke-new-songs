@@ -33,7 +33,7 @@ export default {
     if (
       moment()
         .utcOffset('+09:00')
-        .day() > 3
+        .isoWeekday() > 3
     ) {
       date = date.add(1, 'weeks').day(tues)
     }
