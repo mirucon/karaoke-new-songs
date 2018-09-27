@@ -1,7 +1,7 @@
 <template lang="pug">
   div.searchBox
     label.searchBox__label(aria-label="曲名 / アーティスト名 で検索")
-      input#searchBox__input.searchBox__input(type="text", placeholder="曲名 / アーティスト名 で検索", @input="updateValue($event.target.value)", :value="value")
+      input#searchBox__input.searchBox__input(type="text", placeholder="曲名 / アーティスト名 で検索", @input="updateValue($event.target.value)")
       span.icon--clear(@click="$emit('clearQuery')")
         span.top
         span.bottom
@@ -17,9 +17,6 @@
 <script>
 export default {
   name: 'SearchBar',
-  props: {
-    value: ''
-  },
   data: () => ({
     showFilterWindow: '',
     toggleHeight: { top: '40px', left: '0' },
