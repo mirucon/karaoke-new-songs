@@ -1,4 +1,4 @@
-# nuxt-basic-starter
+# karaoke-new-songs
 
 > Nuxt.js project
 
