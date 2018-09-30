@@ -78,10 +78,10 @@ export default {
   transition: 0.2s all;
 
   &:hover {
-    border-color: $error-focus + #343434;
+    border-color: $border-focus + #343434;
   }
   &:focus {
-    border-color: $error-focus;
+    border-color: $border-focus;
     outline: 0;
   }
 

@@ -5,6 +5,9 @@
         :errors="[]"
         label="label"
       />
+      <app-button
+        text="テキスト"
+      />
     </div>
   </section>
 </template>
@@ -12,9 +15,11 @@
 <script>
 import AppLogo from '~/components/AppLogo.vue'
 import FormInput from '~/components/molecules/FormInput'
+import AppButton from '~/components/atoms/AppButton'
 
 export default {
   components: {
+    AppButton,
     FormInput,
     AppLogo
   }
