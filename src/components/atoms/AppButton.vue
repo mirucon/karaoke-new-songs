@@ -26,7 +26,7 @@ export default {
       }
     },
     disabled: {
-      type: String,
+      type: Boolean,
       default: () => false
     },
     text: {

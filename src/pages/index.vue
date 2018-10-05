@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import AppLogo from '~/components/AppLogo.vue'
 import FormInput from '~/components/molecules/FormInput'
 import AppButton from '~/components/atoms/AppButton'
@@ -22,6 +23,20 @@ export default {
     AppButton,
     FormInput,
     AppLogo
+  },
+  async fetch({ store }) {
+    // Get next week's Tuesday if it is Thursday or later.
+    let date = moment().utcOffset('+09:00')
+    if (
+      moment()
+        .utcOffset('+09:00')
+        .isoWeekday() > 3
+    ) {
+      date = date.add(1, 'weeks').day(2)
+    } else {
+      date = date.isoWeekday(2)
+    }
+    await store.dispatch('songs/getSingleWeekSongs', date.format('YYYY-MM-DD'))
   }
 }
 </script>
