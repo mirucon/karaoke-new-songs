@@ -20,7 +20,7 @@
           a.author(href="https://twitter.com/mirucons")
             img.authorIcon(src="https://secure.gravatar.com/avatar/38228223544cf5f1f818c93ecdd4371f" width="80" height="80" alt="mirucon")
             span.authorName: strong mirucon
-          p Vue.jsやWordPress開発をする15歳のフリーランスエンジニア。DAMの精密採点が趣味。
+          p Vue.jsやWordPress開発をするフリーランスエンジニア。DAMの精密採点が趣味。
           p <a href="https://twitter.com/mirucons" target="blank">Twitter</a> | <a href="https://github.com/mirucon" target="blank">GitHub</a>
 
         section.aboutSite__content.attributions
