@@ -67,7 +67,7 @@ export const mutations = {
 export const actions = {
   async getSingleSongsTable({ commit, state }, date: string) {
     commit('setIsLoading', true)
-    const res: AxiosResponse<any> = await axios.get(`http://localhost:8000/api/weekly/${date}`)
+    const res: AxiosResponse<any> = await axios.get(`https://apiv2.karaokenewsongs.com/api/weekly/${date}`)
     const songsData: Array<any> = res.data.songs
     await commit('setSongsTable', {
       date: res.data.date,
