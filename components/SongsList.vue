@@ -16,16 +16,16 @@
           v-for="col in cols", :class="{ dam: col[0] === 'D', joy: col[0] === 'J', both: col[0] === 'D,J', isDAMHidden: !settings.showDAM, isJOYHidden: !settings.showJOY }"
         )
 
-          template(v-for="(item, index) in col")
+          template(v-for="(item, key) in col")
             div.releaseList__item.releaseList__model(
-              v-if="index === 0", :class="{ 'icon--dam': item === 'D', 'icon--joy': item === 'J', 'icon--both': item === 'D,J' }"
+              v-if="key === 'type'", :class="{ 'icon--dam': item === 'D', 'icon--joy': item === 'J', 'icon--both': item === 'D,J' }"
             ): span.releaseList__model__inner {{ item }}
-            div.releaseList__item.releaseList__songWrapper(v-else-if="index === 1")
-              template(v-for="(nm, index) in item")
-                div(
-                  :class="{ releaseList__artist: index === 0, releaseList__song: index === 1 }"
-                ): span(:class="{ releaseList__artist__inner: index === 0, releaseList__song__inner: index === 1 }") {{ nm }}
-            div.releaseList__item.releaseList__date(v-else-if="index === 2") {{ item[1] }}
+            div.releaseList__item.releaseList__songWrapper(v-else-if="key === 'artist' || key === 'song'")
+              div.releaseList__artist(v-if="key === 'artist'")
+                span.releaseList__artist__inner {{ item }}
+              div.releaseList__song(v-else-if="key === 'song'")
+                span.releaseList__song__inner {{ item }}
+            div.releaseList__item.releaseList__date(v-else-if="key === 'date'") {{ item['rel'] }}
       div.wrapper--notFound(v-if="searchQuery && cols.length <= 0")
         div
           p 検索結果が見つかりませんでした。
@@ -43,35 +43,35 @@ import AboutSite from '~/components/AboutSite.vue'
 
 /* Custom sort by model/artist/song/date */
 const comparatorModel = (a, b) => {
-  if (a[0] < b[0]) return -2
-  if (a[0] > b[0]) return 2
-  if (a[1][0] < b[1][0]) return -2
-  if (a[1][0] > b[1][0]) return 2
-  if (a[1][1] < b[1][1]) return -1
-  if (a[1][1] > b[1][1]) return 1
+  if (a['type'] < b['type']) return -2
+  if (a['type'] > b['type']) return 2
+  if (a['artist'] < b['artist']) return -2
+  if (a['artist'] > b['artist']) return 2
+  if (a['song'] < b['song']) return -1
+  if (a['song'] > b['song']) return 1
   return 0
 }
 const comparatorArtist = (a, b) => {
-  if (a[1][0] < b[1][0]) return -2
-  if (a[1][0] > b[1][0]) return 2
-  if (a[1][1] < b[1][1]) return -1
-  if (a[1][1] > b[1][1]) return 1
+  if (a['artist'] < b['artist']) return -2
+  if (a['artist'] > b['artist']) return 2
+  if (a['song'] < b['song']) return -1
+  if (a['song'] > b['song']) return 1
   return 0
 }
 const comparatorSong = (a, b) => {
-  if (a[1][1] < b[1][1]) return -1
-  if (a[1][1] > b[1][1]) return 1
+  if (a['song'] < b['song']) return -1
+  if (a['song'] > b['song']) return 1
   return 0
 }
 const comparatorDate = (a, b) => {
-  let aDate = moment(a[2][0], 'YYYY/M/D')
-  let bDate = moment(b[2][0], 'YYYY/M/D')
+  let aDate = moment(a['date']['abs'], 'YYYY/M/D')
+  let bDate = moment(b['date']['abs'], 'YYYY/M/D')
   if (aDate < bDate) return -1
   if (aDate > bDate) return 1
-  if (a[1][0] < b[1][0]) return -1
-  if (a[1][0] > b[1][0]) return 1
-  if (a[1][1] < b[1][1]) return -1
-  if (a[1][1] > b[1][1]) return 1
+  if (a['artist'] < b['artist']) return -1
+  if (a['artist'] > b['artist']) return 1
+  if (a['song'] < b['song']) return -1
+  if (a['song'] > b['song']) return 1
   return 0
 }
 
