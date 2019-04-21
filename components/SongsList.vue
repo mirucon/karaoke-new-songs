@@ -25,7 +25,7 @@
                 div(
                   :class="{ releaseList__artist: index === 0, releaseList__song: index === 1 }"
                 ): span(:class="{ releaseList__artist__inner: index === 0, releaseList__song__inner: index === 1 }") {{ nm }}
-            div.releaseList__item.releaseList__date(v-else-if="index === 2") {{ item[1] }} {{ item[0] }}
+            div.releaseList__item.releaseList__date(v-else-if="index === 2") {{ item[1] }}
       div.wrapper--notFound(v-if="searchQuery && cols.length <= 0")
         div
           p 検索結果が見つかりませんでした。
