@@ -71,7 +71,7 @@ export const actions = {
     let urls: Array<any> = []
     for (const date of dates) {
       urls.push(
-        await axios.get(`https://apiv2.karaokenewsongs.com/weekly/${date}`)
+        await axios.get(`https://apiv2.karaokenewsongs.com/api/weekly/${date}`)
       )
     }
     const resAll: any = await Promise.all(urls)
