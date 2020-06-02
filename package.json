@@ -48,7 +48,7 @@
     "stylus": "0.54.7",
     "stylus-loader": "3.0.2",
     "ts-loader": "3.5.0",
-    "typescript": "3.0.1",
+    "typescript": "3.9.3",
     "typescript-eslint-parser": "17.0.1",
     "vue-eslint-parser": "3.3.0"
   },
