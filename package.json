@@ -41,7 +41,7 @@
     "eslint-plugin-vue": "4.7.1",
     "node-sass": "4.14.1",
     "prettier": "1.19.1",
-    "prettier-eslint": "8.8.2",
+    "prettier-eslint": "10.1.1",
     "pug": "2.0.4",
     "pug-plain-loader": "1.0.0",
     "smooth-scroll": "14.2.1",
