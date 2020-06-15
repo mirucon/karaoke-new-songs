@@ -47,7 +47,7 @@
     "smooth-scroll": "14.2.1",
     "stylus": "0.54.7",
     "stylus-loader": "3.0.2",
-    "ts-loader": "3.5.0",
+    "ts-loader": "7.0.5",
     "typescript": "3.9.3",
     "typescript-eslint-parser": "17.0.1",
     "vue-eslint-parser": "7.1.0"
