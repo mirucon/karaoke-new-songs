@@ -38,7 +38,7 @@
     "eslint-plugin-promise": "3.8.0",
     "eslint-plugin-standard": "3.1.0",
     "eslint-plugin-typescript": "0.14.0",
-    "eslint-plugin-vue": "4.7.1",
+    "eslint-plugin-vue": "6.2.2",
     "node-sass": "4.14.1",
     "prettier": "1.19.1",
     "prettier-eslint": "8.8.2",
@@ -47,7 +47,7 @@
     "smooth-scroll": "14.2.1",
     "stylus": "0.54.7",
     "stylus-loader": "3.0.2",
-    "ts-loader": "3.5.0",
+    "ts-loader": "7.0.5",
     "typescript": "3.9.3",
     "typescript-eslint-parser": "17.0.1",
     "vue-eslint-parser": "7.1.0"
