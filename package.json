@@ -49,7 +49,7 @@
     "stylus-loader": "3.0.2",
     "ts-loader": "3.5.0",
     "typescript": "3.9.10",
-    "typescript-eslint-parser": "17.0.1",
+    "typescript-eslint-parser": "21.0.2",
     "vue-eslint-parser": "7.11.0"
   },
   "prettier": {
