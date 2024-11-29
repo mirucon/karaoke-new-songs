@@ -3278,10 +3278,10 @@ eslint-config-standard@11.0.0:
   resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-11.0.0.tgz#87ee0d3c9d95382dc761958cbb23da9eea31e0ba"
   integrity sha512-oDdENzpViEe5fwuRCWla7AXQd++/oyIp8zP+iP9jiUPG6NBj3SHgdgtl/kTn00AjeN+1HNvavTKmYbMo+xMOlw==
 
-eslint-config-typescript@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-typescript/-/eslint-config-typescript-1.1.0.tgz#77eba5ab9fe095bd8d7998b135cc7372a0e0b045"
-  integrity sha512-2dKs/kXzOc1BSzgt+UhQC95bXtxQno44Xraic/sV0U06R1xjnUkRVqCjctxPdkus5GsSc7pR1FipBXJeBXykKg==
+eslint-config-typescript@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-typescript/-/eslint-config-typescript-3.0.0.tgz#13e0627f8c5aa8d58b5a01eeddd0a726a259c4b5"
+  integrity sha512-CwC2cQ29OLE1OUw0k+Twpc6wpCdenG8rrErl89sWrzmMpWfkulyeQS1HJhhjU0B3Tb4k41zdei4LtX26x5m60Q==
 
 eslint-import-resolver-node@^0.3.9:
   version "0.3.9"
